@@ -1,2 +1,3 @@
 .env
-Application/AdminPortal
+Application/AdminPortal/application
+Application/AdminPortal/routes

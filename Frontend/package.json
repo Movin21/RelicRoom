@@ -17,6 +17,7 @@
     "axios": "^1.6.7",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
+    "firebase": "^10.8.1",
     "localforage": "^1.10.0",
     "lucide-react": "^0.344.0",
     "match-sorter": "^6.3.4",
@@ -27,7 +28,8 @@
     "redux": "^5.0.1",
     "sort-by": "^0.0.2",
     "tailwind-merge": "^2.2.1",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "uuid": "^9.0.1"
   },
   "devDependencies": {
     "@types/node": "^20.11.24",

@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const { boolean } = require("zod");
 
 const bidderSchema = mongoose.Schema(
   {
@@ -54,7 +55,12 @@ const bidderSchema = mongoose.Schema(
       required: true,
     },
     isActive: {
-      type: true,
+      type: Boolean,
+      default: true,
+    },
+    type: {
+      type: String,
+      default: "Bidder",
     },
   },
   { timestamp: true }

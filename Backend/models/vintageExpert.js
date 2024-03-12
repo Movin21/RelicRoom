@@ -26,7 +26,16 @@ const VintageExpertSchema = mongoose.Schema(
       type: Boolean,
       required: true,
     },
+    isActive: {
+      type: Boolean,
+      default: true,
+    },
+    type: {
+      type: String,
+      default: "Vintage Expert",
+    },
   },
+
   { timestamps: true }
 );
 

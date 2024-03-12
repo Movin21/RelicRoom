@@ -46,7 +46,11 @@ const auctioneerSchema = mongoose.Schema(
     },
     isActive: {
       type: Boolean,
-      required: true,
+      default: true,
+    },
+    type: {
+      type: String,
+      default: "Auctioneer",
     },
   },
   { timestamp: true }

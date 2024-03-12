@@ -34,6 +34,14 @@ const repairSpecialistSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    isActive: {
+      type: Boolean,
+      default: true,
+    },
+    type: {
+      type: String,
+      default: "Repair Specialist",
+    },
   },
   { timestamp: true }
 );

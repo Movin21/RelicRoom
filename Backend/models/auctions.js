@@ -39,6 +39,10 @@ const auctionSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  isFlagged: {
+    type: Boolean,
+    default: false,
+  },
   viewCount: {
     type: Number,
     default: 0,

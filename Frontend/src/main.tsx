@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Home from "./pages/Home/Home.tsx";
-import AdminLogin from "./pages/AdminPortal/authentication/page.tsx";
+
 import "./index.css";
 
 const router = createBrowserRouter([
@@ -12,7 +12,6 @@ const router = createBrowserRouter([
   },
   {
     path: "/adminLogin",
-    element: <AdminLogin />,
   },
 ]);
 

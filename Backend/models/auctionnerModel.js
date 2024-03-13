@@ -10,10 +10,6 @@ const auctioneerSchema = mongoose.Schema(
       type: String,
       required: true,
     },
-    profilepic: {
-      type: String,
-      required: true,
-    },
     description: {
       type: String,
       required: true,

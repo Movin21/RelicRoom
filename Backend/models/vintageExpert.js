@@ -34,6 +34,10 @@ const VintageExpertSchema = mongoose.Schema(
       type: String,
       default: "Vintage Expert",
     },
+    profileImage: {
+      type: String,
+      default: "",
+    },
   },
 
   { timestamps: true }

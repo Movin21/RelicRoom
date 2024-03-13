@@ -3,7 +3,7 @@ const dotenv = require("dotenv").config();
 const connectDB = require("./DB Connection/DBConnection.js");
 const cors = require("cors");
 const errorHandler = require("./middleware/errorHandler.js");
-const adminRouter = require("./Application/AdminPortal/routes/adminRoute.js");
+// const adminRouter = require("./Application/AdminPortal/routes/adminRoute.js");
 
 const app = express();
 
@@ -12,7 +12,7 @@ app.use(cors());
 connectDB();
 
 //adminPortalMiddleware
-app.use("/admin", adminRouter);
+// app.use("/admin", adminRouter);
 
 //errorHandler
 app.use(errorHandler);

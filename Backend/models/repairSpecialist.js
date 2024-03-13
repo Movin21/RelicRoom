@@ -42,6 +42,10 @@ const repairSpecialistSchema = new mongoose.Schema(
       type: String,
       default: "Repair Specialist",
     },
+    profileImage: {
+      type: String,
+      default: "",
+    },
   },
   { timestamp: true }
 );

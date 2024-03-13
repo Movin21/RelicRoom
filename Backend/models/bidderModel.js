@@ -62,6 +62,10 @@ const bidderSchema = mongoose.Schema(
       type: String,
       default: "Bidder",
     },
+    profileImage: {
+      type: String,
+      default: "",
+    },
   },
   { timestamp: true }
 );

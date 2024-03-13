@@ -52,6 +52,10 @@ const auctioneerSchema = mongoose.Schema(
       type: String,
       default: "Auctioneer",
     },
+    profileImage: {
+      type: String,
+      default: "",
+    },
   },
   { timestamp: true }
 );

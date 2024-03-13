@@ -4,6 +4,7 @@ const connectDB = require("./DB Connection/DBConnection.js");
 const cors = require("cors");
 const errorHandler = require("./middleware/errorHandler.js");
  const adminRouter = require("./Application/AdminPortal/routes/adminRoute.js");
+ const rsRouter = require("./Application/Repair Specialist/routes/rsControl.js");
 
 const app = express();
 
@@ -13,6 +14,7 @@ connectDB();
 
 //adminPortalMiddleware
  app.use("/admin", adminRouter);
+ app.use("/repairSpecialist", rsRouter);
 
 //errorHandler
 app.use(errorHandler);

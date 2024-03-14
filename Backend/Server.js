@@ -9,7 +9,9 @@ const errorHandler = require("./middleware/errorHandler.js");
 const auctionRoutes = require("./Application/Auction Listing/routes/auctions.js");
 const bidRouts = require("./Application/Auction Listing/routes/bid.js");
 const adminRouter = require("./Application/AdminPortal/routes/adminRoute.js");
-const auctioneerRouter=require("./Application/Auctioneer/routes/auctioneerRoutes.js");
+const auctioneerRouter=require("./Application/Auctioneer/routes/auctioneerRoutes.js")
+const rsRouter = require("./Application/Repair Specialist/routes/rsControl.js");
+const vintageexpertRouter=require("./Application/Vintage Item Expert/routes/vintageitemexpertrouter.js")
 const customerCareRouter=require("./Application/Customer Care/routes/customerCareRouter.js");
 const bidderRoutes = require("./Application/Bidder/routes/bidderRoutes.js");
 const rsRouter = require("./Application/Repair Specialist/routes/rsControl.js");
@@ -30,6 +32,7 @@ app.use("/auctioneer",auctioneerRouter);
 app.use("/customerCare",customerCareRouter)
 app.use("/bidder",bidderRoutes);
 app.use("/repairSpecialist", rsRouter);
+app.use("/vintageexpert",vintageexpertRouter);
 
 
 
@@ -38,3 +41,4 @@ app.use(errorHandler);
 app.listen(process.env.PORT || 5000, () => {
   console.log(`Server running on Port ${process.env.PORT || 5000}`);
 });
+

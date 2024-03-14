@@ -8,7 +8,8 @@ const errorHandler = require("./middleware/errorHandler.js");
 const auctionRoutes = require("./Application/Auction Listing/routes/auctions.js");
 const bidRouts = require("./Application/Auction Listing/routes/bid.js");
 const adminRouter = require("./Application/AdminPortal/routes/adminRoute.js");
-const auctioneerRouter=require("./Application/Auctioneer/routes/auctioneerRoutes.js")
+const auctioneerRouter=require("./Application/Auctioneer/routes/auctioneerRoutes.js");
+const customerCareRouter=require("./Application/Customer Care/routes/customerCareRouter.js");
 const app = express();
 
 app.use(express.json());
@@ -20,6 +21,7 @@ app.use("/admin", adminRouter);
 app.use("/auctions", auctionRoutes);
 app.use("/bids", bidRouts);
 app.use("/auctioneer",auctioneerRouter);
+app.use("/customerCare",customerCareRouter)
 
 //errorHandler
 app.use(errorHandler);

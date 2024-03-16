@@ -12,7 +12,15 @@ module.exports = {
       },
     },
     extend: {
+      fontFamily: {
+        akshar: ["Akshar", "sans-serif"],
+        poppins: ["Poppins", "sans-serif"],
+        amethysta: ["Amethysta", "sans-serif"],
+      },
       colors: {
+        brownDark: "#302300",
+        brownLight: "#B8AA70",
+        brownMedium: "#635A3F",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",

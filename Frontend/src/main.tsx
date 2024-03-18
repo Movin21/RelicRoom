@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Home from "./pages/Home/Home.tsx";
+import AdminPortal from "./pages/AdminPortal/AdminPortal.tsx";
 import firebase from "firebase/compat/app";
 import "./index.css";
 
@@ -12,7 +13,7 @@ firebase.initializeApp(firebaseConfig);
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Home />,
+    element: <AdminPortal />,
   },
   {
     path: "/adminLogin",

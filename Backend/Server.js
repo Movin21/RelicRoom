@@ -12,7 +12,7 @@ const auctioneerRouter = require("./Application/Auctioneer/routes/auctioneerRout
 const vintageexpertRouter = require("./Application/Vintage Item Expert/routes/vintageitemexpertrouter.js");
 const customerCareRouter = require("./Application/Customer Care/routes/customerCareRouter.js");
 const bidderRoutes = require("./Application/Bidder/routes/bidderRoutes.js");
-const rsRouter = require("./Application/Repair Specialist/routes/rsControl.js");
+
 
 const app = express();
 

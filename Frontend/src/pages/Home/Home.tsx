@@ -1,15 +1,13 @@
+import Carousel from "./carousel";
+import Body from "./body";
+
 const Home = () => {
   return (
     <div>
-      <div className="font-akshar text-brownDark">
-        Mainly Used For Main Topics
-      </div>
-      <div className="font-poppins  text-brownLight">
-        Profile Data / All Descriptions
-      </div>
-      <div className="font-amethysta text-brownMedium">
-        Auction Blogs / Repair Specialist Topics
-      </div>
+      <Carousel />
+      <Body />
+      <Body />
+      <Body />
     </div>
   );
 };

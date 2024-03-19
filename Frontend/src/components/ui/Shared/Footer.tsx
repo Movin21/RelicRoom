@@ -92,7 +92,7 @@ const Footer = () => {
         <div className="flex justify-center items-center space-x-8 mb-0 ">
           <Link
             to="#"
-            className="text-white hover:text-gray-400 transition duration-300"
+            className="text-white hover:text-brownLight transition duration-300"
           >
             <svg
               width="24"
@@ -111,7 +111,7 @@ const Footer = () => {
           </Link>
           <Link
             to="#"
-            className="text-white hover:text-gray-400 transition duration-300"
+            className="text-white hover:text-brownLight transition duration-300"
           >
             <svg
               width="24"
@@ -130,7 +130,7 @@ const Footer = () => {
           </Link>
           <Link
             to="#"
-            className="text-white hover:text-gray-400 transition duration-300"
+            className="text-white hover:text-brownLight transition duration-300"
           >
             <svg
               width="24"
@@ -149,7 +149,7 @@ const Footer = () => {
           </Link>
           <Link
             to="#"
-            className="text-white hover:text-gray-400 transition duration-300"
+            className="text-white hover:text-brownLight transition duration-300"
           >
             <svg
               width="24"
@@ -168,7 +168,7 @@ const Footer = () => {
           </Link>
           <Link
             to="#"
-            className="text-white hover:text-gray-400 transition duration-300"
+            className="text-white hover:text-brownLight transition duration-300"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -182,7 +182,7 @@ const Footer = () => {
           </Link>
         </div>
         {/* Separator line */}
-        <div className="text-center mt-8">
+        <div className="text-center ">
           <hr className="border-t-1 border-footertxt mx-auto" />
         </div>
       </div>

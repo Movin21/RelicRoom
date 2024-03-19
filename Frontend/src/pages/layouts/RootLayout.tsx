@@ -5,7 +5,7 @@ import { Outlet } from "react-router-dom";
 const RootLayout = () => {
   return (
     <div>
-      <div className="sticky top-0">
+      <div className="sticky top-0 bg-white">
         <NavBar />
       </div>
       <div>

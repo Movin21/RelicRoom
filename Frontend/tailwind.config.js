@@ -12,6 +12,7 @@ module.exports = {
       },
     },
     extend: {
+     
       fontFamily: {
         akshar: ["Akshar", "sans-serif"],
         poppins: ["Poppins", "sans-serif"],

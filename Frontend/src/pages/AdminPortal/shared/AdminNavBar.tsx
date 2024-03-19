@@ -13,7 +13,7 @@ const AdminPortal = () => {
 
   return (
     <>
-      <nav className="sticky top-0 bg-gray-100 flex items-center justify-between px-4 py-2 sm:px-6 z-10 shadow-md">
+      <nav className="sticky top-0 bg-white flex items-center justify-between px-4 py-2 sm:px-6 z-10 shadow-md">
         <div className="flex items-center">
           <img src={logo} alt="Relic Room Logo" className="h-8 mr-4" />
           <div className="relative sm:ml-4">

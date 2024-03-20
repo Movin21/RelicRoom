@@ -15,7 +15,11 @@ const AdminPortal = () => {
     <>
       <nav className="sticky top-0 bg-white flex items-center justify-between px-4 py-2 sm:px-6 z-10 shadow-md">
         <div className="flex items-center">
-          <img src={logo} alt="Relic Room Logo" className="h-8 mr-4" />
+          <img
+            src={logo}
+            alt="Relic Room Logo"
+            className="max-w-[10rem] w-full"
+          />
           <div className="relative sm:ml-4">
             <input
               type="text"

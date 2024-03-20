@@ -9,16 +9,16 @@ const AdminLayout = () => {
       <div className="sticky top-0 z-10">
         <AdminNavBar />
       </div>
-      <div className="flex items-center mb-8">
-        <h1 className="text-4xl font-bold text-brownDark font-akshar ml-5  mt-3  ">
+      <div className="flex flex-col md:flex-row items-center mb-8">
+        <h1 className="text-2xl md:text-4xl font-bold text-brownDark font-akshar ml-5 mt-5 mb-0">
           Admin Portal
         </h1>
       </div>
-      <div className="flex flex-row flex-grow ml-5 mb-8 ">
-        <div>
+      <div className="flex flex-col md:flex-row flex-grow ml-5 mb-8">
+        <div className="mt-0 md:w-64">
           <SideMenu />
         </div>
-        <div className="flex-grow m-6 bg-white my-0 shadow-md ">
+        <div className="flex-grow m-6 bg-gray-100 my-0 ">
           <Outlet />
         </div>
       </div>

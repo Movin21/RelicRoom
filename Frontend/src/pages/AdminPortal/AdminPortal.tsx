@@ -1,7 +1,6 @@
 import RevenueChart from "./Charts/RevenueCharts";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import UserPieChart from "./Charts/UserPieChart";
 
 const AdminPortal = () => {
   const [users, setUsers] = useState(0);
@@ -150,9 +149,6 @@ const AdminPortal = () => {
           Revenue
         </div>
         <RevenueChart />
-      </div>
-      <div className="bg-white rounded-lg shadow-md p-4 mt-3 w-1/2 max-h-72">
-        <UserPieChart />
       </div>
     </>
   );

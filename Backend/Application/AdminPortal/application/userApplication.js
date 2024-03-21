@@ -149,15 +149,31 @@ const countAllUsers = async (req, res, next) => {
     const vintageExpertCount = await vintageExpert.countDocuments();
     const repairSpecialistCount = await repairSpecialist.countDocuments();
 
-    const totalCount = {
-      count:
-        auctioneerCount +
-        bidderCount +
-        vintageExpertCount +
-        repairSpecialistCount,
+    const totalCount =
+      auctioneerCount +
+      bidderCount +
+      vintageExpertCount +
+      repairSpecialistCount;
+    res.status(200).json(totalCount);
+  } catch (error) {
+    next(error);
+  }
+};
+const userChart = async (req, res, next) => {
+  try {
+    const auctioneerCount = await auctioneers.countDocuments();
+    const bidderCount = await bidders.countDocuments();
+    const vintageExpertCount = await vintageExpert.countDocuments();
+    const repairSpecialistCount = await repairSpecialist.countDocuments();
+
+    const data = {
+      auctioneerCount,
+      bidderCount,
+      vintageExpertCount,
+      repairSpecialistCount,
     };
 
-    res.status(200).json(totalCount);
+    res.json(data);
   } catch (error) {
     next(error);
   }

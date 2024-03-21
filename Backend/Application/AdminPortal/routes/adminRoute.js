@@ -11,6 +11,7 @@ const {
   getAllAuctions,
   markExpired,
   markFlagged,
+  countAllAuctions,
 } = require("../application/auctionReveiw.js");
 const {
   getAllUsers,
@@ -93,4 +94,6 @@ adminRouter.route("/users/RepairSpecialistCount").get(countRepairSpecialists);
 adminRouter.route("/users/count").get(countAllUsers);
 //Revenue Data
 adminRouter.route("/revenue").get(getAllData);
+//AuctionData
+adminRouter.route("/countAuctions").get(countAllAuctions);
 module.exports = adminRouter;

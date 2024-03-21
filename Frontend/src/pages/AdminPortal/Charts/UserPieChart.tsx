@@ -1,13 +1,26 @@
-import React, { PureComponent } from "react";
+import React, { PureComponent, useState, useEffect } from "react";
+import axios from "axios";
 import { PieChart, Pie, Sector, ResponsiveContainer } from "recharts";
-
-const data = [
+const [data, setdata] = useState([
   { name: "Auctioneer", value: 400 },
   { name: "Bidder", value: 300 },
   { name: "Vintage Expert", value: 300 },
   { name: "Repair Specialist", value: 200 },
-];
+]);
 
+useEffect(() => {
+  const fetchData = async () => {
+    try {
+      const usersResponse = await axios.get("/api/users");
+
+      setdata(usersResponse.data.totalUsers);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  fetchData();
+}, []);
 const renderActiveShape = (props: any) => {
   const RADIAN = Math.PI / 180;
   const {
@@ -97,15 +110,15 @@ export default class UserPieChart extends PureComponent {
 
   render() {
     return (
-      <PieChart width={400} height={400}>
+      <PieChart width={500} height={500}>
         <Pie
           activeIndex={this.state.activeIndex}
           activeShape={renderActiveShape}
           data={data}
-          cx="53%"
+          cx="55%"
           cy="50%"
-          innerRadius={60}
-          outerRadius={80}
+          innerRadius={80}
+          outerRadius={100}
           fill="#635A3F"
           dataKey="value"
           onMouseEnter={this.onPieEnter}

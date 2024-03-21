@@ -8,7 +8,15 @@ const getAllAuctions = async (req, res, next) => {
     next(error);
   }
 };
-
+const countAllAuctions = async (req, res) => {
+  try {
+    const count = await auctions.countDocuments();
+    res.json(count);
+  } catch (error) {
+    console.error("Error counting auctions:", error);
+    res.status(500).json({ error: "Error counting auctions" });
+  }
+};
 const markExpired = async (req, res, next) => {
   try {
     const expireAuctions = await auctions.findByIdAndUpdate(
@@ -40,4 +48,4 @@ const markFlagged = async (req, res, next) => {
   }
 };
 
-module.exports = { getAllAuctions, markExpired, markFlagged };
+module.exports = { getAllAuctions, markExpired, markFlagged, countAllAuctions };

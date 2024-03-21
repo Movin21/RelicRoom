@@ -21,7 +21,7 @@ const adminSchema = mongoose.Schema(
     },
     profileImage: {
       type: String,
-      default: "",
+      default: "https://github.com/shadcn.png",
     },
   },
   { timestamps: true }

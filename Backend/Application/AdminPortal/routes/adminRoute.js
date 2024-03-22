@@ -11,6 +11,7 @@ const {
   getAllAuctions,
   markExpired,
   markFlagged,
+  countAllAuctions,
 } = require("../application/auctionReveiw.js");
 const {
   getAllUsers,
@@ -26,8 +27,13 @@ const {
   deleteBidder,
   deleteVintageExpert,
   deleteRepairSpecialist,
+  countAuctioneers,
+  countBidders,
+  countVintageExperts,
+  countRepairSpecialists,
+  countAllUsers,
 } = require("../application/userApplication.js");
-
+const { getAllData } = require("../application/revenueCalculate.js");
 /**************************************ADMIN USER ROUTES***************************************/
 // Route to create a new admin user and get a admin user
 adminRouter.route("/adminUser").get(getAllAdmins).post(createAdmin);
@@ -76,5 +82,18 @@ adminRouter
   .route("/users/repairSpecialist/:id")
   .patch(deactivateRepairSpecialist)
   .delete(deleteRepairSpecialist);
-
+//count Auctionners
+adminRouter.route("/users/auctioneerCount").get(countAuctioneers);
+//count Bidders
+adminRouter.route("/users/bidderCount").get(countBidders);
+//count Vintage Experts
+adminRouter.route("/users/vintageExpertCount").get(countVintageExperts);
+//count Repair Specialists
+adminRouter.route("/users/RepairSpecialistCount").get(countRepairSpecialists);
+//count all users
+adminRouter.route("/users/count").get(countAllUsers);
+//Revenue Data
+adminRouter.route("/revenue").get(getAllData);
+//AuctionData
+adminRouter.route("/countAuctions").get(countAllAuctions);
 module.exports = adminRouter;

@@ -45,7 +45,9 @@ const updateAdmin = async (req, res, next) => {
     if (!updatedAdmin) {
       return res.status(404).json({ message: "Admin not found" });
     }
-    res.status(200).json(updatedAdmin);
+    res
+      .status(200)
+      .json({ updateAdmin, token: generateToken(updatedAdmin._id) });
   } catch (error) {
     next(error);
   }

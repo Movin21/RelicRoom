@@ -10,6 +10,7 @@ import AdminLayout from "./pages/layouts/AdminLaytout.tsx";
 import AdminPortal from "./pages/AdminPortal/AdminPortal.tsx";
 import AdminPortalLogin from "./pages/AdminPortal/AdminPortalLogin.tsx";
 import AdminLoginLayout from "./pages/layouts/AdminLoginLayout.tsx";
+import AdminRegister from "./pages/AdminPortal/AdminRegister.tsx";
 const firebaseConfig = {};
 
 firebase.initializeApp(firebaseConfig);
@@ -24,7 +25,10 @@ const router = createBrowserRouter([
   },
   {
     element: <AdminLayout />,
-    children: [{ path: "/admin", element: <AdminPortal /> }],
+    children: [
+      { path: "/admin", element: <AdminPortal /> },
+      { path: "/adminRegister", element: <AdminRegister /> },
+    ],
   },
   {
     element: <AdminLoginLayout />,

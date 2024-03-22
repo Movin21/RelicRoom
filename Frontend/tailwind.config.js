@@ -12,11 +12,11 @@ module.exports = {
       },
     },
     extend: {
-     
       fontFamily: {
         akshar: ["Akshar", "sans-serif"],
         poppins: ["Poppins", "sans-serif"],
         amethysta: ["Amethysta", "sans-serif"],
+        nunitoSans: ["Nunito Sans", "sans-serif"],
       },
       colors: {
         brownDark: "#302300",

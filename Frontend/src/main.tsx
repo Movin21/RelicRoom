@@ -11,7 +11,18 @@ import AdminPortal from "./pages/AdminPortal/AdminPortal.tsx";
 import AdminPortalLogin from "./pages/AdminPortal/AdminPortalLogin.tsx";
 import AdminLoginLayout from "./pages/layouts/AdminLoginLayout.tsx";
 import AdminRegister from "./pages/AdminPortal/AdminRegister.tsx";
-const firebaseConfig = {};
+import { Provider } from "react-redux";
+import { store } from "./redux/store";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyA2zhpGMIkd9iN2SmlLkcVz1mlKRy23v60",
+  authDomain: "relicroom-632b8.firebaseapp.com",
+  projectId: "relicroom-632b8",
+  storageBucket: "relicroom-632b8.appspot.com",
+  messagingSenderId: "134645367706",
+  appId: "1:134645367706:web:05ce85a588a5f36c4af023",
+  measurementId: "G-00NWB1RQTG",
+};
 
 firebase.initializeApp(firebaseConfig);
 
@@ -38,6 +49,8 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <Provider store={store}>
+      <RouterProvider router={router} />
+    </Provider>
   </React.StrictMode>
 );

@@ -1,9 +1,15 @@
 const Admin = require("../../../models/admin");
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 // Create a new admin user
 const createAdmin = async (req, res, next) => {
   try {
-    const newAdmin = new Admin(req.body);
+    const { password, ...adminData } = req.body;
+    //password encryption
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const newAdmin = new Admin({ ...adminData, password: hashedPassword });
+    console.log(newAdmin);
     const savedAdmin = await newAdmin.save();
     res.status(201).json(savedAdmin);
   } catch (error) {
@@ -21,7 +27,7 @@ const getAllAdmins = async (req, res, next) => {
   }
 };
 
-// Get a single admin user by ID
+//find admin by Id
 const getAdmin = async (req, res, next) => {
   try {
     const admin = await Admin.findById(req.params.id);
@@ -29,6 +35,31 @@ const getAdmin = async (req, res, next) => {
       return res.status(404).json({ message: "Admin not found" });
     }
     res.status(200).json(admin);
+  } catch (error) {
+    next(error);
+  }
+};
+
+// Get a single admin user by username
+const LoginAdmin = async (req, res, next) => {
+  try {
+    const { username, password } = req.body;
+    const admin = await Admin.findOne({ username });
+
+    if (!admin) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Admin not found" });
+    }
+
+    const isPasswordMatch = await bcrypt.compare(password, admin.password);
+    if (!isPasswordMatch) {
+      return res
+        .status(401)
+        .json({ success: false, message: "Incorrect password" });
+    }
+
+    res.status(200).json({ success: true, message: "Login successful", admin });
   } catch (error) {
     next(error);
   }
@@ -72,4 +103,5 @@ module.exports = {
   getAdmin,
   updateAdmin,
   deleteAdmin,
+  LoginAdmin,
 };

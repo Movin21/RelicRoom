@@ -1,29 +1,48 @@
-import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { AlertCircle } from "lucide-react";
+import { useDispatch } from "react-redux";
+import { login } from "./slice/adminSlice";
+const schema = z.object({
+  username: z.string().min(1, "Username is required"),
+  password: z.string().min(1, "Password is required"),
+  rememberPassword: z.boolean(),
+});
 
 const AdminPortalLogin = () => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [rememberPassword, setRememberPassword] = useState(false);
+  const [loginError, setLoginError] = useState("");
+  const navigate = useNavigate();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: zodResolver(schema),
+  });
+  const dispatch = useDispatch();
 
-  const handleEmailChange = (e: any) => {
-    setUsername(e.target.value);
-  };
+  const onSubmit = async (data: any) => {
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/admin/adminUserLogin",
+        data
+      );
 
-  const handlePasswordChange = (e: any) => {
-    setPassword(e.target.value);
-  };
-
-  const handleRememberPasswordChange = (e: any) => {
-    setRememberPassword(e.target.checked);
-  };
-
-  const handleSubmit = (e: any) => {
-    e.preventDefault();
-    // Perform login logic here
-    console.log("Username:", username);
-    console.log("Password:", password);
-    console.log("Remember Password:", rememberPassword);
+      if (response.data.success) {
+        // Login successful
+        dispatch(login( response.data.admin ));
+        navigate("/admin");
+        console.log(response.data.admin);
+      }
+    } catch (error) {
+      setLoginError(" Invalid username or password");
+    }
   };
 
   return (
@@ -35,7 +54,8 @@ const AdminPortalLogin = () => {
         <p className="mb-4 font-poppins  text-center text-sm">
           Please enter your username and password to continue
         </p>
-        <form onSubmit={handleSubmit}>
+
+        <form onSubmit={handleSubmit(onSubmit)}>
           <div className="mb-4">
             <label
               htmlFor="username"
@@ -44,13 +64,19 @@ const AdminPortalLogin = () => {
               Username:
             </label>
             <input
-              type="username"
+              type="text"
               id="username"
-              value={username}
-              onChange={handleEmailChange}
-              className="w-full px-3 py-1.5 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              {...register("username")}
+              className={`w-full px-3 py-1.5 border ${
+                errors.username ? "border-red-500" : "border-gray-300"
+              } rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500`}
               placeholder="Movin_2001"
             />
+            {errors.username && (
+              <span className="text-red-500">
+                {String(errors.username.message)}
+              </span>
+            )}
           </div>
           <div className="mb-4">
             <label
@@ -62,12 +88,27 @@ const AdminPortalLogin = () => {
             <input
               type="password"
               id="password"
-              value={password}
-              onChange={handlePasswordChange}
-              className="w-full px-3 py-1.5 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              {...register("password")}
+              className={`w-full px-3 py-1.5 border ${
+                errors.password ? "border-red-500" : "border-gray-300"
+              } rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500`}
               placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;"
             />
+            {errors.password && (
+              <span className="text-red-500">
+                {String(errors.password.message)}
+              </span>
+            )}
           </div>
+          {loginError && (
+            <div className="bg-red-100 border border-red-400 text-red-700  rounded mb-4">
+              <Alert variant="destructive">
+                <AlertCircle className="h-5 w-5" />
+                <AlertTitle>Login Error</AlertTitle>
+                <AlertDescription>{loginError}</AlertDescription>
+              </Alert>
+            </div>
+          )}
           <div className="mb-6">
             <label
               htmlFor="rememberPassword"
@@ -76,8 +117,7 @@ const AdminPortalLogin = () => {
               <input
                 type="checkbox"
                 id="rememberPassword"
-                checked={rememberPassword}
-                onChange={handleRememberPasswordChange}
+                {...register("rememberPassword")}
                 className="mr-2"
               />
               Remember Password
@@ -93,7 +133,7 @@ const AdminPortalLogin = () => {
           </div>
         </form>
         <p className="font-poppins mt-4 text-sm">
-          Don't have an account?{" "}
+          Don't have an account?
           <Link
             to="#"
             className="font-poppins text-brownMedium hover:underline"

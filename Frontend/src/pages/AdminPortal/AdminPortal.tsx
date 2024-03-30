@@ -134,7 +134,7 @@ const AdminPortal = () => {
           </div>
           <div className="flex items-center">
             <div className="text-black  text-4xl font-bold ml-5 mt-2">
-              $ {revenue}
+              $ {revenue.toFixed(2)}
             </div>
           </div>
 

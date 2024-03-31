@@ -18,7 +18,6 @@ import AuctioneerRegister from "./pages/Auctioneer/AuctioneerRegister.tsx";
 import AuctioneerPortal from "./pages/Auctioneer/AuctioneerPortal.tsx";
 import AuctioneerProfile from "./pages/Auctioneer/AuctioneerProfile.tsx";
 import AuctionList from "./pages/Auction Listing/AuctionList.tsx";
-const firebaseConfig = {};
 import { Provider } from "react-redux";
 import { store, persistor } from "./redux/store.ts";
 import { PersistGate } from "redux-persist/integration/react";
@@ -32,22 +31,23 @@ const firebaseConfig = {
   appId: "1:134645367706:web:05ce85a588a5f36c4af023",
   measurementId: "G-00NWB1RQTG",
 };
-
-
+firebase.initializeApp(firebaseConfig);
 
 const router = createBrowserRouter([
-
-  { element: <RootLayout />, children: [{ path: "/", element: <Home /> },
-  {path: "/auctioneerLogin", element: <AuctioneerLogin />},
-  {path: "/auctioneerRegister", element: <AuctioneerRegister />},
-  {path: "/auctioneerPortal", element: <AuctioneerPortal />},
-  {path: "/auctioneerProfile", element: <AuctioneerProfile />}
-  {path: "/auction/postAuction", element: <PostAuction /> },
-  {path: "/auction/listedAuctions", element: <AuctionList /> },
-  {path: "/bidderLogin", element: <BidderLogin />},
-  {path: "bidderSignup", element: <BidderSignup/>}
-], 
-},
+  {
+    element: <RootLayout />,
+    children: [
+      { path: "/", element: <Home /> },
+      { path: "/auctioneerLogin", element: <AuctioneerLogin /> },
+      { path: "/auctioneerRegister", element: <AuctioneerRegister /> },
+      { path: "/auctioneerPortal", element: <AuctioneerPortal /> },
+      { path: "/auctioneerProfile", element: <AuctioneerProfile /> },
+      { path: "/auction/postAuction", element: <PostAuction /> },
+      { path: "/auction/listedAuctions", element: <AuctionList /> },
+      { path: "/bidderLogin", element: <BidderLogin /> },
+      { path: "bidderSignup", element: <BidderSignup /> },
+    ],
+  },
   {
     element: <AdminLayout />,
     children: [

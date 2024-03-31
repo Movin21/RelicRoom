@@ -1,14 +1,27 @@
-import React, { PureComponent } from "react";
+import { Divide } from "lucide-react";
+import { PureComponent } from "react";
 import { PieChart, Pie, Sector, ResponsiveContainer } from "recharts";
 
 const data = [
-  { name: "Auctioneer", value: 400 },
-  { name: "Bidder", value: 300 },
-  { name: "Vintage Expert", value: 300 },
-  { name: "Repair Specialist", value: 200 },
+  { name: "Group A", value: 400 },
+  { name: "Group B", value: 300 },
+  { name: "Group C", value: 300 },
+  { name: "Group D", value: 200 },
 ];
 
-const renderActiveShape = (props: any) => {
+const renderActiveShape = (props: {
+  cx: any;
+  cy: any;
+  midAngle: any;
+  innerRadius: any;
+  outerRadius: any;
+  startAngle: any;
+  endAngle: any;
+  fill: any;
+  payload: any;
+  percent: any;
+  value: any;
+}) => {
   const RADIAN = Math.PI / 180;
   const {
     cx,
@@ -67,7 +80,7 @@ const renderActiveShape = (props: any) => {
         y={ey}
         textAnchor={textAnchor}
         fill="#333"
-      >{` ${value} Users`}</text>
+      >{`PV ${value}`}</text>
       <text
         x={ex + (cos >= 0 ? 1 : -1) * 12}
         y={ey}
@@ -81,12 +94,12 @@ const renderActiveShape = (props: any) => {
   );
 };
 
-export default class UserPieChart extends PureComponent {
+export default class USerPieChart extends PureComponent {
   static demoUrl =
     "https://codesandbox.io/s/pie-chart-with-customized-active-shape-y93si";
 
   state = {
-    activeIndex: -1,
+    activeIndex: 0,
   };
 
   onPieEnter = (_: any, index: any) => {
@@ -97,20 +110,26 @@ export default class UserPieChart extends PureComponent {
 
   render() {
     return (
-      <PieChart width={400} height={400}>
-        <Pie
-          activeIndex={this.state.activeIndex}
-          activeShape={renderActiveShape}
-          data={data}
-          cx="53%"
-          cy="50%"
-          innerRadius={60}
-          outerRadius={80}
-          fill="#635A3F"
-          dataKey="value"
-          onMouseEnter={this.onPieEnter}
-        />
-      </PieChart>
+      <div className="bg-white rounded-lg shadow-md p-4 mt-3 w-1/2 ">
+        <div className="text-brownMedium text-2xl font-bold font-akshar">
+          User Density
+        </div>
+
+        <PieChart width={530} height={400}>
+          <Pie
+            activeIndex={this.state.activeIndex}
+            activeShape={renderActiveShape}
+            data={data}
+            cx="50%"
+            cy="50%"
+            innerRadius={90}
+            outerRadius={120}
+            fill="#302300"
+            dataKey="value"
+            onMouseEnter={this.onPieEnter}
+          />
+        </PieChart>
+      </div>
     );
   }
 }

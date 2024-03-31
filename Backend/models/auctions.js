@@ -43,6 +43,10 @@ const auctionSchema = new mongoose.Schema({
     type: Number,
     default: 0,
   },
+  createdAt: {
+    type: Date,
+    default: Date.now, // Set the default value to the current date and time
+  },
 });
 
 module.exports = mongoose.model("Auctions", auctionSchema);

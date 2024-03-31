@@ -11,12 +11,55 @@ import AdminPortal from "./pages/AdminPortal/AdminPortal.tsx";
 import AdminPortalLogin from "./pages/AdminPortal/AdminPortalLogin.tsx";
 import AdminLoginLayout from "./pages/layouts/AdminLoginLayout.tsx";
 import AdminRegister from "./pages/AdminPortal/AdminRegister.tsx";
-const firebaseConfig = {};
 
-firebase.initializeApp(firebaseConfig);
+
+
+import AuctioneerLogin from "./pages/Auctioneer/AuctioneerLogin.tsx";
+import AuctioneerRegister from "./pages/Auctioneer/AuctioneerRegister.tsx";
+import AuctioneerPortal from "./pages/Auctioneer/AuctioneerPortal.tsx";
+import AuctioneerProfile from "./pages/Auctioneer/AuctioneerProfile.tsx";
+
+
+import AuctionList from "./pages/Auction Listing/AuctionList.tsx";
+import { Provider } from "react-redux";
+import { store, persistor } from "./redux/store.ts";
+import { PersistGate } from "redux-persist/integration/react";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyA2zhpGMIkd9iN2SmlLkcVz1mlKRy23v60",
+  authDomain: "relicroom-632b8.firebaseapp.com",
+  projectId: "relicroom-632b8",
+  storageBucket: "relicroom-632b8.appspot.com",
+  messagingSenderId: "134645367706",
+  appId: "1:134645367706:web:05ce85a588a5f36c4af023",
+  measurementId: "G-00NWB1RQTG",
+};
+
+
+
+
 
 const router = createBrowserRouter([
-  { element: <RootLayout />, children: [{ path: "/", element: <Home /> }] },
+
+
+
+  { element: <RootLayout />, children: [{ path: "/", element: <Home /> },
+  {path: "/auctioneerLogin", element: <AuctioneerLogin />},
+  {path: "/auctioneerRegister", element: <AuctioneerRegister />},
+  {path: "/auctioneerPortal", element: <AuctioneerPortal />},
+  {path: "/auctioneerProfile", element: <AuctioneerProfile />}
+], 
+},
+
+  {
+    element: <RootLayout />,
+    children: [
+      { path: "/", element: <Home /> },
+      { path: "/auction/postAuction", element: <PostAuction /> },
+      { path: "/auction/listedAuctions", element: <AuctionList /> },
+    ],
+  },
+
   {
     element: <AdminLayout />,
     children: [

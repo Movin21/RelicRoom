@@ -55,7 +55,7 @@ const SideMenu = () => {
                   role="img"
                 >
                   <title>Auction</title>
-                  <desc>A solid styled icon from Orion Icon Library.</desc>
+
                   <path
                     data-name="layer1"
                     fill="#202020"

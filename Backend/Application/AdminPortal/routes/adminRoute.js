@@ -6,11 +6,13 @@ const {
   getAdmin,
   updateAdmin,
   deleteAdmin,
+  LoginAdmin,
 } = require("../application/adminApplication.js");
 const {
   getAllAuctions,
   markExpired,
   markFlagged,
+  countAllAuctions,
 } = require("../application/auctionReveiw.js");
 const {
   getAllUsers,
@@ -36,6 +38,7 @@ const { getAllData } = require("../application/revenueCalculate.js");
 /**************************************ADMIN USER ROUTES***************************************/
 // Route to create a new admin user and get a admin user
 adminRouter.route("/adminUser").get(getAllAdmins).post(createAdmin);
+adminRouter.route("/adminUserLogin").post(LoginAdmin);
 
 // Route to get, update, and delete an admin user by ID
 adminRouter
@@ -93,4 +96,6 @@ adminRouter.route("/users/RepairSpecialistCount").get(countRepairSpecialists);
 adminRouter.route("/users/count").get(countAllUsers);
 //Revenue Data
 adminRouter.route("/revenue").get(getAllData);
+//AuctionData
+adminRouter.route("/countAuctions").get(countAllAuctions);
 module.exports = adminRouter;

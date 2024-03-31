@@ -11,6 +11,8 @@ import AdminPortal from "./pages/AdminPortal/AdminPortal.tsx";
 import AdminPortalLogin from "./pages/AdminPortal/AdminPortalLogin.tsx";
 import AdminLoginLayout from "./pages/layouts/AdminLoginLayout.tsx";
 import AdminRegister from "./pages/AdminPortal/AdminRegister.tsx";
+import AuctionList from "./pages/Auction Listing/AuctionList.tsx";
+const firebaseConfig = {};
 import { Provider } from "react-redux";
 import { store, persistor } from "./redux/store.ts";
 import { PersistGate } from "redux-persist/integration/react";
@@ -33,6 +35,7 @@ const router = createBrowserRouter([
     children: [
       { path: "/", element: <Home /> },
       { path: "/auction/postAuction", element: <PostAuction /> },
+      { path: "/auction/listedAuctions", element: <AuctionList /> },
     ],
   },
   {

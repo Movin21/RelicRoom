@@ -1,5 +1,4 @@
 import React, { useCallback, useState } from "react";
-import { useDropzone } from "react-dropzone";
 
 function DropZone() {
   const [images, setImages] = useState<File[]>([]);
@@ -48,7 +47,7 @@ function DropZone() {
           Drag and drop your images here or click here to upload
         </label>
       </div>
-      <div className="flex flex-wrap gap-2">
+      <div className="flex flex-wrap gap-2 mt-2">
         {images.map((image, index) => (
           <div
             key={index}

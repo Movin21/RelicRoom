@@ -11,6 +11,13 @@ import AdminPortal from "./pages/AdminPortal/AdminPortal.tsx";
 import AdminPortalLogin from "./pages/AdminPortal/AdminPortalLogin.tsx";
 import AdminLoginLayout from "./pages/layouts/AdminLoginLayout.tsx";
 import AdminRegister from "./pages/AdminPortal/AdminRegister.tsx";
+
+import AuctioneerLogin from "./pages/Auctioneer/AuctioneerLogin.tsx";
+import AuctioneerRegister from "./pages/Auctioneer/AuctioneerRegister.tsx";
+import AuctioneerPortal from "./pages/Auctioneer/AuctioneerPortal.tsx";
+import AuctioneerProfile from "./pages/Auctioneer/AuctioneerProfile.tsx";
+const firebaseConfig = {};
+
 import AuctionList from "./pages/Auction Listing/AuctionList.tsx";
 import { Provider } from "react-redux";
 import { store, persistor } from "./redux/store.ts";
@@ -26,9 +33,19 @@ const firebaseConfig = {
   measurementId: "G-00NWB1RQTG",
 };
 
-firebase.initializeApp(firebaseConfig);
+
+
 
 const router = createBrowserRouter([
+
+  { element: <RootLayout />, children: [{ path: "/", element: <Home /> },
+  {path: "/auctioneerLogin", element: <AuctioneerLogin />},
+  {path: "/auctioneerRegister", element: <AuctioneerRegister />},
+  {path: "/auctioneerPortal", element: <AuctioneerPortal />},
+  {path: "/auctioneerProfile", element: <AuctioneerProfile />}
+], 
+},
+
   {
     element: <RootLayout />,
     children: [
@@ -37,6 +54,7 @@ const router = createBrowserRouter([
       { path: "/auction/listedAuctions", element: <AuctionList /> },
     ],
   },
+
   {
     element: <AdminLayout />,
     children: [

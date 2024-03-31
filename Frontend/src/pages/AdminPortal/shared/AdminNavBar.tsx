@@ -7,9 +7,11 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 import logo from "../../../assets/Logo/Logo.png";
-import { useState } from "react";
+
+import { useSelector } from "react-redux";
+
 const AdminPortal = () => {
-  const [userName, setUserName] = useState("Movin");
+  const admin = useSelector((state: any) => state.admin.admin);
 
   return (
     <>
@@ -43,11 +45,11 @@ const AdminPortal = () => {
         </div>
         <div className="flex items-center sm:ml-4">
           <Avatar>
-            <AvatarImage src="https://github.com/shadcn.png" />
+            <AvatarImage src={admin.profileImage} />
             <AvatarFallback>CN</AvatarFallback>
           </Avatar>
           <div className="ml-2 hidden sm:block">
-            <p className="text-sm font-medium">{userName}</p>
+            <p className="text-sm font-medium">{admin.username}</p>
             <p className="text-xs text-gray-500">Admin</p>
           </div>
           <div className="ml-4 sm:ml-2">

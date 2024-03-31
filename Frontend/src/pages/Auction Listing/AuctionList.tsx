@@ -1,15 +1,9 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./auction.css";
+import { formatDuration, intervalToDuration } from "date-fns"; // Importing date-fns functions for time calculation
 
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardFooter, CardTitle } from "@/components/ui/card";
 import { Link } from "react-router-dom";
 
 interface Auction {
@@ -95,6 +89,19 @@ const AuctionList: React.FC = () => {
     setSortOrder(e.target.value);
   };
 
+  const now = new Date();
+
+  const calculateTimeLeft = (endDate: Date) => {
+    const duration = intervalToDuration({
+      start: now,
+      end: endDate,
+    });
+    return formatDuration(duration, {
+      delimiter: ", ",
+      format: ["days", "hours", "minutes"],
+    });
+  };
+
   return (
     <div className="container mx-auto p-5">
       <h1 className="text-3xl font-bold mb-5">All Auctions</h1>
@@ -158,7 +165,7 @@ const AuctionList: React.FC = () => {
         </div>
         <div className="relative flex-1">
           <select
-            className="w-full border border-gray-300 p-2 rounded-md appearance-none"
+            className="w-full border border-gray-300 p-2 rounded-md appearance-none ml-3"
             value={sortOrder}
             onChange={handleSortOrderChange}
           >
@@ -206,12 +213,16 @@ const AuctionList: React.FC = () => {
                     Starting Price: ${auction.auctionStartingPrice}
                   </p>
                   <p className="mb-1">Category: {auction.auctionCategory}</p>
-                  <p className="mb-1">
-                    Created At:{" "}
-                    {new Date(auction.createdAt).toLocaleDateString()}
-                  </p>
                 </div>
               </CardContent>
+              <CardFooter className="p-3 flex justify-between items-center">
+                <p className="mb-1 text-red-500 font-bold font-poppins">
+                  Time Left: {calculateTimeLeft(auction.auctionDuration)}
+                </p>
+                <button className="text-white bg-primary hover:bg-secondary ease-in-out hover:text-white px-6 py-1 rounded-md">
+                  Bid
+                </button>
+              </CardFooter>
             </Card>
           ))
         )}

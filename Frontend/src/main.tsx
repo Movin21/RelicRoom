@@ -12,11 +12,13 @@ import AdminPortalLogin from "./pages/AdminPortal/AdminPortalLogin.tsx";
 import AdminLoginLayout from "./pages/layouts/AdminLoginLayout.tsx";
 import AdminRegister from "./pages/AdminPortal/AdminRegister.tsx";
 
+
+
 import AuctioneerLogin from "./pages/Auctioneer/AuctioneerLogin.tsx";
 import AuctioneerRegister from "./pages/Auctioneer/AuctioneerRegister.tsx";
 import AuctioneerPortal from "./pages/Auctioneer/AuctioneerPortal.tsx";
 import AuctioneerProfile from "./pages/Auctioneer/AuctioneerProfile.tsx";
-const firebaseConfig = {};
+
 
 import AuctionList from "./pages/Auction Listing/AuctionList.tsx";
 import { Provider } from "react-redux";
@@ -36,7 +38,10 @@ const firebaseConfig = {
 
 
 
+
 const router = createBrowserRouter([
+
+
 
   { element: <RootLayout />, children: [{ path: "/", element: <Home /> },
   {path: "/auctioneerLogin", element: <AuctioneerLogin />},

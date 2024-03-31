@@ -1,6 +1,4 @@
 const mongoose = require("mongoose");
-const { boolean } = require("zod");
-
 const bidderSchema = mongoose.Schema(
   {
     firstname: {
@@ -34,10 +32,10 @@ const bidderSchema = mongoose.Schema(
       type: Boolean,
       required: true,
     },
-    howtoknow: {
-      type: String,
-      required: false,
-    },
+    // howtoknow: {
+    //   type: String,
+    //   required: false,
+    // },
     interests: {
       type: Boolean,
       required: true,
@@ -54,10 +52,10 @@ const bidderSchema = mongoose.Schema(
       type: Boolean,
       default: true,
     },
-    type: {
-      type: String,
-      default: "Bidder",
-    },
+    // type: {
+    //   type: String,
+    //   default: "Bidder",
+    // },
     profileImage: {
       type: String,
       default: "",

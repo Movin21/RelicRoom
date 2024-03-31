@@ -107,6 +107,78 @@ const deleteRepairSpecialist = async (userId) => {
   return await repairSpecialist.findByIdAndDelete(userId);
 };
 
+const countAuctioneers = async (req, res) => {
+  try {
+    const count = await auctioneers.countDocuments();
+    res.status(200).json({ count });
+  } catch (error) {
+    next(error);
+  }
+};
+
+const countBidders = async (req, res) => {
+  try {
+    const count = await bidders.countDocuments();
+    res.status(200).json({ count });
+  } catch (error) {
+    next(error);
+  }
+};
+
+const countVintageExperts = async (req, res) => {
+  try {
+    const count = await vintageExpert.countDocuments();
+    res.status(200).json({ count });
+  } catch (error) {
+    next(error);
+  }
+};
+
+const countRepairSpecialists = async (req, res) => {
+  try {
+    const count = await repairSpecialist.countDocuments();
+    res.status(200).json({ count });
+  } catch (error) {
+    next(error);
+  }
+};
+const countAllUsers = async (req, res, next) => {
+  try {
+    const auctioneerCount = await auctioneers.countDocuments();
+    const bidderCount = await bidders.countDocuments();
+    const vintageExpertCount = await vintageExpert.countDocuments();
+    const repairSpecialistCount = await repairSpecialist.countDocuments();
+
+    const totalCount =
+      auctioneerCount +
+      bidderCount +
+      vintageExpertCount +
+      repairSpecialistCount;
+    res.status(200).json(totalCount);
+  } catch (error) {
+    next(error);
+  }
+};
+const userChart = async (req, res, next) => {
+  try {
+    const auctioneerCount = await auctioneers.countDocuments();
+    const bidderCount = await bidders.countDocuments();
+    const vintageExpertCount = await vintageExpert.countDocuments();
+    const repairSpecialistCount = await repairSpecialist.countDocuments();
+
+    const data = {
+      auctioneerCount,
+      bidderCount,
+      vintageExpertCount,
+      repairSpecialistCount,
+    };
+
+    res.json(data);
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   getAllUsers,
   getAllAuctioneers,
@@ -121,4 +193,9 @@ module.exports = {
   deleteBidder,
   deleteVintageExpert,
   deleteRepairSpecialist,
+  countAllUsers,
+  countAuctioneers,
+  countBidders,
+  countVintageExperts,
+  countRepairSpecialists,
 };

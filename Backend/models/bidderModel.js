@@ -30,10 +30,6 @@ const bidderSchema = mongoose.Schema(
       required: true,
       maxlength: 10,
     },
-    profilepic: {
-      type: String,
-      required: true,
-    },
     area: {
       type: Boolean,
       required: true,

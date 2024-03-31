@@ -118,7 +118,7 @@ function NavBar() {
           <NavigationMenuList>
             <NavigationMenuItem>
               <NavigationMenuLink
-                className={`font-akshar text-primary hover:text-secondary hover:bg-white ${navigationMenuTriggerStyle()}`}
+                className={`font-akshar text-medium text-primary  hover:text-secondary hover:bg-white ${navigationMenuTriggerStyle()}`}
               >
                 <Link to="#">Auctions</Link>
               </NavigationMenuLink>
@@ -132,7 +132,7 @@ function NavBar() {
             </NavigationMenuItem>
             <DropdownMenu>
               <DropdownMenuTrigger
-                className={`font-akshar text-primary hover:text-secondary hover:bg-white `}
+                className={`font-akshar  text-primary hover:text-secondary hover:bg-white `}
               >
                 <Link
                   className={`font-akshar text-primary hover:text-secondary hover:bg-white ${navigationMenuTriggerStyle()}`}

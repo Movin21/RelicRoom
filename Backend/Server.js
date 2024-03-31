@@ -29,8 +29,9 @@ setInterval(() => {
   const currentDay = currentDate.getDate();
   if (currentDay === 1) {
     updateMonthlyData();
+    console.log("Monthly Data Update Fetched !!");
   }
-}, 86400000); // Check every 24 hours
+}, 1000); // Check every 24 hours
 
 //Route Middleware
 app.use("/admin", adminRouter);

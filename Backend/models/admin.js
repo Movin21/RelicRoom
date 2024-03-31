@@ -13,7 +13,6 @@ const adminSchema = mongoose.Schema(
     username: {
       type: String,
       required: true,
-      unique: true,
     },
     password: {
       type: String,
@@ -21,7 +20,7 @@ const adminSchema = mongoose.Schema(
     },
     profileImage: {
       type: String,
-      default: "",
+      default: "https://github.com/shadcn.png",
     },
   },
   { timestamps: true }

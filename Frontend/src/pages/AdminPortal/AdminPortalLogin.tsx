@@ -36,7 +36,7 @@ const AdminPortalLogin = () => {
 
       if (response.data.success) {
         // Login successful
-        dispatch(login( response.data.admin ));
+        dispatch(login(response.data.admin));
         navigate("/admin");
         console.log(response.data.admin);
       }

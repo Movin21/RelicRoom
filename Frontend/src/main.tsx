@@ -11,15 +11,12 @@ import AdminPortal from "./pages/AdminPortal/AdminPortal.tsx";
 import AdminPortalLogin from "./pages/AdminPortal/AdminPortalLogin.tsx";
 import AdminLoginLayout from "./pages/layouts/AdminLoginLayout.tsx";
 import AdminRegister from "./pages/AdminPortal/AdminRegister.tsx";
-
-
-
+import BidderLogin from "./pages/Bidder/BidderLogin.tsx";
+import BidderSignup from "./pages/Bidder/BidderSignup.tsx";
 import AuctioneerLogin from "./pages/Auctioneer/AuctioneerLogin.tsx";
 import AuctioneerRegister from "./pages/Auctioneer/AuctioneerRegister.tsx";
 import AuctioneerPortal from "./pages/Auctioneer/AuctioneerPortal.tsx";
 import AuctioneerProfile from "./pages/Auctioneer/AuctioneerProfile.tsx";
-
-
 import AuctionList from "./pages/Auction Listing/AuctionList.tsx";
 import { Provider } from "react-redux";
 import { store, persistor } from "./redux/store.ts";
@@ -34,32 +31,23 @@ const firebaseConfig = {
   appId: "1:134645367706:web:05ce85a588a5f36c4af023",
   measurementId: "G-00NWB1RQTG",
 };
-
-
-
-
+firebase.initializeApp(firebaseConfig);
 
 const router = createBrowserRouter([
-
-
-
-  { element: <RootLayout />, children: [{ path: "/", element: <Home /> },
-  {path: "/auctioneerLogin", element: <AuctioneerLogin />},
-  {path: "/auctioneerRegister", element: <AuctioneerRegister />},
-  {path: "/auctioneerPortal", element: <AuctioneerPortal />},
-  {path: "/auctioneerProfile", element: <AuctioneerProfile />}
-], 
-},
-
   {
     element: <RootLayout />,
     children: [
       { path: "/", element: <Home /> },
+      { path: "/auctioneerLogin", element: <AuctioneerLogin /> },
+      { path: "/auctioneerRegister", element: <AuctioneerRegister /> },
+      { path: "/auctioneerPortal", element: <AuctioneerPortal /> },
+      { path: "/auctioneerProfile", element: <AuctioneerProfile /> },
       { path: "/auction/postAuction", element: <PostAuction /> },
       { path: "/auction/listedAuctions", element: <AuctionList /> },
+      { path: "/bidderLogin", element: <BidderLogin /> },
+      { path: "bidderSignup", element: <BidderSignup /> },
     ],
   },
-
   {
     element: <AdminLayout />,
     children: [

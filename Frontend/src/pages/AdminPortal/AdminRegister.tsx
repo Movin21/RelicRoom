@@ -82,7 +82,7 @@ const AdminRegister = () => {
   async function onSubmit(data: z.infer<typeof FormSchema>) {
     data.profilePicture = ImgUrl;
     try {
-      await axios.post("http://localhost:5000/admin/adminUser", data);
+      await axios.post("http://localhost:3000/admin/adminUser", data);
       console.log("Admin created successfully");
       form.control._reset();
       setImgUrl("https://github.com/shadcn.png");

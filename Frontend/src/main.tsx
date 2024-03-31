@@ -45,7 +45,7 @@ const router = createBrowserRouter([
       { path: "/auction/postAuction", element: <PostAuction /> },
       { path: "/auction/listedAuctions", element: <AuctionList /> },
       { path: "/bidderLogin", element: <BidderLogin /> },
-      { path: "bidderSignup", element: <BidderSignup /> },
+      { path: "/bidderSignup", element: <BidderSignup /> },
     ],
   },
   {

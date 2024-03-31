@@ -1,6 +1,7 @@
 import RevenueChart from "./Charts/RevenueCharts";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import USerPieChart from "./Charts/UserPieChart";
 
 const AdminPortal = () => {
   const [users, setUsers] = useState(0);
@@ -134,7 +135,7 @@ const AdminPortal = () => {
           </div>
           <div className="flex items-center">
             <div className="text-black  text-4xl font-bold ml-5 mt-2">
-              $ {revenue}
+              $ {revenue.toFixed(2)}
             </div>
           </div>
 
@@ -144,12 +145,13 @@ const AdminPortal = () => {
         </div>
       </div>
 
-      <div className="bg-white rounded-lg shadow-md p-4 md:p-8">
-        <div className="text-brownMedium text-1xl md:text-3xl font-bold mb-2 md:mb-4">
+      <div className="bg-white rounded-lg shadow-md p-4 ">
+        <div className="text-brownMedium text-2xl font-bold mb-2 md:mb-4 font-akshar">
           Revenue
         </div>
         <RevenueChart />
       </div>
+      <USerPieChart />
     </>
   );
 };

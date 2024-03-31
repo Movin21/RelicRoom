@@ -13,29 +13,24 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { toast } from "@/components/ui/use-toast";
-
 import { Label } from "@/components/ui/label";
+import { ChangeEvent, useRef, useState } from "react";
+import firebase from "firebase/compat/app";
+import "firebase/compat/storage";
+import axios from "axios";
+
 const FormSchema = z
   .object({
+    firstName: z.string().min(1, {
+      message: "First Name is required.",
+    }),
+    lastName: z.string().min(1, {
+      message: "Last Name is required.",
+    }),
     username: z.string().min(2, {
       message: "Username must be at least 2 characters.",
     }),
-    firstname: z.string().min(1, {
-      message: "First Name is required.",
-    }),
-    lastname: z.string().min(1, {
-      message: "Last Name is required.",
-    }),
-    picture: z
-      .instanceof(File)
-      .refine(
-        (file) => file && ["image/jpeg", "image/png"].includes(file.type),
-        {
-          message: "Please upload a valid image file (JPEG or PNG).",
-          path: ["picture"], // Specify the path for the error message
-        }
-      ),
+    profilePicture: z.string(),
     password: z
       .string()
       .min(6, { message: "Password must be at least 8 characters." })
@@ -58,20 +53,42 @@ const FormSchema = z
     message: "Passwords do not match.",
   });
 
-const UserForm = () => {
+const AdminRegister = () => {
+  const [ImgUrl, setImgUrl] = useState("https://github.com/shadcn.png");
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  function handleFileUpload(event: ChangeEvent<HTMLInputElement>) {
+    const selectedFile = event.target.files?.[0];
+    if (selectedFile) {
+      const storageRef = firebase.storage().ref("images");
+      const fileRef = storageRef.child(selectedFile.name);
+      fileRef.put(selectedFile).then((snapshot) => {
+        snapshot.ref.getDownloadURL().then((downloadURL) => {
+          setImgUrl(downloadURL);
+        });
+      });
+    }
+  }
   const form = useForm<z.infer<typeof FormSchema>>({
     defaultValues: {
+      firstName: "",
+      lastName: "",
       username: "",
-      firstname: "",
-      lastname: "",
       password: "",
-      confirmPassword: "",
-      picture: "https://github.com/shadcn.png",
+      profilePicture: "",
     },
   });
 
-  function onSubmit(data: z.infer<typeof FormSchema>) {
-    console.log("Hello", data);
+  async function onSubmit(data: z.infer<typeof FormSchema>) {
+    data.profilePicture = ImgUrl;
+    try {
+      await axios.post("http://localhost:5000/admin/adminUser", data);
+      console.log("Admin created successfully");
+      form.control._reset();
+      setImgUrl("https://github.com/shadcn.png");
+    } catch (error) {
+      console.error("Error creating admin:", error);
+    }
   }
 
   return (
@@ -87,29 +104,32 @@ const UserForm = () => {
             className="mx-auto space-y-6"
           >
             <div className="flex flex-col items-center justify-center mb-6">
-              <Avatar className="rounded-full w-20 h-20 object-cover">
-                <AvatarImage
-                  src="https://github.com/shadcn.png"
-                  alt="@shadcn"
-                />
+              <Avatar
+                className="rounded-full w-20 h-20 object-cover"
+                onClick={() => fileInputRef.current?.click()}
+              >
+                <AvatarImage src={ImgUrl} alt="@shadcn" />
                 <AvatarFallback>CN</AvatarFallback>
               </Avatar>
 
               <div className="text-sm text-blue-500 mt-2 flex flex-col items-center justify-center">
                 <Label htmlFor="picture" className="py-2">
-                  Edit Photo
+                  Profile Picture
                 </Label>
 
                 <FormField
                   control={form.control}
-                  name="picture"
-                  render={({ field }) => (
+                  name="profilePicture"
+                  render={() => (
                     <FormItem>
-                      <FormLabel htmlFor="picture">Edit Photo</FormLabel>
                       <FormControl>
-                        <Input type="" {...field} />
+                        <Input
+                          className="invisible m-0"
+                          type="file"
+                          onChange={handleFileUpload}
+                          ref={fileInputRef}
+                        />
                       </FormControl>
-                      <FormMessage className="text-red-500" />
                     </FormItem>
                   )}
                 />
@@ -121,7 +141,7 @@ const UserForm = () => {
                 <div>
                   <FormField
                     control={form.control}
-                    name="firstname"
+                    name="firstName"
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>First Name</FormLabel>
@@ -136,7 +156,7 @@ const UserForm = () => {
                 <div>
                   <FormField
                     control={form.control}
-                    name="lastname"
+                    name="lastName"
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>Last Name</FormLabel>
@@ -212,4 +232,4 @@ const UserForm = () => {
     </div>
   );
 };
-export default UserForm;
+export default AdminRegister;

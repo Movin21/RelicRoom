@@ -13,13 +13,13 @@ const AdminPortal = () => {
       try {
         // Example API endpoints, replace with your actual API endpoints
         const usersResponse = await axios.get(
-          "http://localhost:5000/admin/users/count"
+          "http://localhost:3000/admin/users/count"
         );
         const revenueResponse = await axios.get(
-          "http://localhost:5000/admin/revenue"
+          "http://localhost:3000/admin/revenue"
         );
         const auctionsResponse = await axios.get(
-          "http://localhost:5000/admin/countAuctions"
+          "http://localhost:3000/admin/countAuctions"
         );
 
         // Update state with fetched data

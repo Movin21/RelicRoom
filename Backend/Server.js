@@ -16,6 +16,7 @@ const customerCareRouter=require("./Application/Customer Care/routes/customerCar
 const bidderRoutes = require("./Application/Bidder/routes/bidderRoutes.js");
 
 
+
 const app = express();
 
 app.use(express.json());

@@ -45,23 +45,41 @@ const formSchema = z.object({
   }),
   category: z.enum(["art", "clothing", "furniture", "jewelry"]),
   startingPrice: z.coerce
-    .number()
-    .min(0.01, {
-      message: "Starting Price can't be empty",
+    .number({
+      required_error: "REQUIRED",
+      invalid_type_error: "Valid number required",
+    })
+    .nonnegative({
+      message: "Starting price cannot be a negative value",
     })
     .min(2, {
       message: "Starting Price should be at least $2",
     }),
   auctionDuration: z.object({
-    days: z.coerce.number().min(0, {
-      message: "Days cannot be a negative value",
-    }),
-    hours: z.coerce.number().min(0, {
-      message: "Hours cannot be a negative value",
-    }),
-    minutes: z.coerce.number().min(0, {
-      message: "Minutes cannot be a negative value",
-    }),
+    days: z.coerce
+      .number({
+        required_error: "REQUIRED",
+        invalid_type_error: "Valid number required",
+      })
+      .nonnegative({
+        message: "Days cannot be a negative value",
+      }),
+    hours: z.coerce
+      .number({
+        required_error: "REQUIRED",
+        invalid_type_error: "Valid number required",
+      })
+      .nonnegative({
+        message: "Hours cannot be a negative value",
+      }),
+    minutes: z.coerce
+      .number({
+        required_error: "REQUIRED",
+        invalid_type_error: "Valid number required",
+      })
+      .nonnegative({
+        message: "Minutes cannot be a negative value",
+      }),
   }),
   addImages: z.array(z.string().url()).max(4, {
     message: "Maximum of 4 images allowed",
@@ -97,7 +115,8 @@ export default function PostForm() {
         auctionCategory: values.category,
         auctionStartingPrice: values.startingPrice,
         auctionDuration: auctionEndDate,
-        auctionImages: values.addImages,
+        auctionImages:
+          "https://img.freepik.com/free-photo/arrangement-with-old-travel-items_23-2148666278.jpg?w=1060",
       });
       console.log(response);
       console.log("Response:", response.data); // Assuming backend responds with the saved data
@@ -107,6 +126,7 @@ export default function PostForm() {
       console.error("Error:", error);
     }
   };
+
   return (
     <div className="flex items-center justify-center   h-full ">
       <Card className=" md:w-180 p-6 mt-10 mb-10">
@@ -226,21 +246,31 @@ export default function PostForm() {
                   )}
                 />
               </div>
-              <FormLabel>Item Images</FormLabel>
+              <FormLabel>Add Images</FormLabel>
               <DropZone />
               <Button
+                disabled={form.formState.isSubmitting} // Disable the button while submitting
                 type="submit"
                 className="w-full text-white bg-primary hover:bg-secondary ease-in-out hover:text-white tw-50 mt-4"
                 variant="outline"
                 onClick={() => {
                   if (form.formState.isValid) {
-                    toast("Auction has been created successfully", {});
+                    toast("Auction has been created successfully", {
+                      description:
+                        "You can view your auction in the Auctions page",
+
+                      duration: 3000, // Set duration
+                      position: "bottom-right", // Set toast position
+                    });
                   }
                 }}
               >
-                Submit
+                Post Auction
               </Button>
-              <Toaster className="text-secondary bg-primary" />
+              <Toaster
+                className="text-secondary"
+                toastOptions={{ style: { backgroundColor: "#302300" } }}
+              />
             </form>
           </Form>
         </CardContent>

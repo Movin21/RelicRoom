@@ -10,12 +10,22 @@ import AdminPortal from "./pages/AdminPortal/AdminPortal.tsx";
 import AdminPortalLogin from "./pages/AdminPortal/AdminPortalLogin.tsx";
 import AdminLoginLayout from "./pages/layouts/AdminLoginLayout.tsx";
 import AdminRegister from "./pages/AdminPortal/AdminRegister.tsx";
+import AuctioneerLogin from "./pages/Auctioneer/AuctioneerLogin.tsx";
+import AuctioneerRegister from "./pages/Auctioneer/AuctioneerRegister.tsx";
+import AuctioneerPortal from "./pages/Auctioneer/AuctioneerPortal.tsx";
+import AuctioneerProfile from "./pages/Auctioneer/AuctioneerProfile.tsx";
 const firebaseConfig = {};
 
 firebase.initializeApp(firebaseConfig);
 
 const router = createBrowserRouter([
-  { element: <RootLayout />, children: [{ path: "/", element: <Home /> }] },
+  { element: <RootLayout />, children: [{ path: "/", element: <Home /> },
+  {path: "/auctioneerLogin", element: <AuctioneerLogin />},
+  {path: "/auctioneerRegister", element: <AuctioneerRegister />},
+  {path: "/auctioneerPortal", element: <AuctioneerPortal />},
+  {path: "/auctioneerProfile", element: <AuctioneerProfile />}
+], 
+},
   {
     element: <AdminLayout />,
     children: [

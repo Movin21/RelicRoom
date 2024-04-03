@@ -68,9 +68,9 @@ router.delete('/delete/:id', async (req, res) => {
     }
 });
 
-//auctions placed(search and filter)
 
-// Get all auctions 
+//auctions placed(search and filter)
+ // Get all auctions by ID
 router.get('/getAllAuctions/:id', async (req, res) => {
     try {
         const allAuctions = await auction.find({ auctioneerId: req.params.id });
@@ -82,7 +82,7 @@ router.get('/getAllAuctions/:id', async (req, res) => {
     }
 });
 
-// Get ongoing auctions  //got output as []
+// Get ongoing auctions   
 router.get('/getOngoingAuctions/:id', async (req, res) => {
     try {
         const ongoingAuctions = await auction.find({
@@ -105,23 +105,9 @@ router.get('/getExpiredAuctions/:id', async (req, res) => {
     } catch (err) {
         return res.status(400).json({
             error: err.message
-        });
-    }
+        });
+    }
 });
 
-// Auctioneer login  //internal server error
-// router.post('/login', async (req, res) => {
-//     const { email, password } = req.body;
-//     try {
-//         const auctioneer = await auctioneer.findOne({ email: email, password: password });
-//         if (auctioneer) {
-//             return res.status(200).json(auctioneer);
-//         } else {
-//             return res.status(400).json({ message: "Login failed. Invalid email or password." });
-//         }
-//     } catch (err) {
-//         return res.status(500).json({ error: err.message });
-//     }
-// });
 
 module.exports = router;

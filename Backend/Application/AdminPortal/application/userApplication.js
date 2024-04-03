@@ -2,7 +2,7 @@ const auctioneers = require("../../../models/auctionnerModel");
 const bidders = require("../../../models/bidderModel");
 const vintageExpert = require("../../../models/vintageExpert");
 const repairSpecialist = require("../../../models/repairSpecialist");
-
+const express = require("express");
 const getAllUsers = async (req, res) => {
   try {
     const auctioneerUsers = await auctioneers.find();
@@ -60,51 +60,64 @@ const getAllRepairSpecialists = async (req, res) => {
 };
 
 const deactivateAuctioneer = async (userId) => {
-  return await auctioneers.findByIdAndUpdate(
-    userId,
-    { isActive: false },
-    { new: true }
-  );
+  return await auctioneers.findByIdAndUpdate(userId, { isActive: false });
 };
 
 const deactivateBidder = async (userId) => {
-  return await bidders.findByIdAndUpdate(
-    userId,
-    { isActive: false },
-    { new: true }
-  );
+  return await bidders.findByIdAndUpdate(userId, { isActive: false });
 };
 
 const deactivateVintageExpert = async (userId) => {
-  return await vintageExpert.findByIdAndUpdate(
-    userId,
-    { isActive: false },
-    { new: true }
-  );
+  return await vintageExpert.findByIdAndUpdate(userId, { isActive: false });
 };
 
 const deactivateRepairSpecialist = async (userId) => {
-  return await repairSpecialist.findByIdAndUpdate(
-    userId,
-    { isActive: false },
-    { new: true }
-  );
+  return await repairSpecialist.findByIdAndUpdate(userId, { isActive: false });
 };
 
-const deleteAuctioneer = async (userId) => {
-  return await auctioneers.findByIdAndDelete(userId);
+const deleteAuctioneer = async (req, res) => {
+  try {
+    const Auctioneer = await auctioneers.findByIdAndDelete(req.params.id);
+    return res.status(200).json({ msg: "Auctioneer Deleted" });
+  } catch (err) {
+    return res.status(400).json({
+      error: err.message,
+    });
+  }
 };
 
-const deleteBidder = async (userId) => {
-  return await bidders.findByIdAndDelete(userId);
+const deleteBidder = async (req, res) => {
+  try {
+    const Bidder = await bidders.findByIdAndDelete(req.params.id);
+    return res.status(200).json({ msg: "Bidder Deleted" });
+  } catch (err) {
+    return res.status(400).json({
+      error: err.message,
+    });
+  }
 };
 
-const deleteVintageExpert = async (userId) => {
-  return await vintageExpert.findByIdAndDelete(userId);
+const deleteVintageExpert = async (req, res) => {
+  try {
+    const VintageExpert = await vintageExpert.findByIdAndDelete(req.params.id);
+    return res.status(200).json({ msg: "Vintage Expert Deleted" });
+  } catch (err) {
+    return res.status(400).json({
+      error: err.message,
+    });
+  }
 };
-
-const deleteRepairSpecialist = async (userId) => {
-  return await repairSpecialist.findByIdAndDelete(userId);
+const deleteRepairSpecialist = async (req, res) => {
+  try {
+    const RepairSpecialist = await repairSpecialist.findByIdAndDelete(
+      req.params.id
+    );
+    return res.status(200).json({ msg: "Repair Specialist Deleted" });
+  } catch (err) {
+    return res.status(400).json({
+      error: err.message,
+    });
+  }
 };
 
 const countAuctioneers = async (req, res) => {
@@ -166,12 +179,13 @@ const userChart = async (req, res, next) => {
     const vintageExpertCount = await vintageExpert.countDocuments();
     const repairSpecialistCount = await repairSpecialist.countDocuments();
 
-    const data = {
-      auctioneerCount,
-      bidderCount,
-      vintageExpertCount,
-      repairSpecialistCount,
-    };
+    // Creating an array of objects with the desired structure
+    const data = [
+      { name: "Auctioneer", value: auctioneerCount },
+      { name: "Bidder", value: bidderCount },
+      { name: "Vintage Expert", value: vintageExpertCount },
+      { name: "Repair Specialist", value: repairSpecialistCount },
+    ];
 
     res.json(data);
   } catch (error) {
@@ -198,4 +212,5 @@ module.exports = {
   countBidders,
   countVintageExperts,
   countRepairSpecialists,
+  userChart,
 };

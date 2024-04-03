@@ -24,14 +24,18 @@ app.use(cors());
 connectDB();
 
 // Run updateMonthlyData function at the start of each month
-// setInterval(() => {
-//   const currentDate = new Date();
-//   const currentDay = currentDate.getDate();
-//   if (currentDay === 1) {
-//     updateMonthlyData();
-//     console.log("Monthly Data Update Fetched !!");
-//   }
-// }, 1000); // Check every 24 hours
+
+/*setInterval(() => {
+  const currentDate = new Date();
+  const currentDay = currentDate.getDate();
+  if (currentDay === 1) {
+    updateMonthlyData();
+    console.log("Monthly Data Update Fetched !!");
+  }
+}, 86400); // Check every 24 hours*/
+
+
+
 
 //Route Middleware
 app.use("/admin", adminRouter);
@@ -43,7 +47,6 @@ app.use("/bidder", bidderRoutes);
 app.use("/repairSpecialist", rsRouter);
 app.use("/vintageexpert", vintageexpertRouter);
 
-//errorHandler
 app.use(errorHandler);
 app.listen(process.env.PORT || 5000, () => {
   console.log(`Server running on Port ${process.env.PORT || 5000}`);

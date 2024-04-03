@@ -15,10 +15,23 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 import firebase from "firebase/compat/app";
 import "firebase/compat/storage";
 import axios from "axios";
+import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { login } from "./slice/adminSlice";
 
 const FormSchema = z
   .object({
@@ -63,18 +76,20 @@ const FormSchema = z
   });
 
 const AdminRegister = () => {
+  const admin = useSelector((state: any) => state.admin.admin);
+  const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
-  const [imgUrl, setImgUrl] = useState("https://github.com/shadcn.png");
+  const [ImgUrl, setImgUrl] = useState(admin.profilePicture);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      firstName: "",
-      lastName: "",
-      username: "",
+      firstName: admin.firstName,
+      lastName: admin.lastName,
+      username: admin.username,
       password: "",
-      profilePicture: "",
+      profilePicture: admin.profilePicture,
     },
   });
 
@@ -94,14 +109,29 @@ const AdminRegister = () => {
     }
   }
 
-  async function onSubmit(data: z.infer<typeof FormSchema>) {
-    data.profilePicture = imgUrl;
+  const onClickAvatar = () => {
+    fileInputRef.current?.click();
+  };
+
+  async function onDelete() {
     try {
-      await axios.post("http://localhost:5000/admin/adminUser", data);
-      console.log("Admin created successfully");
-      form.reset();
+      await axios.delete(`http://localhost:5000/admin/adminUser/${admin._id}`);
+      console.log("Admin deleted successfully");
       navigate("/adminLogin");
-      setImgUrl("https://github.com/shadcn.png");
+    } catch (error) {
+      console.error("Error deleting admin:", error);
+    }
+  }
+
+  async function onSubmit(data: z.infer<typeof FormSchema>) {
+    data.profilePicture = ImgUrl;
+    try {
+      await axios.patch(
+        `http://localhost:5000/admin/adminUser/${admin._id}`,
+        data
+      );
+      console.log("Admin created successfully", data);
+      dispatch(login(data));
     } catch (error) {
       console.error("Error creating admin:", error);
     }
@@ -109,9 +139,42 @@ const AdminRegister = () => {
 
   return (
     <div>
-      <div className="font-akshar text-2xl text-primary font-bold mb-6">
-        Add New Admin
+      <div className="flex justify-between items-center">
+        <div className="font-akshar text-2xl text-primary font-bold mb-6">
+          Profile Details
+        </div>
+        <div className="ml-auto">
+          <AlertDialog>
+            <AlertDialogTrigger asChild>
+              <Button className="font-nunitoSans bg-brownDark hover:bg-brownMedium text-white font-bold py-2 px-4 w-full rounded focus:outline-none focus:shadow-outline">
+                Delete Profile
+              </Button>
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle className="font-akshar text-2xl text-brownMedium">
+                  Are you absolutely sure?
+                </AlertDialogTitle>
+                <AlertDialogDescription className="font-nunitoSans">
+                  This action cannot be undone. This will permanently delete
+                  your account and remove your data from our servers.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel className="font-akshar">
+                  Cancel
+                </AlertDialogCancel>
+                <AlertDialogAction>
+                  <Button onClick={onDelete} className="font-akshar w-full">
+                    Delete Account Permanently
+                  </Button>
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
+        </div>
       </div>
+
       <div className="bg-white rounded-lg shadow-md p-4 md:p-8 font-nunitoSans w-8/10">
         <Form {...form}>
           <form
@@ -121,9 +184,9 @@ const AdminRegister = () => {
             <div className="flex flex-col items-center justify-center mb-6">
               <Avatar
                 className="rounded-full w-20 h-20 object-cover cursor-pointer"
-                onClick={() => fileInputRef.current?.click()}
+                onClick={onClickAvatar}
               >
-                <AvatarImage src={imgUrl} alt="@shadcn" />
+                <AvatarImage src={ImgUrl} alt="@shadcn" />
                 <AvatarFallback>CN</AvatarFallback>
               </Avatar>
 
@@ -199,9 +262,12 @@ const AdminRegister = () => {
                     name="password"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Password</FormLabel>
+                        <FormLabel>Reset Password</FormLabel>
                         <FormControl>
-                          <Input placeholder="admin_01" {...field} />
+                          <Input
+                            placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;"
+                            {...field}
+                          />
                         </FormControl>
                         <FormMessage className="text-red-500" />
                       </FormItem>
@@ -214,9 +280,12 @@ const AdminRegister = () => {
                     name="confirmPassword"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Confirm Password</FormLabel>
+                        <FormLabel>Conform Password</FormLabel>
                         <FormControl>
-                          <Input placeholder="admin_01" {...field} />
+                          <Input
+                            placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;"
+                            {...field}
+                          />
                         </FormControl>
                         <FormMessage className="text-red-500" />
                       </FormItem>
@@ -227,7 +296,7 @@ const AdminRegister = () => {
             </div>
             <div className="flex justify-center">
               {isLoading ? (
-                <Button className="font-nunitoSans bg-brownDark hover:bg-brownMedium text-white font-bold py-2 px-4 w-1/3 rounded focus:outline-none focus:shadow-outline">
+                <Button className="disabled mfont-nunitoSans bg-brownMedium text-white font-bold py-2 px-4 w-1/3 rounded ">
                   Loading...
                 </Button>
               ) : (
@@ -235,7 +304,7 @@ const AdminRegister = () => {
                   type="submit"
                   className="font-nunitoSans bg-brownDark hover:bg-brownMedium text-white font-bold py-2 px-4 w-1/3 rounded focus:outline-none focus:shadow-outline"
                 >
-                  Create Account
+                  Update Profile
                 </Button>
               )}
             </div>

@@ -1,15 +1,9 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./auction.css";
-
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { formatDuration, intervalToDuration } from "date-fns";
+import { Breadcrumb } from "antd";
+import { Card, CardContent, CardFooter, CardTitle } from "@/components/ui/card";
 import { Link } from "react-router-dom";
 
 interface Auction {
@@ -95,9 +89,32 @@ const AuctionList: React.FC = () => {
     setSortOrder(e.target.value);
   };
 
+  const now = new Date();
+
+  const calculateTimeLeft = (endDate: Date) => {
+    const duration = intervalToDuration({
+      start: now,
+      end: endDate,
+    });
+    return formatDuration(duration, {
+      delimiter: ", ",
+      format: ["days", "hours", "minutes"],
+    });
+  };
+
   return (
     <div className="container mx-auto p-5">
-      <h1 className="text-3xl font-bold mb-5">All Auctions</h1>
+      {/* Breadcrumb */}
+      <Breadcrumb className="mb-2">
+        <Breadcrumb.Item>
+          <Link to="/">Home</Link>
+        </Breadcrumb.Item>
+        <Breadcrumb.Item>Auctions</Breadcrumb.Item>
+      </Breadcrumb>
+      <h1 className="text-3xl font-bold mb-5 text-primary">All Auctions</h1>
+      <h1 className="text-medium font-bold mb-1 text-primary font-akshar">
+        FILTER BY
+      </h1>
       <div className="flex justify-between items-center mb-4">
         <div className="relative flex-1">
           <input
@@ -158,7 +175,7 @@ const AuctionList: React.FC = () => {
         </div>
         <div className="relative flex-1">
           <select
-            className="w-full border border-gray-300 p-2 rounded-md appearance-none"
+            className="w-full border border-gray-300 p-2 rounded-md appearance-none ml-3"
             value={sortOrder}
             onChange={handleSortOrderChange}
           >
@@ -183,36 +200,46 @@ const AuctionList: React.FC = () => {
           </div>
         </div>
       </div>
-      <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-8 mt-15">
+      <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-10 mt-8">
         {filteredAuctions.length === 0 ? (
           <p className="text-gray-700">No results found</p>
         ) : (
           filteredAuctions.map((auction) => (
-            <Card
-              key={auction._id}
-              className="mt-10 shadow-md transition-transform duration-300 transform hover:scale-105"
-            >
-              <div className="rounded-t-lg overflow-hidden">
-                <img
-                  src={auction.auctionImages[0]}
-                  alt={`Image for ${auction.auctionTitle}`}
-                  className="w-full h-60 object-cover"
-                />
-              </div>
-              <CardTitle className="mt-3 p-3">{auction.auctionTitle}</CardTitle>
-              <CardContent className="p-3">
-                <div>
-                  <p className="mb-1">
-                    Starting Price: ${auction.auctionStartingPrice}
-                  </p>
-                  <p className="mb-1">Category: {auction.auctionCategory}</p>
-                  <p className="mb-1">
-                    Created At:{" "}
-                    {new Date(auction.createdAt).toLocaleDateString()}
-                  </p>
+            <Link to={`/auction/${auction?._id}`} key={auction?._id}>
+              <Card
+                key={auction._id}
+                className="mt-0 shadow-md transition-transform duration-300 transform hover:scale-105"
+              >
+                <div className="rounded-t-lg overflow-hidden">
+                  <img
+                    src={auction.auctionImages[0]}
+                    alt={`Image for ${auction.auctionTitle}`}
+                    className="w-full h-56 object-cover"
+                  />
                 </div>
-              </CardContent>
-            </Card>
+                <CardTitle className=" p-2 font-amethysta text-xl">
+                  {auction.auctionTitle}
+                </CardTitle>
+                <CardContent className="p-2">
+                  <div>
+                    <p className=" font-poppins text-sm">
+                      Starting Price: ${auction.auctionStartingPrice}
+                    </p>
+                    <p className=" font-poppins text-sm">
+                      Category: {auction.auctionCategory}
+                    </p>
+                  </div>
+                </CardContent>
+                <CardFooter className="p-2 flex justify-between items-center">
+                  <p className="mb-1 text-red-500 font-bold font-poppins text-xs mr-8">
+                    {calculateTimeLeft(auction.auctionDuration)} Left
+                  </p>
+                  <button className="text-white bg-primary hover:bg-secondary ease-in-out hover:text-white px-6 py-1 rounded-md">
+                    Bid
+                  </button>
+                </CardFooter>
+              </Card>
+            </Link>
           ))
         )}
       </div>

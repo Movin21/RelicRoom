@@ -34,6 +34,7 @@ connectDB();
 }, 86400); // Check every 24 hours*/
 
 
+
 //Route Middleware
 app.use("/admin", adminRouter);
 app.use("/auctions", auctionRoutes);

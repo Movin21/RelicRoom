@@ -20,20 +20,21 @@ const getAllData = async (req, res) => {
     const totalStartingPrice =
       result.length > 0 ? result[0].totalStartingPrice : 0;
 
-    res.json((totalStartingPrice / 100) * 5);
+    res.json((totalStartingPrice / 100) * 5); // Sending response back
   } catch (error) {
     console.error("Error getting summation of auctionStartingPrice:", error);
     res
       .status(500)
-      .json({ error: "Error getting summation of auctionStartingPrice" });
+      .json({ error: "Error getting summation of auctionStartingPrice" }); // Handling errors
   }
 };
+
 // Update data monthly
 const updateMonthlyData = async () => {
   const currentDate = new Date();
   const currentMonth = currentDate.getMonth();
-  const revenue = getAllData;
-  const cost = getAllData - (getAllData / 100) * 2;
+  const revenue = await getAllData(); // Await the result of getAllData()
+  const cost = parseFloat(revenue) - (parseFloat(revenue) / 100) * 2; // Cast to number
 
   // Check if data for the current month exists
   const existingData = await Revenue.findOne({ name: currentMonth });

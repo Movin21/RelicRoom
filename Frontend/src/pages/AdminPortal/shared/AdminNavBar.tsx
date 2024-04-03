@@ -26,7 +26,7 @@ const AdminPortal = () => {
             <input
               type="text"
               placeholder="Search..."
-              className="px-3 py-2 rounded-xl bg-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 sm:w-64"
+              className="font-poppins px-3 py-2 rounded-xl bg-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 sm:w-64"
             />
             <svg
               width="15"
@@ -45,12 +45,12 @@ const AdminPortal = () => {
         </div>
         <div className="flex items-center sm:ml-4">
           <Avatar>
-            <AvatarImage src={admin.profileImage} />
+            <AvatarImage src={admin.profilePicture} />
             <AvatarFallback>CN</AvatarFallback>
           </Avatar>
           <div className="ml-2 hidden sm:block">
-            <p className="text-sm font-medium">{admin.username}</p>
-            <p className="text-xs text-gray-500">Admin</p>
+            <p className="text-sm font-medium font-akshar">{admin.username}</p>
+            <p className="text-xs text-gray-500 font-poppins">Admin</p>
           </div>
           <div className="ml-4 sm:ml-2">
             <DropdownMenu>

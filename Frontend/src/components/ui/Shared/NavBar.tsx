@@ -1,7 +1,5 @@
 import { Link } from "react-router-dom"; // Import Link from React Router
-
 import Logo from "../../../assets/Logo/Logo.png";
-
 import {
   Menubar,
   MenubarContent,
@@ -114,28 +112,28 @@ function NavBar() {
       {/* Second Navbar  */}
       <div className="flex justify-between items-center px-4 py-2">
         {/* Navigation bar */}
-        <NavigationMenu className="border-none text-lg cborder-none">
+        <NavigationMenu className="border-none  cborder-none">
           <NavigationMenuList>
             <NavigationMenuItem>
               <NavigationMenuLink
-                className={`font-akshar text-medium text-primary  hover:text-secondary hover:bg-white ${navigationMenuTriggerStyle()}`}
+                className={`font-akshar text-lg md:text-xl lg:stext-lg text-primary  hover:text-secondary hover:bg-white ${navigationMenuTriggerStyle()}`}
               >
                 <Link to="#">Auctions</Link>
               </NavigationMenuLink>
             </NavigationMenuItem>
             <NavigationMenuItem>
               <NavigationMenuLink
-                className={`font-akshar text-primary hover:text-secondary hover:bg-white ${navigationMenuTriggerStyle()}`}
+                className={`font-akshar text-lg md:text-xl lg:text-lg text-primary hover:text-secondary hover:bg-white ${navigationMenuTriggerStyle()}`}
               >
                 <Link to="#">Customer Care</Link>
               </NavigationMenuLink>
             </NavigationMenuItem>
             <DropdownMenu>
               <DropdownMenuTrigger
-                className={`font-akshar  text-primary hover:text-secondary hover:bg-white `}
+                className={`font-akshar  text-lg md:text-lg lg:text-lg text-primary hover:text-secondary hover:bg-white `}
               >
                 <Link
-                  className={`font-akshar text-primary hover:text-secondary hover:bg-white ${navigationMenuTriggerStyle()}`}
+                  className={`font-akshar text-lg md:text-xl lg:text-lg text-primary hover:text-secondary hover:bg-white ${navigationMenuTriggerStyle()}`}
                   to=""
                 >
                   Services
@@ -162,21 +160,21 @@ function NavBar() {
                 </Link>
               </DropdownMenuTrigger>
               <DropdownMenuContent
-                className={`font-akshar text-primary hover:text-secondary `}
+                className={`font-akshar text-lg md:text-lg lg:text-lg text-primary hover:text-secondary `}
               >
                 <DropdownMenuSeparator />
                 <DropdownMenuItem
-                  className={`font-akshar text-primary hover:text-secondary `}
+                  className={`font-akshar text-lg md:text-xl lg:text-lg text-primary hover:text-secondary `}
                 >
                   Service 1
                 </DropdownMenuItem>
                 <DropdownMenuItem
-                  className={`font-akshar text-primary hover:text-secondary `}
+                  className={`font-akshar text-lg md:text-xl lg:text-lg text-primary hover:text-secondary `}
                 >
                   Service 2
                 </DropdownMenuItem>
                 <DropdownMenuItem
-                  className={`font-akshar text-primary hover:text-secondary `}
+                  className={`font-akshar text-lg md:text-xl lg:text-lg text-primary hover:text-secondary `}
                 >
                   Service 3
                 </DropdownMenuItem>
@@ -184,7 +182,7 @@ function NavBar() {
             </DropdownMenu>
             <NavigationMenuItem>
               <NavigationMenuLink
-                className={`font-akshar text-primary hover:text-secondary hover:bg-white ${navigationMenuTriggerStyle()}`}
+                className={`font-akshar text-lg md:text-xl lg:text-lg text-primary hover:text-secondary hover:bg-white ${navigationMenuTriggerStyle()}`}
               >
                 <Link to="#">About Us</Link>
               </NavigationMenuLink>
@@ -196,13 +194,13 @@ function NavBar() {
           <input
             type="text"
             placeholder="Search here.."
-            className="flex-1 w-50 sm:w-60 transition-all duration-300 border border-gray-300 px-4 py-1 focus:outline-none focus:border-1 focus:border-primary hover:w-48 sm:hover:w-80"
+            className="flex-1 w-50 sm:w-60 transition-all duration-300 border border-gray-300 px-4 py-1 focus:outline-none focus:border-1 focus:border-primary hover:w-48 sm:hover:w-80 text-lg md:text-xl lg:text-lg"
           />
           <div className="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-500 group-hover:text-primary">
             <Link to="">
               <svg
-                width="15"
-                height="15"
+                width="20"
+                height="20"
                 viewBox="0 0 15 15"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"

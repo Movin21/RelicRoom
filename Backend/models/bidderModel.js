@@ -1,6 +1,4 @@
 const mongoose = require("mongoose");
-const { boolean } = require("zod");
-
 const bidderSchema = mongoose.Schema(
   {
     firstname: {

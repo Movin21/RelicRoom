@@ -33,6 +33,7 @@ const {
   countVintageExperts,
   countRepairSpecialists,
   countAllUsers,
+  userChart,
 } = require("../application/userApplication.js");
 const { getAllData } = require("../application/revenueCalculate.js");
 /**************************************ADMIN USER ROUTES***************************************/
@@ -61,29 +62,33 @@ adminRouter.route("/users/auctioneers").get(getAllAuctioneers);
 //get the all Bidders
 adminRouter.route("/users/bidders").get(getAllBidders);
 //get the all Vintage Experts
-adminRouter.route("/users/vintageExpert").get(getAllVintageExperts);
+adminRouter.route("/users/vintageExperts").get(getAllVintageExperts);
 //get the all Repair Specialists
-adminRouter.route("/users/RepairSpecialist").get(getAllRepairSpecialists);
-//deactivate a Auctioneer
+adminRouter.route("/users/RepairSpecialists").get(getAllRepairSpecialists);
+// deactivate an Auctioneer
 adminRouter
   .route("/users/auctioneers/:id")
   .patch(deactivateAuctioneer)
   .delete(deleteAuctioneer);
-//deactivate a Biddeer
+
+// deactivate a Bidder
 adminRouter
   .route("/users/bidders/:id")
   .patch(deactivateBidder)
   .delete(deleteBidder);
-//deactivate a auctioneer
+
+// deactivate a Vintage Expert
 adminRouter
-  .route("/users/vintageExpert/:id")
+  .route("/users/vintageExperts/:id")
   .patch(deactivateVintageExpert)
   .delete(deleteVintageExpert);
-//deactivate a auctioneer
+
+// deactivate a Repair Specialist
 adminRouter
-  .route("/users/repairSpecialist/:id")
+  .route("/users/repairSpecialists/:id")
   .patch(deactivateRepairSpecialist)
   .delete(deleteRepairSpecialist);
+
 //count Auctionners
 adminRouter.route("/users/auctioneerCount").get(countAuctioneers);
 //count Bidders
@@ -94,6 +99,8 @@ adminRouter.route("/users/vintageExpertCount").get(countVintageExperts);
 adminRouter.route("/users/RepairSpecialistCount").get(countRepairSpecialists);
 //count all users
 adminRouter.route("/users/count").get(countAllUsers);
+//user Chart
+adminRouter.route("/users/chart").get(userChart);
 //Revenue Data
 adminRouter.route("/revenue").get(getAllData);
 //AuctionData

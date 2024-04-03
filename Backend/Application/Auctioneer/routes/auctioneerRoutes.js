@@ -115,19 +115,32 @@ router.get("/getExpiredAuctions/:id", async (req, res) => {
   }
 });
 
-// Auctioneer login  //internal server error
-// router.post('/login', async (req, res) => {
-//     const { email, password } = req.body;
-//     try {
-//         const auctioneer = await auctioneer.findOne({ email: email, password: password });
-//         if (auctioneer) {
-//             return res.status(200).json(auctioneer);
-//         } else {
-//             return res.status(400).json({ message: "Login failed. Invalid email or password." });
-//         }
-//     } catch (err) {
-//         return res.status(500).json({ error: err.message });
-//     }
-// });
+router.post("/login", async (req, res) => {
+  const { email, password } = req.body;
+
+  try {
+    // Check if user exists
+    const Auctioneer = await auctioneer.findOne({ email });
+    if (!Auctioneer) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // Check if user is active
+    if (!Auctioneer.isActive) {
+      return res.status(403).json({ message: "User is not active" });
+    }
+
+    // Compare passwords (not recommended for production)
+    if (password !== Auctioneer.password) {
+      return res.status(401).json({ message: "Invalid credentials" });
+    }
+
+    // If login is successful, send the user data to the frontend
+    res.status(200).json(Auctioneer);
+  } catch (error) {
+    console.error("Login error:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
 
 module.exports = router;

@@ -13,6 +13,7 @@ import AdminLoginLayout from "./pages/layouts/AdminLoginLayout.tsx";
 import AdminRegister from "./pages/AdminPortal/AdminRegister.tsx";
 import BidderLogin from "./pages/Bidder/BidderLogin.tsx";
 import BidderSignup from "./pages/Bidder/BidderSignup.tsx";
+import BidderProfile from "./pages/Bidder/BidderProfile.tsx";
 import AuctioneerLogin from "./pages/Auctioneer/AuctioneerLogin.tsx";
 import AuctioneerRegister from "./pages/Auctioneer/AuctioneerRegister.tsx";
 import AuctioneerPortal from "./pages/Auctioneer/AuctioneerPortal.tsx";
@@ -39,6 +40,7 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 
 const router = createBrowserRouter([
+
   {
     element: <RootLayout />,
     children: [
@@ -50,10 +52,12 @@ const router = createBrowserRouter([
       { path: "/auction/postAuction", element: <PostAuction /> },
       { path: "/auction/listedAuctions", element: <AuctionList /> },
       { path: "/auction/:id", element: <SingleAuction /> },
-      { path: "/bidderLogin", element: <BidderLogin /> },
-      { path: "/bidderSignup", element: <BidderSignup /> },
+      { path: "/bidderLogin", element: <BidderLogin />},
+      { path: "/bidderSignup", element: <BidderSignup/>},
+      { path: "/bidderProfile", element: <BidderProfile/>}
     ],
   },
+
   {
     element: <AdminLayout />,
     children: [

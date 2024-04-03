@@ -21,9 +21,11 @@ import AuctionList from "./pages/Auction Listing/AuctionList.tsx";
 import { Provider } from "react-redux";
 import { store, persistor } from "./redux/store.ts";
 import { PersistGate } from "redux-persist/integration/react";
+import SingleAuction from "./pages/Auction Listing/SingleAuction.tsx";
 import { AdminAuctions } from "./pages/AdminPortal/AdminAuctions.tsx";
 import AdminProfile from "./pages/AdminPortal/AdminProfile.tsx";
 import { AdminUsers } from "./pages/AdminPortal/AdminUsers.tsx";
+
 
 const firebaseConfig = {
   apiKey: "AIzaSyA2zhpGMIkd9iN2SmlLkcVz1mlKRy23v60",
@@ -47,6 +49,7 @@ const router = createBrowserRouter([
       { path: "/auctioneerProfile", element: <AuctioneerProfile /> },
       { path: "/auction/postAuction", element: <PostAuction /> },
       { path: "/auction/listedAuctions", element: <AuctionList /> },
+      { path: "/auction/:id", element: <SingleAuction /> },
       { path: "/bidderLogin", element: <BidderLogin /> },
       { path: "/bidderSignup", element: <BidderSignup /> },
     ],

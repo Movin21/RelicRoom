@@ -31,7 +31,8 @@ connectDB();
     updateMonthlyData();
     console.log("Monthly Data Update Fetched !!");
   }
-}, 1000); // Check every 24 hours*/
+}, 86400); // Check every 24 hours*/
+
 
 //Route Middleware
 app.use("/admin", adminRouter);
@@ -45,5 +46,5 @@ app.use("/vintageexpert", vintageexpertRouter);
 
 app.use(errorHandler);
 app.listen(process.env.PORT || 5000, () => {
-  console.log(`Server running on Port ${process.env.PORT || 5001}`);
+  console.log(`Server running on Port ${process.env.PORT || 5000}`);
 });

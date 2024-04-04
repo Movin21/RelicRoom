@@ -32,7 +32,7 @@ connectDB();
     updateMonthlyData();
     console.log("Monthly Data Update Fetched !!");
   }
-}, 86400); // Check every 24 hours*/
+}, 1000); // Check every 24 hours*/
 
 
 

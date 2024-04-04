@@ -22,10 +22,15 @@ import AuctionList from "./pages/Auction Listing/AuctionList.tsx";
 import { Provider } from "react-redux";
 import { store, persistor } from "./redux/store.ts";
 import { PersistGate } from "redux-persist/integration/react";
+import Feedback from "./pages/Customer Care/Feedback.tsx";
+import Suggestions from "./pages/Customer Care/Suggestions.tsx";
+import Complaints from "./pages/Customer Care/Complaints.tsx";
+import FAQ from "./pages/Customer Care/FAQ.tsx";
 import SingleAuction from "./pages/Auction Listing/SingleAuction.tsx";
 import { AdminAuctions } from "./pages/AdminPortal/AdminAuctions.tsx";
 import AdminProfile from "./pages/AdminPortal/AdminProfile.tsx";
 import { AdminUsers } from "./pages/AdminPortal/AdminUsers.tsx";
+
 
 
 const firebaseConfig = {
@@ -51,10 +56,17 @@ const router = createBrowserRouter([
       { path: "/auctioneerProfile", element: <AuctioneerProfile /> },
       { path: "/auction/postAuction", element: <PostAuction /> },
       { path: "/auction/listedAuctions", element: <AuctionList /> },
+      { path: "/bidderLogin", element: <BidderLogin /> },
+      { path: "/bidderSignup", element: <BidderSignup /> },
+      { path: "/feedback", element: <Feedback/>},
+      { path: "/suggestion", element: <Suggestions/>},
+      { path: "/complaint", element: <Complaints/>},
+      { path: "/faq", element: <FAQ/>},
       { path: "/auction/:id", element: <SingleAuction /> },
       { path: "/bidderLogin", element: <BidderLogin />},
       { path: "/bidderSignup", element: <BidderSignup/>},
       { path: "/bidderProfile", element: <BidderProfile/>}
+
     ],
   },
 

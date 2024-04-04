@@ -30,8 +30,8 @@ import SingleAuction from "./pages/Auction Listing/SingleAuction.tsx";
 import { AdminAuctions } from "./pages/AdminPortal/AdminAuctions.tsx";
 import AdminProfile from "./pages/AdminPortal/AdminProfile.tsx";
 import { AdminUsers } from "./pages/AdminPortal/AdminUsers.tsx";
-
-
+import CustomerCareLayout from "./pages/layouts/CustomerCareLayout.tsx";
+import CustomerCare from "./pages/Customer Care/CustomerCare.tsx";
 
 const firebaseConfig = {
   apiKey: "AIzaSyA2zhpGMIkd9iN2SmlLkcVz1mlKRy23v60",
@@ -45,7 +45,6 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 
 const router = createBrowserRouter([
-
   {
     element: <RootLayout />,
     children: [
@@ -58,15 +57,14 @@ const router = createBrowserRouter([
       { path: "/auction/listedAuctions", element: <AuctionList /> },
       { path: "/bidderLogin", element: <BidderLogin /> },
       { path: "/bidderSignup", element: <BidderSignup /> },
-      { path: "/feedback", element: <Feedback/>},
-      { path: "/suggestion", element: <Suggestions/>},
-      { path: "/complaint", element: <Complaints/>},
-      { path: "/faq", element: <FAQ/>},
+      { path: "/feedback", element: <Feedback /> },
+      { path: "/suggestion", element: <Suggestions /> },
+      { path: "/complaint", element: <Complaints /> },
+      { path: "/faq", element: <FAQ /> },
       { path: "/auction/:id", element: <SingleAuction /> },
-      { path: "/bidderLogin", element: <BidderLogin />},
-      { path: "/bidderSignup", element: <BidderSignup/>},
-      { path: "/bidderProfile", element: <BidderProfile/>}
-
+      { path: "/bidderLogin", element: <BidderLogin /> },
+      { path: "/bidderSignup", element: <BidderSignup /> },
+      { path: "/bidderProfile", element: <BidderProfile /> },
     ],
   },
 
@@ -83,6 +81,10 @@ const router = createBrowserRouter([
   {
     element: <AdminLoginLayout />,
     children: [{ path: "/adminLogin", element: <AdminPortalLogin /> }],
+  },
+  {
+    element: <CustomerCareLayout />,
+    children: [{ path: "/customerCare", element: <CustomerCare /> }],
   },
 ]);
 

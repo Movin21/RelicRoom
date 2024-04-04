@@ -198,11 +198,11 @@ const formSchema = z.object({
                                    </SelectTrigger>
                                  </FormControl>
                                  <SelectContent>
-                                     <SelectItem value="one">1</SelectItem>
-                                     <SelectItem value="two">2</SelectItem>   
-                                     <SelectItem value="three">3</SelectItem>  
-                                     <SelectItem value="four">4</SelectItem>  
-                                     <SelectItem value="five">5</SelectItem>   
+                                     <SelectItem value="1">1</SelectItem>
+                                     <SelectItem value="2">2</SelectItem>   
+                                     <SelectItem value="3">3</SelectItem>  
+                                     <SelectItem value="4">4</SelectItem>  
+                                     <SelectItem value="5">5</SelectItem>   
                                  </SelectContent>
                                  </Select>
                                  <FormMessage />

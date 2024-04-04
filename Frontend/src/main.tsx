@@ -21,6 +21,11 @@ import AuctionList from "./pages/Auction Listing/AuctionList.tsx";
 import { Provider } from "react-redux";
 import { store, persistor } from "./redux/store.ts";
 import { PersistGate } from "redux-persist/integration/react";
+import Feedback from "./pages/Customer Care/Feedback.tsx";
+import Suggestions from "./pages/Customer Care/Suggestions.tsx";
+import Complaints from "./pages/Customer Care/Complaints.tsx";
+import FAQ from "./pages/Customer Care/FAQ.tsx";
+
 
 const firebaseConfig = {
   apiKey: "AIzaSyA2zhpGMIkd9iN2SmlLkcVz1mlKRy23v60",
@@ -46,6 +51,11 @@ const router = createBrowserRouter([
       { path: "/auction/listedAuctions", element: <AuctionList /> },
       { path: "/bidderLogin", element: <BidderLogin /> },
       { path: "/bidderSignup", element: <BidderSignup /> },
+      { path: "/feedback", element: <Feedback/>},
+      { path: "/suggestion", element: <Suggestions/>},
+      { path: "/complaint", element: <Complaints/>},
+      { path: "/faq", element: <FAQ/>},
+      
     ],
   },
   {

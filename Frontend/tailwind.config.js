@@ -27,6 +27,8 @@ module.exports = {
         poppins: ["Poppins", "sans-serif"],
         amethysta: ["Amethysta", "sans-serif"],
         nunitoSans: ["Nunito Sans", "sans-serif"],
+        alatsi: ["Alatsi", "sans-serif"],
+        manrope: ["Manrope", "sans-serif"],
       },
       colors: {
         brownDark: "#302300",

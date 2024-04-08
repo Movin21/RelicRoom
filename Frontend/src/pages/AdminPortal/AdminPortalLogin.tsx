@@ -31,7 +31,7 @@ const AdminPortalLogin = () => {
   const onSubmit = async (data: any) => {
     try {
       const response = await axios.post(
-        "http://localhost:3000/admin/adminUserLogin",
+        "http://localhost:5000/admin/adminUserLogin",
         data
       );
 

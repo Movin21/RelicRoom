@@ -13,6 +13,7 @@ import AdminLoginLayout from "./pages/layouts/AdminLoginLayout.tsx";
 import AdminRegister from "./pages/AdminPortal/AdminRegister.tsx";
 import BidderLogin from "./pages/Bidder/BidderLogin.tsx";
 import BidderSignup from "./pages/Bidder/BidderSignup.tsx";
+import BidderProfile from "./pages/Bidder/BidderProfile.tsx";
 import AuctioneerLogin from "./pages/Auctioneer/AuctioneerLogin.tsx";
 import AuctioneerRegister from "./pages/Auctioneer/AuctioneerRegister.tsx";
 import AuctioneerPortal from "./pages/Auctioneer/AuctioneerPortal.tsx";
@@ -21,10 +22,16 @@ import AuctionList from "./pages/Auction Listing/AuctionList.tsx";
 import { Provider } from "react-redux";
 import { store, persistor } from "./redux/store.ts";
 import { PersistGate } from "redux-persist/integration/react";
+import Feedback from "./pages/Customer Care/Feedback.tsx";
+import Suggestions from "./pages/Customer Care/Suggestions.tsx";
+import Complaints from "./pages/Customer Care/Complaints.tsx";
+import FAQ from "./pages/Customer Care/FAQ.tsx";
 import SingleAuction from "./pages/Auction Listing/SingleAuction.tsx";
 import { AdminAuctions } from "./pages/AdminPortal/AdminAuctions.tsx";
 import AdminProfile from "./pages/AdminPortal/AdminProfile.tsx";
 import { AdminUsers } from "./pages/AdminPortal/AdminUsers.tsx";
+import CustomerCareLayout from "./pages/layouts/CustomerCareLayout.tsx";
+import CustomerCare from "./pages/Customer Care/CustomerCare.tsx";
 
 const firebaseConfig = {
   apiKey: "AIzaSyA2zhpGMIkd9iN2SmlLkcVz1mlKRy23v60",
@@ -48,11 +55,19 @@ const router = createBrowserRouter([
       { path: "/auctioneerProfile", element: <AuctioneerProfile /> },
       { path: "/auction/postAuction", element: <PostAuction /> },
       { path: "/auction/listedAuctions", element: <AuctionList /> },
+      { path: "/bidderLogin", element: <BidderLogin /> },
+      { path: "/bidderSignup", element: <BidderSignup /> },
+      { path: "/feedback", element: <Feedback /> },
+      { path: "/suggestion", element: <Suggestions /> },
+      { path: "/complaint", element: <Complaints /> },
+      { path: "/faq", element: <FAQ /> },
       { path: "/auction/:id", element: <SingleAuction /> },
       { path: "/bidderLogin", element: <BidderLogin /> },
       { path: "/bidderSignup", element: <BidderSignup /> },
+      { path: "/bidderProfile", element: <BidderProfile /> },
     ],
   },
+
   {
     element: <AdminLayout />,
     children: [
@@ -66,6 +81,10 @@ const router = createBrowserRouter([
   {
     element: <AdminLoginLayout />,
     children: [{ path: "/adminLogin", element: <AdminPortalLogin /> }],
+  },
+  {
+    element: <CustomerCareLayout />,
+    children: [{ path: "/customerCare", element: <CustomerCare /> }],
   },
 ]);
 

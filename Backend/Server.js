@@ -24,6 +24,7 @@ app.use(cors());
 connectDB();
 
 // Run updateMonthlyData function at the start of each month
+
 /*setInterval(() => {
   const currentDate = new Date();
   const currentDay = currentDate.getDate();
@@ -31,7 +32,9 @@ connectDB();
     updateMonthlyData();
     console.log("Monthly Data Update Fetched !!");
   }
-}, 86400); // Check every 24 hours*/
+}, 1000); // Check every 24 hours*/
+
+
 
 //Route Middleware
 app.use("/admin", adminRouter);

@@ -109,7 +109,7 @@ const USerPieChart = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:5000/admin/users/chart"
+          "http://localhost:3000/admin/users/chart"
         );
         // Check if the response data is an array
         if (Array.isArray(response.data)) {
@@ -133,7 +133,7 @@ const USerPieChart = () => {
   };
 
   return (
-    <div>
+    <ResponsiveContainer width="100%" height="100%">
       <Card className="w-[480px] h-[400px] bg-white rounded-lg shadow-md mt-3">
         <CardHeader>
           <CardTitle>
@@ -143,7 +143,7 @@ const USerPieChart = () => {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <PieChart width={460} height={500}>
+          <PieChart width={500} height={500}>
             <Pie
               activeIndex={activeIndex}
               activeShape={renderActiveShape}
@@ -159,7 +159,7 @@ const USerPieChart = () => {
           </PieChart>
         </CardContent>
       </Card>
-    </div>
+    </ResponsiveContainer>
   );
 };
 

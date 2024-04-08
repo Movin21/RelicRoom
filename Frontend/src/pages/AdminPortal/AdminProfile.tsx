@@ -115,7 +115,7 @@ const AdminRegister = () => {
 
   async function onDelete() {
     try {
-      await axios.delete(`http://localhost:5000/admin/adminUser/${admin._id}`);
+      await axios.delete(`http://localhost:3000/admin/adminUser/${admin._id}`);
       console.log("Admin deleted successfully");
       navigate("/adminLogin");
     } catch (error) {
@@ -127,7 +127,7 @@ const AdminRegister = () => {
     data.profilePicture = ImgUrl;
     try {
       await axios.patch(
-        `http://localhost:5000/admin/adminUser/${admin._id}`,
+        `http://localhost:3000/admin/adminUser/${admin._id}`,
         data
       );
       console.log("Admin created successfully", data);

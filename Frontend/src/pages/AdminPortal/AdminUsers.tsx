@@ -91,7 +91,7 @@ export function AdminUsers() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/admin/users/auctioneers")
+      .get("http://localhost:3000/admin/users/auctioneers")
       .then((response) => {
         setAuctioneers(response.data);
       })
@@ -100,7 +100,7 @@ export function AdminUsers() {
       });
 
     axios
-      .get("http://localhost:5000/admin/users/bidders")
+      .get("http://localhost:3000/admin/users/bidders")
       .then((response) => {
         setBidders(response.data);
       })
@@ -109,7 +109,7 @@ export function AdminUsers() {
       });
 
     axios
-      .get("http://localhost:5000/admin/users/vintageExperts")
+      .get("http://localhost:3000/admin/users/vintageExperts")
       .then((response) => {
         setVintageExperts(response.data);
       })
@@ -118,7 +118,7 @@ export function AdminUsers() {
       });
 
     axios
-      .get("http://localhost:5000/admin/users/repairSpecialists")
+      .get("http://localhost:3000/admin/users/repairSpecialists")
       .then((response) => {
         setRepairSpecialists(response.data);
       })
@@ -129,7 +129,7 @@ export function AdminUsers() {
 
   const deleteAuctioneerAccount = (auctioneerId: string) => {
     axios
-      .delete(`http://localhost:5000/admin/users/auctioneers/${auctioneerId}`)
+      .delete(`http://localhost:3000/admin/users/auctioneers/${auctioneerId}`)
       .then(() => {
         setAuctioneers((prevAuctioneers) =>
           prevAuctioneers.filter(
@@ -144,7 +144,7 @@ export function AdminUsers() {
 
   const deleteBidderAccount = (bidderId: string) => {
     axios
-      .delete(`http://localhost:5000/admin/users/bidders/${bidderId}`)
+      .delete(`http://localhost:3000/admin/users/bidders/${bidderId}`)
       .then(() => {
         setBidders((prevBidders) =>
           prevBidders.filter((bidder) => bidder._id !== bidderId)
@@ -157,7 +157,7 @@ export function AdminUsers() {
 
   const deleteVintageExpertAccount = (expertId: string) => {
     axios
-      .delete(`http://localhost:5000/admin/users/vintageExperts/${expertId}`)
+      .delete(`http://localhost:3000/admin/users/vintageExperts/${expertId}`)
       .then(() => {
         setVintageExperts((prevVintageExperts) =>
           prevVintageExperts.filter((expert) => expert._id !== expertId)
@@ -171,7 +171,7 @@ export function AdminUsers() {
   const deleteRepairSpecialistAccount = (specialistId: string) => {
     axios
       .delete(
-        `http://localhost:5000/admin/users/repairSpecialists/${specialistId}`
+        `http://localhost:3000/admin/users/repairSpecialists/${specialistId}`
       )
       .then(() => {
         setRepairSpecialists((prevRepairSpecialists) =>

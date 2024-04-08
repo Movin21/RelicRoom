@@ -10,11 +10,21 @@
     "preview": "vite preview"
   },
   "dependencies": {
+
     "@fortawesome/fontawesome-free": "^6.5.2",
     "@hookform/resolvers": "^3.3.4",
     "@iconify-icons/mdi": "^1.2.48",
     "@iconify/react": "^4.1.1",
     "@material-tailwind/react": "^2.1.9",
+
+    "@chakra-ui/react": "^2.8.2",
+    "@emotion/react": "^11.11.4",
+    "@emotion/styled": "^11.11.5",
+    "@hookform/resolvers": "^3.3.4",
+
+    "@radix-ui/react-accordion": "^1.1.2",
+
+
     "@radix-ui/react-alert-dialog": "^1.0.5",
     "@radix-ui/react-avatar": "^1.0.4",
     "@radix-ui/react-checkbox": "^1.0.4",
@@ -39,8 +49,13 @@
     "clsx": "^2.1.0",
     "cmdk": "^1.0.0",
     "date-fns": "^3.6.0",
+
     "draft-js": "^0.11.7",
-    "firebase": "^10.6.0",
+
+
+    "firebase": "^10.10.0",
+    "framer-motion": "^11.0.24",
+
     "localforage": "^1.10.0",
     "lucide-react": "^0.344.0",
     "match-sorter": "^6.3.4",
@@ -66,6 +81,7 @@
     "tailwind-merge": "^2.2.1",
     "tailwindcss-animate": "^1.0.7",
     "uuid": "^9.0.1",
+    "vaul": "^0.9.0",
     "zod": "^3.22.4"
   },
   "devDependencies": {

@@ -53,7 +53,7 @@ export function AdminAuctions() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/admin/auctions")
+      .get("http://localhost:3000/admin/auctions")
       .then((response) => {
         setAuctions(response.data);
         setActiveAuctions(

@@ -8,6 +8,7 @@ import { z } from "zod";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Checkbox } from "@/components/ui/checkbox"
 import axios from 'axios';
+import { Link } from "react-router-dom";
 
 const FormSchema = z.object({
   email: z.string().min(1,{
@@ -34,10 +35,7 @@ const FormSchema = z.object({
     }),
   country: z.string().min(1, {
       message: "Country is required.",
-    }),
-  profileimage: z.string().min(1, {
-      message: "Profile image is required.",
-    })  
+    }) 
 });
  
 const AuctioneerRegister = () => {
@@ -53,8 +51,8 @@ const AuctioneerRegister = () => {
       description: "",
       contactnumber: "",
       address: "",
-      country: "",
-      profileimage: ""
+      country: ""
+   
     },
   })
 
@@ -84,22 +82,25 @@ const AuctioneerRegister = () => {
   
 
   return  (
-     
-    <Form {...form}>
+  
+    <Form {...form} >
 
-    <div className=" ">
-      <Tabs defaultValue="auctioneerR" className="w-[400px]">
+    <div className="flex items-center justify-center">
+      <Tabs defaultValue="auctioneerR" className="flex items-center justify-center mt-2 h-full  ">
       <TabsList>
-      <TabsTrigger value="login">Login</TabsTrigger>
-      <TabsTrigger value="register">Register</TabsTrigger>
+      <TabsTrigger value="login">
+              <Link to="/auctioneerLogin">Login</Link> {/* Link to the login page */}
+            </TabsTrigger>
+            <TabsTrigger value="register">Register</TabsTrigger>
       </TabsList>
       </Tabs>
     </div>
  
-      <div className="text-center">Register as an Auctioneer</div>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="w-full">
+      <div className=" font-akshar text-secondary  text-center text-2xl mt-2 mb-2">Register as an Auctioneer</div>
 
-        <div className="space-y-2 items-center space-x-4 rounded-md border p-4">
+      <div className="flex justify-center">
+      <form onSubmit={form.handleSubmit(onSubmit)} >
+        <div className="space-y-2 items-center space-x-4 rounded-md border p-4 w-96 justify-center ml-6 ">
 
         <FormField
         control={form.control}
@@ -114,7 +115,7 @@ const AuctioneerRegister = () => {
             </FormItem>
         )}
       />
-                <FormField
+      <FormField
         control={form.control}
         name="industry"
         render={({ field }) => (
@@ -214,36 +215,25 @@ const AuctioneerRegister = () => {
           </FormItem>
         )}
       />
-        <FormField
-          control={form.control}
-          name="profileimage"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Profile Image</FormLabel>
-              <FormControl>
-                <Input placeholder="Enter your profileimage"{...field} />
-              </FormControl>
-              <FormMessage/>
-            </FormItem>
-        )}
-        />
-</div>  
-<div className="flex items-center space-x-2">
+ 
+</div> 
+ 
+<div className="flex items-center justify-center mb-2 mt-2">
       <Checkbox id="terms2" />
       <label
         htmlFor="terms2"
-        className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-      >
+        className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
         Accept terms and conditions
       </label>
     </div>
 
-         <div>
-         <Button className="w-full mt-6 mb-6" type="submit">Submit</Button>
-         </div>
-         
+         <div className="flex items-center justify-center mb-5">
+         <Button className="w-96 text-white bg-primary hover:bg-secondary ease-in-out hover:text-white tw-50 mt-4" type="submit">Submit</Button>
+         </div>    
       </form>
+      </div>
     </Form>
+     
   );
 };
 

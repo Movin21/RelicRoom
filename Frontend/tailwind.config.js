@@ -29,6 +29,7 @@ module.exports = {
         nunitoSans: ["Nunito Sans", "sans-serif"],
         alatsi: ["Alatsi", "sans-serif"],
         manrope: ["Manrope", "sans-serif"],
+        sangbleu: ["SangBleu-Sunrise", "sans-serif"],
       },
       colors: {
         brownDark: "#302300",

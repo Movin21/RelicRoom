@@ -32,7 +32,6 @@ import AdminProfile from "./pages/AdminPortal/AdminProfile.tsx";
 import { AdminUsers } from "./pages/AdminPortal/AdminUsers.tsx";
 import CustomerCareLayout from "./pages/layouts/CustomerCareLayout.tsx";
 import CustomerCare from "./pages/Customer Care/CustomerCare.tsx";
-
 const firebaseConfig = {
   apiKey: "AIzaSyA2zhpGMIkd9iN2SmlLkcVz1mlKRy23v60",
   authDomain: "relicroom-632b8.firebaseapp.com",

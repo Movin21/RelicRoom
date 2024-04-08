@@ -19,6 +19,14 @@
     font-family: "Nunito Sans";
     src: url("./assets/fonts/NunitoSans_7pt-Regular.ttf");
   }
+  @font-face {
+    font-family: "Alatsi";
+    src: url("./assets/fonts/Alatsi-Regular.ttf");
+  }
+  @font-face {
+    font-family: "Manrope";
+    src: url("./assets/fonts/Manrope-Regular.ttf");
+  }
 }
 
 @layer base {

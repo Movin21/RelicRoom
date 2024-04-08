@@ -26,7 +26,6 @@ import { AdminAuctions } from "./pages/AdminPortal/AdminAuctions.tsx";
 import AdminProfile from "./pages/AdminPortal/AdminProfile.tsx";
 import { AdminUsers } from "./pages/AdminPortal/AdminUsers.tsx";
 
-
 const firebaseConfig = {
   apiKey: "AIzaSyA2zhpGMIkd9iN2SmlLkcVz1mlKRy23v60",
   authDomain: "relicroom-632b8.firebaseapp.com",

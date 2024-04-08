@@ -118,7 +118,7 @@ function NavBar() {
               <NavigationMenuLink
                 className={`font-akshar text-lg md:text-xl lg:stext-lg text-primary  hover:text-secondary hover:bg-white ${navigationMenuTriggerStyle()}`}
               >
-                <Link to="#">Auctions</Link>
+                <Link to="auction/listedAuctions">Auctions</Link>
               </NavigationMenuLink>
             </NavigationMenuItem>
             <NavigationMenuItem>

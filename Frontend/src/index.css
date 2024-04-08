@@ -27,6 +27,10 @@
     font-family: "Manrope";
     src: url("./assets/fonts/Manrope-Regular.ttf");
   }
+  @font-face {
+    font-family: "SangBleu-Sunrise";
+    src: url("./assets/fonts/SangBleu-Sunrise.ttf");
+  }
 }
 
 @layer base {

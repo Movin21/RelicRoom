@@ -36,7 +36,6 @@ connectDB();
 
 
 
-
 //Route Middleware
 app.use("/admin", adminRouter);
 app.use("/auctions", auctionRoutes);

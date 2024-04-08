@@ -1,7 +1,32 @@
 const express = require("express");
 const Auctions = require("../../../models/auctions");
+const mongoose = require("mongoose");
+const cron = require("node-cron");
 
 const router = express.Router();
+
+// Function to update expired auctions
+async function updateExpiredAuctions() {
+  try {
+    const expiredAuctions = await Auctions.find({
+      auctionDuration: { $lte: new Date() },
+      isExpired: false,
+    });
+
+    for (const auction of expiredAuctions) {
+      auction.isExpired = true;
+      await auction.save();
+    }
+    console.log("Expired auctions updated successfully");
+  } catch (error) {
+    console.error("Error updating expired auctions:", error);
+  }
+}
+
+// Invoke the function to update expired auctions
+cron.schedule("* * * * *", () => {
+  updateExpiredAuctions();
+});
 
 // Save Auctions
 router.post("/save", async (req, res) => {
@@ -60,15 +85,46 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-// Update a Auction
-router.put("/update/:id", async (req, res) => {
+// Update the current bid of an auction
+router.put("/update/:id/", async (req, res) => {
   try {
-    await Auctions.findByIdAndUpdate(req.params.id, { $set: req.body });
+    const { id } = req.params;
+    const { newBid } = req.body;
+
+    if (!newBid || typeof newBid !== "number") {
+      return res.status(400).json({ error: "Invalid bid value" });
+    }
+
+    const auction = await Auctions.findByIdAndUpdate(
+      id,
+      { currentBid: newBid },
+      { new: true }
+    );
+
+    if (!auction) {
+      return res.status(404).json({ error: "Auction not found" });
+    }
+
+    return res.status(200).json({ success: "Updated successfully", auction });
+  } catch (err) {
+    return res.status(500).json({ error: err.message });
+  }
+});
+
+// Update view count of an auction
+router.put("/:id/views", async (req, res) => {
+  try {
+    const auction = await Auctions.findByIdAndUpdate(
+      req.params.id,
+      { $inc: { viewCount: 1 } },
+      { new: true }
+    );
     return res.status(200).json({
-      success: "Updated Successfully",
+      success: "View count updated successfully",
+      auction: auction,
     });
   } catch (err) {
-    return res.status(400).json({ error: err });
+    return res.status(400).json({ error: err.message });
   }
 });
 

@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import "./auction.css";
 import { formatDuration, intervalToDuration } from "date-fns";
 import { Breadcrumb } from "antd";
-import { Card, CardContent, CardFooter, CardTitle } from "@/components/ui/card";
 import { Link } from "react-router-dom";
+import { Card, CardContent, CardFooter, CardTitle } from "@/components/ui/card";
+import { Icon } from "@iconify/react";
+import visibilityIcon from "@iconify-icons/mdi/visibility";
 
 interface Auction {
   _id: string;
@@ -26,6 +27,9 @@ const AuctionList: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [sortOrder, setSortOrder] = useState("latest");
+  const [auctionStatus, setAuctionStatus] = useState<
+    "All" | "expired" | "ongoing"
+  >("ongoing");
 
   useEffect(() => {
     fetchAllAuctions();
@@ -43,7 +47,7 @@ const AuctionList: React.FC = () => {
 
   useEffect(() => {
     filterAuctions();
-  }, [searchQuery, selectedCategory, auctions, sortOrder]);
+  }, [searchQuery, selectedCategory, auctions, sortOrder, auctionStatus]);
 
   const filterAuctions = () => {
     let filtered: Auction[] = auctions.filter((auction) => {
@@ -57,6 +61,12 @@ const AuctionList: React.FC = () => {
         searchQuery.trim() !== "" &&
         !auction.auctionTitle.toLowerCase().includes(searchQuery.toLowerCase())
       ) {
+        return false;
+      }
+      if (auctionStatus === "expired" && !auction.isExpired) {
+        return false;
+      }
+      if (auctionStatus === "ongoing" && auction.isExpired) {
         return false;
       }
       return true;
@@ -89,9 +99,12 @@ const AuctionList: React.FC = () => {
     setSortOrder(e.target.value);
   };
 
-  const now = new Date();
+  const handleStatusChange = (status: "All" | "expired" | "ongoing") => {
+    setAuctionStatus(status);
+  };
 
   const calculateTimeLeft = (endDate: Date) => {
+    const now = new Date();
     const duration = intervalToDuration({
       start: now,
       end: endDate,
@@ -100,6 +113,14 @@ const AuctionList: React.FC = () => {
       delimiter: ", ",
       format: ["days", "hours", "minutes"],
     });
+  };
+
+  const updateViewCount = async (auctionId: string) => {
+    try {
+      await axios.put(`http://localhost:3000/auctions/${auctionId}/views`);
+    } catch (error) {
+      console.error("Error updating view count:", error);
+    }
   };
 
   return (
@@ -144,7 +165,7 @@ const AuctionList: React.FC = () => {
           </div>
         </div>
 
-        <div className="relative flex-1 ml-40 w-2">
+        <div className="relative flex-1 ml-20">
           <select
             className="w-full border border-gray-300 p-2 rounded-md appearance-none"
             value={selectedCategory}
@@ -173,14 +194,46 @@ const AuctionList: React.FC = () => {
             </svg>
           </div>
         </div>
-        <div className="relative flex-1">
+        <div className="relative flex-1 ml-4">
           <select
-            className="w-full border border-gray-300 p-2 rounded-md appearance-none ml-3"
+            className="w-full border border-gray-300 p-2 rounded-md appearance-none"
             value={sortOrder}
             onChange={handleSortOrderChange}
           >
             <option value="latest">Latest</option>
             <option value="oldest">Oldest</option>
+          </select>
+          <div className="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-500 pointer-events-none">
+            <svg
+              className="h-4 w-4"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M19 9l-7 7-7-7"
+              />
+            </svg>
+          </div>
+        </div>
+        <div className="relative flex-1 ml-4">
+          <select
+            className="w-full border border-gray-300 p-2 rounded-md appearance-none"
+            value={auctionStatus}
+            onChange={(e) =>
+              handleStatusChange(
+                e.target.value as "All" | "expired" | "ongoing"
+              )
+            }
+          >
+            {" "}
+            <option value="ongoing">Ongoing Auctions</option>
+            <option value="All">All Auctions</option>
+            <option value="expired">Expired Auctions</option>
           </select>
           <div className="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-500 pointer-events-none">
             <svg
@@ -205,10 +258,19 @@ const AuctionList: React.FC = () => {
           <p className="text-gray-700">No results found</p>
         ) : (
           filteredAuctions.map((auction) => (
-            <Link to={`/auction/${auction?._id}`} key={auction?._id}>
+            <Link
+              to={`/auction/${auction?._id}`}
+              key={auction?._id}
+              onClick={() => {
+                console.log("Clicked Auction ID:", auction._id);
+                updateViewCount(auction._id);
+              }}
+            >
               <Card
                 key={auction._id}
-                className="mt-0 shadow-md transition-transform duration-300 transform hover:scale-105"
+                className={`mt-0 shadow-md transition-transform duration-300 transform hover:scale-105 ${
+                  auction.isExpired ? "opacity-50" : ""
+                }`}
               >
                 <div className="rounded-t-lg overflow-hidden">
                   <img
@@ -217,16 +279,20 @@ const AuctionList: React.FC = () => {
                     className="w-full h-56 object-cover"
                   />
                 </div>
-                <CardTitle className=" p-2 font-amethysta text-xl">
-                  {auction.auctionTitle}
-                </CardTitle>
                 <CardContent className="p-2">
+                  <CardTitle className=" p-2 font-amethysta text-lg">
+                    {auction.auctionTitle}
+                  </CardTitle>
                   <div>
                     <p className=" font-poppins text-sm">
                       Starting Price: ${auction.auctionStartingPrice}
                     </p>
-                    <p className=" font-poppins text-sm">
+                    <p className=" font-poppins text-sm mt-1">
                       Category: {auction.auctionCategory}
+                      <p className=" mt-2 text-gray-500 font-bold font-poppins text-xs flex items-center mr-8">
+                        <Icon icon={visibilityIcon} className="mr-2" />
+                        {auction.viewCount} Views
+                      </p>
                     </p>
                   </div>
                 </CardContent>
@@ -234,7 +300,10 @@ const AuctionList: React.FC = () => {
                   <p className="mb-1 text-red-500 font-bold font-poppins text-xs mr-8">
                     {calculateTimeLeft(auction.auctionDuration)} Left
                   </p>
-                  <button className="text-white bg-primary hover:bg-secondary ease-in-out hover:text-white px-6 py-1 rounded-md">
+                  <button
+                    className="text-white bg-primary hover:bg-secondary ease-in-out hover:text-white px-6 py-1 rounded-md"
+                    onClick={() => updateViewCount(auction._id)}
+                  >
                     Bid
                   </button>
                 </CardFooter>

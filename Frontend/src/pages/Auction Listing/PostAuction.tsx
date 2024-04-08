@@ -1,5 +1,6 @@
 import React from "react";
 import { useState } from "react";
+import ReactMarkdown from "react-markdown";
 import * as z from "zod";
 import axios from "axios";
 import { useForm } from "react-hook-form";
@@ -24,16 +25,9 @@ import {
   SelectItem,
   Select,
 } from "@/components/ui/select";
+import { useSelector } from "react-redux";
 
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import DropZone from "../../components/ui/Shared/DropZone";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 // Define the form schema
 const formSchema = z.object({
@@ -87,6 +81,8 @@ const formSchema = z.object({
 });
 
 export default function PostForm() {
+  const auctioneer = useSelector((state: any) => state.auctioneer.auctioneer);
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -110,13 +106,18 @@ export default function PostForm() {
 
       // Make a POST request to backend API
       const response = await axios.post("http://localhost:3000/auctions/save", {
+        auctioneerId: auctioneer._id,
         auctionTitle: values.auctionTitle,
         auctionDescription: values.description,
         auctionCategory: values.category,
         auctionStartingPrice: values.startingPrice,
         auctionDuration: auctionEndDate,
-        auctionImages:
+        auctionImages: [
           "https://img.freepik.com/free-photo/arrangement-with-old-travel-items_23-2148666278.jpg?w=1060",
+          "https://img.freepik.com/free-photo/view-vintage-objects-arrangement_23-2150348541.jpg?w=1060",
+          "https://img.freepik.com/free-photo/vintage-objects-arrangement-still-life_23-2150348578.jpg?w=1060",
+          "https://img.freepik.com/free-photo/view-vintage-camera_23-2150315215.jpg?w=1060",
+        ],
       });
       console.log(response);
       console.log("Response:", response.data); // Assuming backend responds with the saved data
@@ -221,6 +222,7 @@ export default function PostForm() {
                     </FormItem>
                   )}
                 />
+
                 <FormField
                   control={form.control}
                   name="auctionDuration.hours"
@@ -247,7 +249,7 @@ export default function PostForm() {
                 />
               </div>
               <FormLabel>Add Images</FormLabel>
-              <DropZone />
+
               <Button
                 disabled={form.formState.isSubmitting} // Disable the button while submitting
                 type="submit"

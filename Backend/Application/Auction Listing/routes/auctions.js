@@ -85,29 +85,38 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-// Update the current bid of an auction
-router.put("/update/:id/", async (req, res) => {
+// Update the current bid and leading bidder of an auction
+router.put("/updateBidAndLeadingBidder/:id", async (req, res) => {
   try {
     const { id } = req.params;
-    const { newBid } = req.body;
+    const { newBid, leadingBidder } = req.body;
 
-    if (!newBid || typeof newBid !== "number") {
-      return res.status(400).json({ error: "Invalid bid value" });
+    // Validate request body
+    if (!newBid || isNaN(newBid) || typeof leadingBidder !== "string") {
+      return res.status(400).json({ error: "Invalid request body" });
     }
 
-    const auction = await Auctions.findByIdAndUpdate(
+    // Update auction with new bid and leading bidder
+    const updatedAuction = await Auctions.findByIdAndUpdate(
       id,
-      { currentBid: newBid },
+      { currentBid: newBid, leadingBidderName: leadingBidder },
       { new: true }
     );
 
-    if (!auction) {
+    // Check if auction exists
+    if (!updatedAuction) {
       return res.status(404).json({ error: "Auction not found" });
     }
 
-    return res.status(200).json({ success: "Updated successfully", auction });
+    // Send success response with updated auction
+    return res.status(200).json({
+      success: "Auction updated successfully",
+      auction: updatedAuction,
+    });
   } catch (err) {
-    return res.status(500).json({ error: err.message });
+    // Handle errors
+    console.error("Error updating bid and leading bidder:", err);
+    return res.status(500).json({ error: "Internal server error" });
   }
 });
 
@@ -125,6 +134,28 @@ router.put("/:id/views", async (req, res) => {
     });
   } catch (err) {
     return res.status(400).json({ error: err.message });
+  }
+});
+
+// Update Auction
+router.put("/update/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const updatedAuction = await Auctions.findByIdAndUpdate(id, req.body, {
+      new: true,
+    });
+
+    if (!updatedAuction) {
+      return res.status(404).json({ error: "Auction not found" });
+    }
+
+    return res.status(200).json({
+      success: "Auction updated successfully",
+      auction: updatedAuction,
+    });
+  } catch (error) {
+    console.error("Error updating auction:", error);
+    return res.status(500).json({ error: "Internal server error" });
   }
 });
 

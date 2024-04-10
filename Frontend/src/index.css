@@ -8,6 +8,10 @@
     src: url("./assets/fonts/Akshar-Regular.ttf");
   }
   @font-face {
+    font-family: "SourceSans3";
+    src: url("./assets/fonts/SourceSans3-Regular.ttf");
+  }
+  @font-face {
     font-family: "Poppins";
     src: url("./assets/fonts/Poppins-Regular.ttf");
   }

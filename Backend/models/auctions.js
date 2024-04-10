@@ -20,7 +20,6 @@ const auctionSchema = new mongoose.Schema({
   auctionImages: [
     {
       type: String,
-      required: true,
     },
   ],
   auctionStartingPrice: {
@@ -40,6 +39,10 @@ const auctionSchema = new mongoose.Schema({
   },
   viewCount: {
     type: Number,
+  },
+  leadingBidderName: {
+    type: String,
+    default: "No bidders yet",
   },
   createdAt: {
     type: Date,

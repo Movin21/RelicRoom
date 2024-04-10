@@ -162,15 +162,18 @@ export default function UpdateAuction() {
       const auctionEndDate = new Date(Date.now() + totalMilliseconds);
 
       // Make a PUT request to backend API for updating auction
-      const response = await axios.put(`http://localhost:3000/auctions/${id}`, {
-        auctioneerId: auctioneer._id,
-        auctionTitle: values.auctionTitle,
-        auctionDescription: values.description,
-        auctionCategory: values.category,
-        auctionStartingPrice: values.startingPrice,
-        auctionDuration: auctionEndDate,
-        auctionImages: downloadURLs,
-      });
+      const response = await axios.put(
+        `http://localhost:3000/auctions/update/${id}`,
+        {
+          auctioneerId: auctioneer._id,
+          auctionTitle: values.auctionTitle,
+          auctionDescription: values.description,
+          auctionCategory: values.category,
+          auctionStartingPrice: values.startingPrice,
+          auctionDuration: auctionEndDate,
+          auctionImages: downloadURLs,
+        }
+      );
 
       // Handle success or redirect if necessary
       console.log("Response:", response.data); // Assuming backend responds with the updated data

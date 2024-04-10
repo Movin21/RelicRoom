@@ -31,6 +31,7 @@ import firebase from "firebase/compat/app";
 import "firebase/compat/storage";
 import Dropzone from "./shared/DropZone";
 import { useParams } from "react-router-dom";
+import { formatDuration, intervalToDuration, setHours } from "date-fns";
 
 // Define the form schema
 const formSchema = z.object({
@@ -104,12 +105,34 @@ export default function UpdateAuction() {
   const [auction, setAuction] = useState<Auction | null>(null);
   const { id } = useParams<{ id: string }>();
 
+  const [days, setDays] = useState(0);
+  const [minutes, setMinutes] = useState(0);
+  const [hours, setHours] = useState(0);
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       addImages: [],
     },
   });
+
+  useEffect(() => {
+    if (auction) {
+      const interval = setInterval(() => {
+        const now = new Date();
+        const duration = intervalToDuration({
+          start: now,
+          end: new Date(auction.auctionDuration),
+        });
+
+        setDays(duration.days || 0);
+        setHours(duration.hours || 0);
+        setMinutes(duration.minutes || 0);
+      }, 1000);
+
+      return () => clearInterval(interval);
+    }
+  }, [auction]);
 
   //Fetch the Selected Auction
   useEffect(() => {
@@ -119,6 +142,7 @@ export default function UpdateAuction() {
           success: boolean;
           auction: Auction;
         }>(`http://localhost:3000/auctions/${id}`);
+        const duration = response.data.auction.auctionDuration;
         setAuction(response.data.auction);
       } catch (error) {
         console.error("Error fetching auction:", error);
@@ -300,7 +324,12 @@ export default function UpdateAuction() {
                   render={({ field }) => (
                     <FormItem>
                       <FormControl>
-                        <Input placeholder="Days" type="number" {...field} />
+                        <Input
+                          placeholder="Days"
+                          type="number"
+                          {...field}
+                          value={field.value || days}
+                        />
                       </FormControl>
                       <FormMessage className="text-red-500" />
                     </FormItem>
@@ -313,7 +342,12 @@ export default function UpdateAuction() {
                   render={({ field }) => (
                     <FormItem>
                       <FormControl>
-                        <Input placeholder="Hours" type="number" {...field} />
+                        <Input
+                          placeholder="Hours"
+                          type="number"
+                          {...field}
+                          value={field.value || hours}
+                        />
                       </FormControl>
                       <FormMessage className="text-red-500" />
                     </FormItem>
@@ -325,7 +359,12 @@ export default function UpdateAuction() {
                   render={({ field }) => (
                     <FormItem>
                       <FormControl>
-                        <Input placeholder="Minutes" type="number" {...field} />
+                        <Input
+                          placeholder="Minutes"
+                          type="number"
+                          {...field}
+                          value={field.value || minutes}
+                        />
                       </FormControl>
                       <FormMessage className="text-red-500" />
                     </FormItem>

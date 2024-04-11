@@ -354,7 +354,7 @@ const SingleAuction: React.FC = () => {
           <h1 className="text-lg font-semibold  font-sourceSans3">
             Item Description:
           </h1>
-          <p className="text-sm  mt-2 font-sangbleu">
+          <p className="text-sm mt-2 font-sangbleu whitespace-pre-wrap">
             {auction.auctionDescription}
           </p>
         </div>

@@ -135,13 +135,13 @@ export function ManageAuctions() {
           <BreadcrumbList>
             <BreadcrumbItem>
               <BreadcrumbLink asChild>
-                <Link to="#">Dashboard</Link>
+                <Link to="/auctionDashboard">Dashboard</Link>
               </BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbSeparator />
             <BreadcrumbItem>
               <BreadcrumbLink asChild>
-                <Link to="#">Manage Auctions</Link>
+                <Link to="/manageAuctions">Manage Auctions</Link>
               </BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbSeparator />
@@ -228,15 +228,15 @@ export function ManageAuctions() {
                           <TableCell className="hidden md:table-cell font-amethysta">
                             {new Date(auction.createdAt).toLocaleString()}
                           </TableCell>
-                          <TableCell className="flex items-center ml-2">
+                          <TableCell className=" justify-center items-center h-full ">
                             <Link to={`/auction/updateAuction/${auction._id}`}>
-                              <Button className="flex items-center justify-center bg-blue-800 text-white px-5 py-2 rounded-md hover:bg-blue-600 h-10 ml-5">
+                              <Button className="flex items-center justify-center bg-blue-800 text-white px-5 py-2 rounded-md hover:bg-blue-600 h-10 ml-10 mb-2 w-20">
                                 Update
                               </Button>
                             </Link>
                             <AlertDialog>
                               <AlertDialogTrigger asChild>
-                                <Button className="flex items-center justify-center bg-red-800 text-white px-5 py-2 rounded-md hover:bg-red-600 h-10 ml-5">
+                                <Button className="flex items-center justify-center bg-red-800 text-white px-5 py-2 rounded-md hover:bg-red-600 h-10 ml-10 w-20">
                                   Delete
                                 </Button>
                               </AlertDialogTrigger>
@@ -282,9 +282,7 @@ export function ManageAuctions() {
               <Card>
                 <CardHeader>
                   <CardTitle>Expired Auctions</CardTitle>
-                  <CardDescription>
-                    Manage all expired auctions and view their performance.
-                  </CardDescription>
+                  <CardDescription>View all expired auctions</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <Table>
@@ -295,13 +293,15 @@ export function ManageAuctions() {
                         </TableHead>
                         <TableHead>Name</TableHead>
                         <TableHead>Status</TableHead>
-
                         <TableHead className="hidden md:table-cell">
                           Current Bid
                         </TableHead>
                         <TableHead className="hidden md:table-cell">
                           Created at
                         </TableHead>
+                        <TableHead>
+                          <p className="ml-10">{`Actions (Update/Delete)`}</p>
+                        </TableHead>{" "}
                       </TableRow>
                     </TableHeader>
                     <TableBody>
@@ -330,6 +330,38 @@ export function ManageAuctions() {
                           </TableCell>
                           <TableCell className="hidden md:table-cell font-amethysta">
                             {new Date(auction.createdAt).toLocaleString()}
+                          </TableCell>
+                          <TableCell className=" justify-center items-center h-full ">
+                            <AlertDialog>
+                              <AlertDialogTrigger asChild>
+                                <Button className="flex items-center justify-center bg-red-800 text-white px-5 py-2 rounded-md hover:bg-red-600 h-10 ml-10 w-20">
+                                  Remove
+                                </Button>
+                              </AlertDialogTrigger>
+                              <AlertDialogContent>
+                                <AlertDialogHeader>
+                                  <AlertDialogTitle>
+                                    Are you absolutely sure?
+                                  </AlertDialogTitle>
+                                  <AlertDialogDescription>
+                                    This action cannot be undone. This will
+                                    permanently delete your Auction and remove
+                                    the data from our system.
+                                  </AlertDialogDescription>
+                                </AlertDialogHeader>
+                                <AlertDialogFooter>
+                                  <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                  <AlertDialogAction
+                                    onClick={() =>
+                                      handleDeleteConfirmation(auction._id)
+                                    }
+                                    className="bg-red-800 text-white px-5 py-2 rounded-md hover:bg-red-600 h-10 ml-5"
+                                  >
+                                    Delete
+                                  </AlertDialogAction>
+                                </AlertDialogFooter>
+                              </AlertDialogContent>
+                            </AlertDialog>
                           </TableCell>
                         </TableRow>
                       ))}

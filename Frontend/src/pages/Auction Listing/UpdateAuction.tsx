@@ -372,7 +372,7 @@ export default function UpdateAuction() {
                 />
               </div>
               <FormLabel className="font-sourceSans3 font-semibold text-md mt-4">
-                Add Images
+                {`Add Images (Upload all the images again)`}
               </FormLabel>
 
               <Dropzone

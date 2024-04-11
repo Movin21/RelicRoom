@@ -17,6 +17,7 @@ import AuctioneerLogin from "./pages/Auctioneer/AuctioneerLogin.tsx";
 import AuctioneerRegister from "./pages/Auctioneer/AuctioneerRegister.tsx";
 import AuctioneerPortal from "./pages/Auctioneer/AuctioneerPortal.tsx";
 import AuctioneerProfile from "./pages/Auctioneer/AuctioneerProfile.tsx";
+import AuctioneerReportG from "./pages/Auctioneer/AuctioneerReportG.tsx"; 
 import AuctionList from "./pages/Auction Listing/AuctionList.tsx";
 import { Provider } from "react-redux";
 import { store, persistor } from "./redux/store.ts";
@@ -25,6 +26,7 @@ import SingleAuction from "./pages/Auction Listing/SingleAuction.tsx";
 import { AdminAuctions } from "./pages/AdminPortal/AdminAuctions.tsx";
 import AdminProfile from "./pages/AdminPortal/AdminProfile.tsx";
 import { AdminUsers } from "./pages/AdminPortal/AdminUsers.tsx";
+ 
 
 
 const firebaseConfig = {
@@ -47,6 +49,7 @@ const router = createBrowserRouter([
       { path: "/auctioneerRegister", element: <AuctioneerRegister /> },
       { path: "/auctioneerPortal", element: <AuctioneerPortal /> },
       { path: "/auctioneerProfile", element: <AuctioneerProfile /> },
+      { path: "/auctioneerReportG", element:  <AuctioneerReportG /> },
       { path: "/auction/postAuction", element: <PostAuction /> },
       { path: "/auction/listedAuctions", element: <AuctionList /> },
       { path: "/auction/:id", element: <SingleAuction /> },

@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import { Card, CardContent, CardFooter, CardTitle } from "@/components/ui/card";
 import { Icon } from "@iconify/react";
 import visibilityIcon from "@iconify-icons/mdi/visibility";
+import { useSelector } from "react-redux";
 
 interface Auction {
   _id: string;
@@ -22,6 +23,8 @@ interface Auction {
 }
 
 const AuctionList: React.FC = () => {
+  const auctioneer = useSelector((state: any) => state.auctioneer.auctioneer);
+
   const [auctions, setAuctions] = useState<Auction[]>([]);
   const [filteredAuctions, setFilteredAuctions] = useState<Auction[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
@@ -253,7 +256,7 @@ const AuctionList: React.FC = () => {
           </div>
         </div>
       </div>
-      <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-10 mt-8">
+      <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-14 mt-8 ">
         {filteredAuctions.length === 0 ? (
           <p className="text-gray-700">No results found</p>
         ) : (
@@ -268,11 +271,11 @@ const AuctionList: React.FC = () => {
             >
               <Card
                 key={auction._id}
-                className={`mt-0 shadow-md transition-transform duration-300 transform hover:scale-105 ${
+                className={`mt-0 shadow-md transition-transform duration-300 transform hover:scale-105  ${
                   auction.isExpired ? "opacity-50" : ""
-                }`}
+                } rounded-none `} // Adjust the width as needed (w-64 for width 16rem)
               >
-                <div className="rounded-t-lg overflow-hidden">
+                <div className="overflow-hidden">
                   <img
                     src={auction.auctionImages[0]}
                     alt={`Image for ${auction.auctionTitle}`}
@@ -280,32 +283,33 @@ const AuctionList: React.FC = () => {
                   />
                 </div>
                 <CardContent className="p-2">
-                  <CardTitle className=" p-2 font-amethysta text-lg">
+                  <CardTitle className="p-1 font-sangbleu text-lg truncate max-w-xs">
                     {auction.auctionTitle}
                   </CardTitle>
                   <div>
-                    <p className=" font-poppins text-sm">
+                    <p className="font-bold text-sm font-sourceSans3">
                       Starting Price: ${auction.auctionStartingPrice}
                     </p>
-                    <p className=" font-poppins text-sm mt-1">
+                    <p className="font-bold text-sm mt-1 font-sourceSans3">
                       Category: {auction.auctionCategory}
-                      <p className=" mt-2 text-gray-500 font-bold font-poppins text-xs flex items-center mr-8">
-                        <Icon icon={visibilityIcon} className="mr-2" />
-                        {auction.viewCount} Views
-                      </p>
                     </p>
                   </div>
                 </CardContent>
                 <CardFooter className="p-2 flex justify-between items-center">
-                  <p className="mb-1 text-red-500 font-bold font-poppins text-xs mr-8">
-                    {calculateTimeLeft(auction.auctionDuration)} Left
+                  {auction.isExpired ? (
+                    <p className="mb-1 text-red-600 font-bold text-xs mr-4">
+                      Expired
+                    </p>
+                  ) : (
+                    <p className="mb-1 text-red-600 font-bold text-xs mr-4">
+                      {calculateTimeLeft(auction.auctionDuration)} Left
+                    </p>
+                  )}
+
+                  <p className=" text-gray-500 font-bold text-xs flex items-center  ">
+                    <Icon icon={visibilityIcon} className="mr-2" />
+                    <div className="mb-0.5">{auction.viewCount} Views</div>
                   </p>
-                  <button
-                    className="text-white bg-primary hover:bg-secondary ease-in-out hover:text-white px-6 py-1 rounded-md"
-                    onClick={() => updateViewCount(auction._id)}
-                  >
-                    Bid
-                  </button>
                 </CardFooter>
               </Card>
             </Link>

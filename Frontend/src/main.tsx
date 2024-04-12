@@ -36,6 +36,7 @@ import AuctionDashboardLayout from "./pages/layouts/AuctionDashboardLayout.tsx";
 import AuctionDashboard from "./pages/Auction Listing/AuctionDashboard.tsx";
 import ManageAuctions from "./pages/Auction Listing/ManageAuctions.tsx";
 import UpdateAuction from "./pages/Auction Listing/UpdateAuction.tsx";
+
 // Initialize Firebase
 const firebaseConfig = {
   apiKey: "AIzaSyD4SG__snQ7W-DqFBLnlIq8zSV9yNCa4PY",

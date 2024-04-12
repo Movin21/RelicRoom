@@ -139,12 +139,14 @@ const AuctionList: React.FC = () => {
       <h1 className="text-medium font-bold mb-1 text-primary font-akshar">
         FILTER BY
       </h1>
-      <div className="flex justify-between items-center mb-4">
-        <div className="relative flex-1">
+      <div className="flex flex-wrap gap-2 mb-4">
+        <div className="w-full sm:w-auto relative">
           <input
             type="text"
             placeholder="Search auctions..."
-            className="w-full pl-8 pr-3 border border-gray-300 p-2 rounded-md"
+            className={`w-full sm:w-64 border border-gray-300 p-2 rounded-md appearance-none ${
+              selectedCategory !== "All" ? "pl-6" : ""
+            }`}
             value={searchQuery}
             onChange={handleSearchChange}
           />
@@ -168,9 +170,11 @@ const AuctionList: React.FC = () => {
           </div>
         </div>
 
-        <div className="relative flex-1 ml-20">
+        <div className="w-full sm:w-auto relative">
           <select
-            className="w-full border border-gray-300 p-2 rounded-md appearance-none"
+            className={`w-full sm:w-48 border border-gray-300 p-2 rounded-md appearance-none ${
+              selectedCategory !== "All" ? "pl-6" : ""
+            }`}
             value={selectedCategory}
             onChange={handleCategoryChange}
           >
@@ -197,9 +201,11 @@ const AuctionList: React.FC = () => {
             </svg>
           </div>
         </div>
-        <div className="relative flex-1 ml-4">
+        <div className="w-full sm:w-auto relative">
           <select
-            className="w-full border border-gray-300 p-2 rounded-md appearance-none"
+            className={`w-full sm:w-48 border border-gray-300 p-2 rounded-md appearance-none ${
+              selectedCategory !== "All" ? "pl-6" : ""
+            }`}
             value={sortOrder}
             onChange={handleSortOrderChange}
           >
@@ -223,9 +229,11 @@ const AuctionList: React.FC = () => {
             </svg>
           </div>
         </div>
-        <div className="relative flex-1 ml-4">
+        <div className="w-full sm:w-auto relative">
           <select
-            className="w-full border border-gray-300 p-2 rounded-md appearance-none"
+            className={`w-full sm:w-48 border border-gray-300 p-2 rounded-md appearance-none ${
+              selectedCategory !== "All" ? "pl-6" : ""
+            }`}
             value={auctionStatus}
             onChange={(e) =>
               handleStatusChange(
@@ -256,7 +264,7 @@ const AuctionList: React.FC = () => {
           </div>
         </div>
       </div>
-      <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-14 mt-8 ">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-8">
         {filteredAuctions.length === 0 ? (
           <p className="text-gray-700">No results found</p>
         ) : (
@@ -271,9 +279,9 @@ const AuctionList: React.FC = () => {
             >
               <Card
                 key={auction._id}
-                className={`mt-0 shadow-md transition-transform duration-300 transform hover:scale-105  ${
+                className={`shadow-md transition-transform duration-300 transform hover:scale-105 ${
                   auction.isExpired ? "opacity-50" : ""
-                } rounded-none `} // Adjust the width as needed (w-64 for width 16rem)
+                } rounded-none`}
               >
                 <div className="overflow-hidden">
                   <img

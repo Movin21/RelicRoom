@@ -147,8 +147,8 @@ export function ManageAuctions() {
             <BreadcrumbSeparator />
           </BreadcrumbList>
         </Breadcrumb>
-        <div className="relative  flex-1 md:grow-0 mt-2  ml-7">
-          <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+        <div className="relative flex-1 md:grow-0 mt-2 ml-7">
+          <Search className="absolute left-2.5 top-3 h-4 w-4 text-muted-foreground" />
           <Input
             type="search"
             placeholder="Search..."
@@ -181,7 +181,7 @@ export function ManageAuctions() {
                   <Table>
                     <TableHeader>
                       <TableRow>
-                        <TableHead className="hidden w-[100px] sm:table-cell">
+                        <TableHead className="hidden md:table-cell">
                           <span>Image</span>
                         </TableHead>
                         <TableHead>Name</TableHead>
@@ -193,25 +193,21 @@ export function ManageAuctions() {
                           Created at
                         </TableHead>
                         <TableHead>
-                          <p className="ml-10">{`Actions (Update/Delete)`}</p>
-                        </TableHead>{" "}
-                        {/* New column for actions */}
+                          <p className="ml-4 md:ml-0">{`Actions (Update/Delete)`}</p>
+                        </TableHead>
                       </TableRow>
                     </TableHeader>
                     <TableBody>
                       {filteredActiveAuctions.map((auction) => (
                         <TableRow key={auction._id}>
-                          <TableCell className="hidden sm:table-cell w-56">
-                            {" "}
-                            {/* Adjust width here */}
+                          <TableCell className="hidden md:table-cell">
                             <img
                               src={auction.auctionImages[0]}
                               alt={auction.auctionTitle}
+                              className="w-20"
                             />
                           </TableCell>
-                          <TableCell className="font-amethysta w-50">
-                            {" "}
-                            {/* Adjust width here */}
+                          <TableCell className="font-medium">
                             {auction.auctionTitle}
                           </TableCell>
                           <TableCell>
@@ -228,15 +224,15 @@ export function ManageAuctions() {
                           <TableCell className="hidden md:table-cell font-amethysta">
                             {new Date(auction.createdAt).toLocaleString()}
                           </TableCell>
-                          <TableCell className=" justify-center items-center h-full ">
+                          <TableCell className="flex items-center">
                             <Link to={`/auction/updateAuction/${auction._id}`}>
-                              <Button className="flex items-center justify-center bg-blue-800 text-white px-5 py-2 rounded-md hover:bg-blue-600 h-10 ml-10 mb-2 w-20">
+                              <Button className="bg-blue-800 text-white px-3 py-1 rounded-md hover:bg-blue-600 mr-2">
                                 Update
                               </Button>
                             </Link>
                             <AlertDialog>
                               <AlertDialogTrigger asChild>
-                                <Button className="flex items-center justify-center bg-red-800 text-white px-5 py-2 rounded-md hover:bg-red-600 h-10 ml-10 w-20">
+                                <Button className="bg-red-800 text-white px-3 py-1 rounded-md hover:bg-red-600">
                                   Delete
                                 </Button>
                               </AlertDialogTrigger>
@@ -257,7 +253,7 @@ export function ManageAuctions() {
                                     onClick={() =>
                                       handleDeleteConfirmation(auction._id)
                                     }
-                                    className="bg-red-800 text-white px-5 py-2 rounded-md hover:bg-red-600 h-10 ml-5"
+                                    className="bg-red-800 text-white px-3 py-1 rounded-md hover:bg-red-600 ml-2"
                                   >
                                     Delete
                                   </AlertDialogAction>
@@ -288,7 +284,7 @@ export function ManageAuctions() {
                   <Table>
                     <TableHeader>
                       <TableRow>
-                        <TableHead className="hidden w-[100px] sm:table-cell">
+                        <TableHead className="hidden md:table-cell">
                           <span>Image</span>
                         </TableHead>
                         <TableHead>Name</TableHead>
@@ -300,17 +296,18 @@ export function ManageAuctions() {
                           Created at
                         </TableHead>
                         <TableHead>
-                          <p className="ml-10">{`Actions (Update/Delete)`}</p>
-                        </TableHead>{" "}
+                          <p className="ml-4 md:ml-0">{`Actions (Update/Delete)`}</p>
+                        </TableHead>
                       </TableRow>
                     </TableHeader>
                     <TableBody>
                       {filteredExpiredAuctions.map((auction) => (
                         <TableRow key={auction._id}>
-                          <TableCell className="font-amethysta hidden sm:table-cell">
+                          <TableCell className="hidden md:table-cell">
                             <img
                               src={auction.auctionImages[0]}
                               alt={auction.auctionTitle}
+                              className="w-20"
                             />
                           </TableCell>
                           <TableCell className="font-medium">
@@ -324,17 +321,16 @@ export function ManageAuctions() {
                               Expired
                             </Badge>
                           </TableCell>
-
-                          <TableCell className="hidden md:table-cell font-amethysta ">
+                          <TableCell className="hidden md:table-cell font-amethysta">
                             {auction.currentBid}
                           </TableCell>
                           <TableCell className="hidden md:table-cell font-amethysta">
                             {new Date(auction.createdAt).toLocaleString()}
                           </TableCell>
-                          <TableCell className=" justify-center items-center h-full ">
+                          <TableCell className="flex items-center">
                             <AlertDialog>
                               <AlertDialogTrigger asChild>
-                                <Button className="flex items-center justify-center bg-red-800 text-white px-5 py-2 rounded-md hover:bg-red-600 h-10 ml-10 w-20">
+                                <Button className="bg-red-800 text-white px-3 py-1 rounded-md hover:bg-red-600">
                                   Remove
                                 </Button>
                               </AlertDialogTrigger>
@@ -355,7 +351,7 @@ export function ManageAuctions() {
                                     onClick={() =>
                                       handleDeleteConfirmation(auction._id)
                                     }
-                                    className="bg-red-800 text-white px-5 py-2 rounded-md hover:bg-red-600 h-10 ml-5"
+                                    className="bg-red-800 text-white px-3 py-1 rounded-md hover:bg-red-600 ml-2"
                                   >
                                     Delete
                                   </AlertDialogAction>

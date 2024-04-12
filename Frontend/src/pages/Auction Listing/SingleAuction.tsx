@@ -40,7 +40,7 @@ interface Auction {
 }
 
 const SingleAuction: React.FC = () => {
-  //Getting the States of Auctoneer and Bidder
+  //Getting the States of Auctioneer and Bidder
   const auctioneer = useSelector((state: any) => state.auctioneer.auctioneer);
   const bidder = useSelector((state: any) => state.bidder.bidder);
 
@@ -98,7 +98,7 @@ const SingleAuction: React.FC = () => {
     }
   };
 
-  //Getting auction name accoding to the auction
+  //Getting auction name according to the auctioneer
   useEffect(() => {
     const fetchAuctioneer = async () => {
       try {
@@ -107,7 +107,7 @@ const SingleAuction: React.FC = () => {
         }>(`http://localhost:3000/auctioneer/getOne/${auction?.auctioneerId}`);
         setAuctioneername(response.data.companyname);
       } catch (error) {
-        console.error("Error fetching auction:", error);
+        console.error("Error fetching auctioneer:", error);
       } finally {
         setIsLoading(false);
       }
@@ -178,19 +178,19 @@ const SingleAuction: React.FC = () => {
     fetchBidModel();
 
     //Getting the Leading bidder name
-    const fetchbidderName = async () => {
+    const fetchBidderName = async () => {
       try {
         const response = await axios.get<{
           [x: string]: SetStateAction<string>;
         }>(`http://localhost:3000/bidder/getOne/${bidder?._id}`);
         setLeadingBiddername(response.data.firstname);
       } catch (error) {
-        console.error("Error fetching auction:", error);
+        console.error("Error fetching bidder:", error);
       } finally {
         setIsLoading(false);
       }
     };
-    fetchbidderName();
+    fetchBidderName();
     updateBidAndLeadingBidder(bidValue, leadingBiddername);
   };
 
@@ -207,14 +207,14 @@ const SingleAuction: React.FC = () => {
         <Breadcrumb.Item>Single Auctions</Breadcrumb.Item>
       </Breadcrumb>
 
-      <section className="container max-w-[1600px]  py-5 flex relative ">
+      <section className="container max-w-[1600px]  py-5 flex flex-col md:flex-row relative ">
         {isLoading ? (
-          <div className="text-center w-100 h-100">Loading auction...</div>
+          <div className="text-center w-full">Loading auction...</div>
         ) : (
           auction && (
-            <div className="flex items-start">
+            <>
               {/* Image Box */}
-              <div className="w-3/6 mr-4 relative ml-6">
+              <div className="w-full md:w-3/6 relative md:mr-4 ml-6">
                 <ImageGallery
                   showBullets={false}
                   showFullscreenButton={true}
@@ -230,11 +230,11 @@ const SingleAuction: React.FC = () => {
               </div>
 
               {/* Other Content */}
-              <div className="flex flex-col flex-1 ml-10">
+              <div className="flex flex-col flex-1 ml-10 mt-4 md:mt-0">
                 <p className="text-sm text-gray-500 mb-3  font-semibold font-sourceSans3">
                   Listed by: {auctioneername}
                 </p>
-                <h2 className="text-3xl font-bold mb-5 font-sangbleu w-4/6">
+                <h2 className="text-3xl font-bold mb-5 font-sangbleu w-full">
                   {auction.auctionTitle}
                 </h2>
                 <p className="  text-gray-500  text-sm flex items-center font-semibold font-sourceSans3  mb-2">
@@ -256,8 +256,7 @@ const SingleAuction: React.FC = () => {
                   Current Bid: ${auction.currentBid}
                 </p>
                 <p className="text-lg font-semibold mb-3 font-sourceSans3">
-                  Leading bidder:
-                  {auction.leadingBidderName}
+                  Leading bidder: {auction.leadingBidderName}
                 </p>
                 {auction.isExpired ? (
                   <p className="mt-12 text-3xl font-semibold mb-3 text-red-600 font-sourceSans3">
@@ -288,18 +287,18 @@ const SingleAuction: React.FC = () => {
                       </div>
                     </p>
 
-                    <div className="flex mt-5 ">
+                    <div className="flex flex-col md:flex-row items-center mt-5 ">
                       <Input
                         type="number"
                         placeholder="Enter bid value"
-                        className="border border-gray-300 p-2 rounded-md mr-1 h-10 w-40"
+                        className="border border-gray-300 p-2 rounded-md mb-2 md:mb-0 md:mr-2 w-full md:w-40"
                         value={bidValue}
                         onChange={handleBidValueChange}
                       />
                       <AlertDialog>
                         <AlertDialogTrigger asChild>
                           <Button
-                            className="flex items-center justify-center bg-blue-800 text-white px-5 py-2 rounded-md hover:bg-blue-600 h-10 ml-5"
+                            className="flex items-center justify-center mb-2 md:mb-0 bg-blue-800 text-white px-5 py-2 rounded-md hover:bg-blue-600 w-full md:w-auto md:ml-2 md:mr-2 h-10"
                             onClick={handlePlaceBid}
                           >
                             <BiShoppingBag className="mr-2" />
@@ -336,7 +335,7 @@ const SingleAuction: React.FC = () => {
                           </AlertDialogFooter>
                         </AlertDialogContent>
                       </AlertDialog>
-                      <button className="flex items-center justify-center bg-red-800 text-white px-3 py-2 rounded-md hover:bg-red-600 h-10 w-2/5 ml-5">
+                      <button className="flex items-center justify-center bg-red-800 text-white px-3 py-2 rounded-md hover:bg-red-600 w-full md:w-auto md:ml-2">
                         <AiOutlineHeart className="mr-2" />
                         Add to Wishlist
                       </button>
@@ -344,14 +343,14 @@ const SingleAuction: React.FC = () => {
                   </>
                 )}
               </div>
-            </div>
+            </>
           )
         )}
       </section>
 
       {auction && (
-        <div className="mb-10 ml-20 w-2/4 ">
-          <h1 className="text-lg font-semibold  font-sourceSans3">
+        <div className="mb-10 ml-2 md:ml-20 w-full md:w-2/4">
+          <h1 className="text-lg font-semibold font-sourceSans3">
             Item Description:
           </h1>
           <p className="text-sm mt-2 font-sangbleu whitespace-pre-wrap">

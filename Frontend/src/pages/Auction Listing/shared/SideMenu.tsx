@@ -4,9 +4,10 @@ import { TbReportAnalytics } from "react-icons/tb";
 import { RiAuctionFill } from "react-icons/ri";
 import { MdOutlinePostAdd } from "react-icons/md";
 import { MdOutlineAnalytics } from "react-icons/md";
+
 const SideMenu = () => {
   return (
-    <div className="w-64 shadow bg-white text-black rounded-lg h-full mb-20 py-6">
+    <div className="w-full sm:w-64 shadow bg-white text-black rounded-lg h-full mb-20 py-6">
       <div className="flex flex-col mx-4">
         <nav>
           <ul className="space-y-2">

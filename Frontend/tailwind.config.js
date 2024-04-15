@@ -23,6 +23,7 @@ module.exports = {
     },
     extend: {
       fontFamily: {
+        sourceSans3: ["SourceSans3", "sans-serif"],
         akshar: ["Akshar", "sans-serif"],
         poppins: ["Poppins", "sans-serif"],
         amethysta: ["Amethysta", "sans-serif"],

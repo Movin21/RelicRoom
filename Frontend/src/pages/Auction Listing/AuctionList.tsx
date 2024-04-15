@@ -7,6 +7,7 @@ import { Card, CardContent, CardFooter, CardTitle } from "@/components/ui/card";
 import { Icon } from "@iconify/react";
 import visibilityIcon from "@iconify-icons/mdi/visibility";
 import { useSelector } from "react-redux";
+import NoSearchResultFound from "./shared/NoSearchResultFound";
 
 interface Auction {
   _id: string;
@@ -264,11 +265,11 @@ const AuctionList: React.FC = () => {
           </div>
         </div>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-8">
-        {filteredAuctions.length === 0 ? (
-          <p className="text-gray-700">No results found</p>
-        ) : (
-          filteredAuctions.map((auction) => (
+      {filteredAuctions.length === 0 ? (
+        <NoSearchResultFound />
+      ) : (
+        <div className="grid  grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mt-8">
+          {filteredAuctions.map((auction) => (
             <Link
               to={`/auction/${auction?._id}`}
               key={auction?._id}
@@ -321,9 +322,9 @@ const AuctionList: React.FC = () => {
                 </CardFooter>
               </Card>
             </Link>
-          ))
-        )}
-      </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };

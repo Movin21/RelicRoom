@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import "./auction.css";
-import { formatDuration, intervalToDuration } from "date-fns"; // Importing date-fns functions for time calculation
-
-import { Card, CardContent, CardFooter, CardTitle } from "@/components/ui/card";
+import { formatDuration, intervalToDuration } from "date-fns";
+import { Breadcrumb } from "antd";
 import { Link } from "react-router-dom";
+import { Card, CardContent, CardFooter, CardTitle } from "@/components/ui/card";
+import { Icon } from "@iconify/react";
+import visibilityIcon from "@iconify-icons/mdi/visibility";
+import { useSelector } from "react-redux";
+import NoSearchResultFound from "./shared/NoSearchResultFound";
 
 interface Auction {
   _id: string;
@@ -21,11 +24,16 @@ interface Auction {
 }
 
 const AuctionList: React.FC = () => {
+  const auctioneer = useSelector((state: any) => state.auctioneer.auctioneer);
+
   const [auctions, setAuctions] = useState<Auction[]>([]);
   const [filteredAuctions, setFilteredAuctions] = useState<Auction[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [sortOrder, setSortOrder] = useState("latest");
+  const [auctionStatus, setAuctionStatus] = useState<
+    "All" | "expired" | "ongoing"
+  >("ongoing");
 
   useEffect(() => {
     fetchAllAuctions();
@@ -43,7 +51,7 @@ const AuctionList: React.FC = () => {
 
   useEffect(() => {
     filterAuctions();
-  }, [searchQuery, selectedCategory, auctions, sortOrder]);
+  }, [searchQuery, selectedCategory, auctions, sortOrder, auctionStatus]);
 
   const filterAuctions = () => {
     let filtered: Auction[] = auctions.filter((auction) => {
@@ -57,6 +65,12 @@ const AuctionList: React.FC = () => {
         searchQuery.trim() !== "" &&
         !auction.auctionTitle.toLowerCase().includes(searchQuery.toLowerCase())
       ) {
+        return false;
+      }
+      if (auctionStatus === "expired" && !auction.isExpired) {
+        return false;
+      }
+      if (auctionStatus === "ongoing" && auction.isExpired) {
         return false;
       }
       return true;
@@ -89,9 +103,12 @@ const AuctionList: React.FC = () => {
     setSortOrder(e.target.value);
   };
 
-  const now = new Date();
+  const handleStatusChange = (status: "All" | "expired" | "ongoing") => {
+    setAuctionStatus(status);
+  };
 
   const calculateTimeLeft = (endDate: Date) => {
+    const now = new Date();
     const duration = intervalToDuration({
       start: now,
       end: endDate,
@@ -102,15 +119,35 @@ const AuctionList: React.FC = () => {
     });
   };
 
+  const updateViewCount = async (auctionId: string) => {
+    try {
+      await axios.put(`http://localhost:3000/auctions/${auctionId}/views`);
+    } catch (error) {
+      console.error("Error updating view count:", error);
+    }
+  };
+
   return (
     <div className="container mx-auto p-5">
-      <h1 className="text-3xl font-bold mb-5">All Auctions</h1>
-      <div className="flex justify-between items-center mb-4">
-        <div className="relative flex-1">
+      {/* Breadcrumb */}
+      <Breadcrumb className="mb-2">
+        <Breadcrumb.Item>
+          <Link to="/">Home</Link>
+        </Breadcrumb.Item>
+        <Breadcrumb.Item>Auctions</Breadcrumb.Item>
+      </Breadcrumb>
+      <h1 className="text-3xl font-bold mb-5 text-primary">All Auctions</h1>
+      <h1 className="text-medium font-bold mb-1 text-primary font-akshar">
+        FILTER BY
+      </h1>
+      <div className="flex flex-wrap gap-2 mb-4">
+        <div className="w-full sm:w-auto relative">
           <input
             type="text"
             placeholder="Search auctions..."
-            className="w-full pl-8 pr-3 border border-gray-300 p-2 rounded-md"
+            className={`w-full sm:w-64 border border-gray-300 p-2 rounded-md appearance-none ${
+              selectedCategory !== "All" ? "pl-6" : ""
+            }`}
             value={searchQuery}
             onChange={handleSearchChange}
           />
@@ -134,9 +171,11 @@ const AuctionList: React.FC = () => {
           </div>
         </div>
 
-        <div className="relative flex-1 ml-40 w-2">
+        <div className="w-full sm:w-auto relative">
           <select
-            className="w-full border border-gray-300 p-2 rounded-md appearance-none"
+            className={`w-full sm:w-48 border border-gray-300 p-2 rounded-md appearance-none ${
+              selectedCategory !== "All" ? "pl-6" : ""
+            }`}
             value={selectedCategory}
             onChange={handleCategoryChange}
           >
@@ -163,9 +202,11 @@ const AuctionList: React.FC = () => {
             </svg>
           </div>
         </div>
-        <div className="relative flex-1">
+        <div className="w-full sm:w-auto relative">
           <select
-            className="w-full border border-gray-300 p-2 rounded-md appearance-none ml-3"
+            className={`w-full sm:w-48 border border-gray-300 p-2 rounded-md appearance-none ${
+              selectedCategory !== "All" ? "pl-6" : ""
+            }`}
             value={sortOrder}
             onChange={handleSortOrderChange}
           >
@@ -189,44 +230,101 @@ const AuctionList: React.FC = () => {
             </svg>
           </div>
         </div>
-      </div>
-      <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-8 mt-15">
-        {filteredAuctions.length === 0 ? (
-          <p className="text-gray-700">No results found</p>
-        ) : (
-          filteredAuctions.map((auction) => (
-            <Card
-              key={auction._id}
-              className="mt-10 shadow-md transition-transform duration-300 transform hover:scale-105"
+        <div className="w-full sm:w-auto relative">
+          <select
+            className={`w-full sm:w-48 border border-gray-300 p-2 rounded-md appearance-none ${
+              selectedCategory !== "All" ? "pl-6" : ""
+            }`}
+            value={auctionStatus}
+            onChange={(e) =>
+              handleStatusChange(
+                e.target.value as "All" | "expired" | "ongoing"
+              )
+            }
+          >
+            {" "}
+            <option value="ongoing">Ongoing Auctions</option>
+            <option value="All">All Auctions</option>
+            <option value="expired">Expired Auctions</option>
+          </select>
+          <div className="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-500 pointer-events-none">
+            <svg
+              className="h-4 w-4"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
             >
-              <div className="rounded-t-lg overflow-hidden">
-                <img
-                  src={auction.auctionImages[0]}
-                  alt={`Image for ${auction.auctionTitle}`}
-                  className="w-full h-60 object-cover"
-                />
-              </div>
-              <CardTitle className="mt-3 p-3">{auction.auctionTitle}</CardTitle>
-              <CardContent className="p-3">
-                <div>
-                  <p className="mb-1">
-                    Starting Price: ${auction.auctionStartingPrice}
-                  </p>
-                  <p className="mb-1">Category: {auction.auctionCategory}</p>
-                </div>
-              </CardContent>
-              <CardFooter className="p-3 flex justify-between items-center">
-                <p className="mb-1 text-red-500 font-bold font-poppins">
-                  Time Left: {calculateTimeLeft(auction.auctionDuration)}
-                </p>
-                <button className="text-white bg-primary hover:bg-secondary ease-in-out hover:text-white px-6 py-1 rounded-md">
-                  Bid
-                </button>
-              </CardFooter>
-            </Card>
-          ))
-        )}
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M19 9l-7 7-7-7"
+              />
+            </svg>
+          </div>
+        </div>
       </div>
+      {filteredAuctions.length === 0 ? (
+        <NoSearchResultFound />
+      ) : (
+        <div className="grid  grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mt-8">
+          {filteredAuctions.map((auction) => (
+            <Link
+              to={`/auction/${auction?._id}`}
+              key={auction?._id}
+              onClick={() => {
+                console.log("Clicked Auction ID:", auction._id);
+                updateViewCount(auction._id);
+              }}
+            >
+              <Card
+                key={auction._id}
+                className={`shadow-md transition-transform duration-300 transform hover:scale-105 ${
+                  auction.isExpired ? "opacity-50" : ""
+                } rounded-none`}
+              >
+                <div className="overflow-hidden">
+                  <img
+                    src={auction.auctionImages[0]}
+                    alt={`Image for ${auction.auctionTitle}`}
+                    className="w-full h-56 object-cover"
+                  />
+                </div>
+                <CardContent className="p-2">
+                  <CardTitle className="p-1 font-sangbleu text-lg truncate max-w-xs">
+                    {auction.auctionTitle}
+                  </CardTitle>
+                  <div>
+                    <p className="font-bold text-sm font-sourceSans3">
+                      Starting Price: ${auction.auctionStartingPrice}
+                    </p>
+                    <p className="font-bold text-sm mt-1 font-sourceSans3">
+                      Category: {auction.auctionCategory}
+                    </p>
+                  </div>
+                </CardContent>
+                <CardFooter className="p-2 flex justify-between items-center">
+                  {auction.isExpired ? (
+                    <p className="mb-1 text-red-600 font-bold text-xs mr-4">
+                      Expired
+                    </p>
+                  ) : (
+                    <p className="mb-1 text-red-600 font-bold text-xs mr-4">
+                      {calculateTimeLeft(auction.auctionDuration)} Left
+                    </p>
+                  )}
+
+                  <p className=" text-gray-500 font-bold text-xs flex items-center  ">
+                    <Icon icon={visibilityIcon} className="mr-2" />
+                    <div className="mb-0.5">{auction.viewCount} Views</div>
+                  </p>
+                </CardFooter>
+              </Card>
+            </Link>
+          ))}
+        </div>
+      )}
     </div>
   );
 };

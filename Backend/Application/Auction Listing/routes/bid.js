@@ -92,4 +92,25 @@ router.delete("/delete/:id", async (req, res) => {
   }
 });
 
+//getlast  bidders
+
+router.get('/last3bidders', async (req, res) => {
+  try {
+    
+    const lastThreeBids = await Bids.find()
+      .sort({ createdAt: -1, updatedAt: -1 }) 
+      .limit(3);
+
+  
+    const firstBid = lastThreeBids[0];
+    const secondBid = lastThreeBids[1];
+    const thirdBid = lastThreeBids[2];
+
+    res.json({ firstBid, secondBid, thirdBid });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Server Error' });
+  }
+});
+
 module.exports = router;

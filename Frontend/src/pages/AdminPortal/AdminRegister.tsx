@@ -1,6 +1,7 @@
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import React, { ChangeEvent, useRef, useState } from "react";
 import { z } from "zod";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
@@ -14,22 +15,30 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { ChangeEvent, useRef, useState } from "react";
 import firebase from "firebase/compat/app";
 import "firebase/compat/storage";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const FormSchema = z
   .object({
-    firstName: z.string().min(1, {
+    firstName: z.string().min(3, {
       message: "First Name is required.",
     }),
-    lastName: z.string().min(1, {
+    lastName: z.string().min(3, {
       message: "Last Name is required.",
     }),
-    username: z.string().min(2, {
-      message: "Username must be at least 2 characters.",
-    }),
+    username: z
+      .string()
+      .min(4, {
+        message: "Username must be at least 4 characters.",
+      })
+      .regex(/[!@#$%^&*(),.?":{}|<>]/, {
+        message: "Username must contain at least one special character.",
+      })
+      .regex(/\d/, {
+        message: "Username must contain at least one digit.",
+      }),
     profilePicture: z.string(),
     password: z
       .string()
@@ -54,22 +63,12 @@ const FormSchema = z
   });
 
 const AdminRegister = () => {
-  const [ImgUrl, setImgUrl] = useState("https://github.com/shadcn.png");
+  const [isLoading, setIsLoading] = useState(false);
+  const [imgUrl, setImgUrl] = useState("https://github.com/shadcn.png");
   const fileInputRef = useRef<HTMLInputElement>(null);
-
-  function handleFileUpload(event: ChangeEvent<HTMLInputElement>) {
-    const selectedFile = event.target.files?.[0];
-    if (selectedFile) {
-      const storageRef = firebase.storage().ref("images");
-      const fileRef = storageRef.child(selectedFile.name);
-      fileRef.put(selectedFile).then((snapshot) => {
-        snapshot.ref.getDownloadURL().then((downloadURL) => {
-          setImgUrl(downloadURL);
-        });
-      });
-    }
-  }
+  const navigate = useNavigate();
   const form = useForm<z.infer<typeof FormSchema>>({
+    resolver: zodResolver(FormSchema),
     defaultValues: {
       firstName: "",
       lastName: "",
@@ -79,13 +78,29 @@ const AdminRegister = () => {
     },
   });
 
+  function handleFileUpload(event: ChangeEvent<HTMLInputElement>) {
+    const selectedFile = event.target.files?.[0];
+    setIsLoading(true);
+    if (selectedFile) {
+      const storageRef = firebase.storage().ref("images");
+      const fileRef = storageRef.child(selectedFile.name);
+      fileRef.put(selectedFile).then((snapshot) => {
+        snapshot.ref.getDownloadURL().then((downloadURL) => {
+          setImgUrl(downloadURL);
+          setIsLoading(false);
+          form.setValue("profilePicture", downloadURL);
+        });
+      });
+    }
+  }
+
   async function onSubmit(data: z.infer<typeof FormSchema>) {
-    data.profilePicture = ImgUrl;
+    data.profilePicture = imgUrl;
     try {
-      await axios.post("http://localhost:3000/admin/adminUser", data);
+      await axios.post("http://localhost:5000/admin/adminUser", data);
       console.log("Admin created successfully");
-      form.control._reset();
-      setImgUrl("https://github.com/shadcn.png");
+      form.reset();
+      navigate("/adminLogin");
     } catch (error) {
       console.error("Error creating admin:", error);
     }
@@ -96,7 +111,6 @@ const AdminRegister = () => {
       <div className="font-akshar text-2xl text-primary font-bold mb-6">
         Add New Admin
       </div>
-
       <div className="bg-white rounded-lg shadow-md p-4 md:p-8 font-nunitoSans w-8/10">
         <Form {...form}>
           <form
@@ -105,10 +119,10 @@ const AdminRegister = () => {
           >
             <div className="flex flex-col items-center justify-center mb-6">
               <Avatar
-                className="rounded-full w-20 h-20 object-cover"
+                className="rounded-full w-20 h-20 object-cover cursor-pointer"
                 onClick={() => fileInputRef.current?.click()}
               >
-                <AvatarImage src={ImgUrl} alt="@shadcn" />
+                <AvatarImage src={imgUrl} alt="@shadcn" />
                 <AvatarFallback>CN</AvatarFallback>
               </Avatar>
 
@@ -116,24 +130,16 @@ const AdminRegister = () => {
                 <Label htmlFor="picture" className="py-2">
                   Profile Picture
                 </Label>
-
-                <FormField
-                  control={form.control}
-                  name="profilePicture"
-                  render={() => (
-                    <FormItem>
-                      <FormControl>
-                        <Input
-                          className="invisible m-0"
-                          type="file"
-                          onChange={handleFileUpload}
-                          ref={fileInputRef}
-                        />
-                      </FormControl>
-                    </FormItem>
-                  )}
-                />
               </div>
+              <input
+                type="file"
+                id="picture"
+                name="picture"
+                accept="image/*"
+                className="hidden"
+                onChange={handleFileUpload}
+                ref={fileInputRef}
+              />
             </div>
 
             <div className="flex flex-col justify-center">
@@ -207,7 +213,7 @@ const AdminRegister = () => {
                     name="confirmPassword"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Conform Password</FormLabel>
+                        <FormLabel>Confirm Password</FormLabel>
                         <FormControl>
                           <Input placeholder="admin_01" {...field} />
                         </FormControl>
@@ -219,12 +225,18 @@ const AdminRegister = () => {
               </div>
             </div>
             <div className="flex justify-center">
-              <Button
-                type="submit"
-                className="font-nunitoSans bg-brownDark hover:bg-brownMedium text-white font-bold py-2 px-4 w-1/3 rounded focus:outline-none focus:shadow-outline"
-              >
-                Create Account
-              </Button>
+              {isLoading ? (
+                <Button className="font-nunitoSans bg-brownDark hover:bg-brownMedium text-white font-bold py-2 px-4 w-1/3 rounded focus:outline-none focus:shadow-outline">
+                  Loading...
+                </Button>
+              ) : (
+                <Button
+                  type="submit"
+                  className="font-nunitoSans bg-brownDark hover:bg-brownMedium text-white font-bold py-2 px-4 w-1/3 rounded focus:outline-none focus:shadow-outline"
+                >
+                  Create Account
+                </Button>
+              )}
             </div>
           </form>
         </Form>
@@ -232,4 +244,5 @@ const AdminRegister = () => {
     </div>
   );
 };
+
 export default AdminRegister;

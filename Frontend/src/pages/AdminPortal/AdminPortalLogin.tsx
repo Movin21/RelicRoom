@@ -22,6 +22,7 @@ const AdminPortalLogin = () => {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm({
     resolver: zodResolver(schema),
   });
@@ -30,7 +31,7 @@ const AdminPortalLogin = () => {
   const onSubmit = async (data: any) => {
     try {
       const response = await axios.post(
-        "http://localhost:3000/admin/adminUserLogin",
+        "http://localhost:5000/admin/adminUserLogin",
         data
       );
 
@@ -39,6 +40,7 @@ const AdminPortalLogin = () => {
         dispatch(login(response.data.admin));
         navigate("/admin");
         console.log(response.data.admin);
+        reset();
       }
     } catch (error) {
       setLoginError(" Invalid username or password");
@@ -70,7 +72,7 @@ const AdminPortalLogin = () => {
               className={`w-full px-3 py-1.5 border ${
                 errors.username ? "border-red-500" : "border-gray-300"
               } rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500`}
-              placeholder="Movin_2001"
+              placeholder="Admin Username"
             />
             {errors.username && (
               <span className="text-red-500">

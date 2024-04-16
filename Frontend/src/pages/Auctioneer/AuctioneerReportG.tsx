@@ -24,14 +24,41 @@ interface Auction {
   winningBidderName: string | null;
 }
 
- 
 const styles = StyleSheet.create({
-  page: { /* Define styles for the page component here */ },
-  table: { margin: 10 },
-  row: { flexDirection: 'row' },
-  cell: { padding: 5, border: '1px solid #ccc' },
+  page: {
+    flexDirection: 'row',
+    backgroundColor: '#ffffff',
+    padding: 20,
+  },
+  table: {
+    width: '100%',
+    borderWidth: 1,
+    borderColor: '#000000',
+    borderStyle: 'solid',
+    borderRadius: 4,
+  },
+  row: {
+    flexDirection: 'row',
+    borderBottomWidth: 1,
+    borderBottomColor: '#000000',
+    borderStyle: 'solid',
+  },
+  cell: {
+    padding: 8,
+    flex: 1,
+    textAlign: 'center',
+    border: '1px solid #ccc',
+    fontSize: 10,
+  },
+  title: {
+    textAlign: 'center',
+    fontSize: 24,
+    marginBottom: 20,
+    marginTop:5,
+  },
+  
 });
-
+ 
 const AuctioneerReportG: React.FC = () => {
   const [data, setData] = useState<Auction[]>([]);
   const auctioneer = useSelector((state: any) => state.auctioneer.auctioneer);
@@ -69,15 +96,27 @@ const AuctioneerReportG: React.FC = () => {
   // Define the component to render the PDF
   const MyDocument: React.FC<{ data: Auction[] }> = ({ data }) => (
     <Document>
-      <Page size="A4" style={styles.page}>
+      <Page size="A3" style={styles.page}>
         <View style={styles.table}>
+        <Text style={styles.title}>Auction Summary Report</Text>
+          <View style={styles.row}>
+            <Text style={[styles.cell, styles.cell]}>Auction ID</Text>
+            <Text style={[styles.cell, styles.cell]}>Auction Title</Text>
+            {/* <Text style={[styles.cell, styles.cell]}>Description</Text> */}
+            <Text style={[styles.cell, styles.cell]}>Category</Text>
+            <Text style={[styles.cell, styles.cell]}>Starting Price</Text>
+            <Text style={[styles.cell, styles.cell]}>Duration</Text>
+            <Text style={[styles.cell, styles.cell]}>Current Bid</Text>
+            <Text style={[styles.cell, styles.cell]}>View Count</Text>
+            <Text style={[styles.cell, styles.cell]}>Created At</Text>
+            <Text style={[styles.cell, styles.cell]}>Winning Bid Price</Text>
+            <Text style={[styles.cell, styles.cell]}>Winning Bidder Name</Text>
+          </View>
           {data.map((auction) => (
             <View style={styles.row} key={auction._id}>
-              {/* Render your table cells here */}
               <Text style={styles.cell}>{auction._id}</Text>
               <Text style={styles.cell}>{auction.auctionTitle}</Text>
-              <Text style={styles.cell}>{auction.auctionImages.join(', ')}</Text>
-              <Text style={styles.cell}>{auction.auctionDescription}</Text>
+              {/* <Text style={styles.cell}>{auction.auctionDescription}</Text> */}
               <Text style={styles.cell}>{auction.auctionCategory}</Text>
               <Text style={styles.cell}>{auction.auctionStartingPrice}</Text>
               <Text style={styles.cell}>{new Date(auction.auctionDuration).toLocaleString()}</Text>
@@ -92,6 +131,7 @@ const AuctioneerReportG: React.FC = () => {
       </Page>
     </Document>
   );
+  
 
   return (
     <div className="flex flex-col min-h-screen bg-muted/40">
@@ -110,8 +150,8 @@ const AuctioneerReportG: React.FC = () => {
                     <TableRow>
                     <TableHead className="hidden md:table-cell text-brownDark font-akshar text-xl font-semibold mb-2">Auction ID</TableHead>
                       <TableHead className="hidden md:table-cell text-brownDark font-akshar text-xl font-semibold mb-2">Auction Title</TableHead>
-                      <TableHead className="hidden md:table-cell text-brownDark font-akshar text-xl font-semibold mb-2">Auction Images</TableHead>
-                      <TableHead className="hidden md:table-cell text-brownDark font-akshar text-xl font-semibold mb-2">Description</TableHead>
+                      {/* <TableHead className="hidden md:table-cell text-brownDark font-akshar text-xl font-semibold mb-2">Auction Images</TableHead> */}
+                      {/* <TableHead className="hidden md:table-cell text-brownDark font-akshar text-xl font-semibold mb-2">Description</TableHead> */}
                       <TableHead className="hidden md:table-cell text-brownDark font-akshar text-xl font-semibold mb-2">Auction Category</TableHead>
                       <TableHead className="hidden md:table-cell text-brownDark font-akshar text-xl font-semibold mb-2">Starting Price</TableHead>
                       <TableHead className="hidden md:table-cell text-brownDark font-akshar text-xl font-semibold mb-2">Auction Duration</TableHead>
@@ -127,12 +167,12 @@ const AuctioneerReportG: React.FC = () => {
                       <TableRow key={auction._id}>
                         <TableCell className="hidden md:table-cell font-akshar">{auction._id}</TableCell>
                         <TableCell className="hidden md:table-cell font-akshar">{auction.auctionTitle}</TableCell>
-                        <TableCell className="hidden md:table-cell font-akshar">
+                        {/* <TableCell className="hidden md:table-cell font-akshar">
                           {auction.auctionImages.map((image, index) => (
                             <img key={index} src={image} alt={`Auction Image ${index}`} />
                           ))}
-                        </TableCell>
-                        <TableCell className="hidden md:table-cell font-akshar">{auction.auctionDescription}</TableCell>
+                        </TableCell> */}
+                        {/* <TableCell className="hidden md:table-cell font-akshar">{auction.auctionDescription}</TableCell> */}
                         <TableCell className="hidden md:table-cell font-akshar">{auction.auctionCategory}</TableCell>
                         <TableCell className="hidden md:table-cell font-akshar">{auction.auctionStartingPrice}</TableCell>
                         <TableCell className="hidden md:table-cell font-akshar"> {new Date(auction.auctionDuration).toLocaleString()}</TableCell>

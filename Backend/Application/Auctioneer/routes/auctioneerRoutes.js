@@ -44,7 +44,7 @@ router.get("/getOne/:id", async (req, res) => {
     });
   }
 });
-
+ 
 // Update an auctioneer
 router.patch("/update/:id", async (req, res) => {
   try {
@@ -60,23 +60,6 @@ router.patch("/update/:id", async (req, res) => {
     });
   }
 });
-
-
-// router.patch("/update/:id", async (req, res) => {
-//   try {
-//     const Auctioneer = await auctioneer.findByIdAndUpdate(
-//       req.params.id,
-//       { profileImage: req.body.profilePicture }, // Save profile picture URL to profileImage field
-//       { new: true }
-//     );
-//     return res.status(200).json(Auctioneer);
-//   } catch (err) {
-//     return res.status(400).json({
-//       error: err.message,
-//     });
-//   }
-// });
-
 
 // Delete an auctioneer
 router.delete("/delete/:id", async (req, res) => {

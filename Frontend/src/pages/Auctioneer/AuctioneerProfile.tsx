@@ -86,8 +86,7 @@ const AuctioneerProfile = () => {
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
     try {
-      // Update profilePicture field in data with the correct URL from ImgUrl
-      data.profilePicture = ImgUrl;
+      console.log(auctioneer._id);
       await axios.patch(
         `http://localhost:3000/auctioneer/update/${auctioneer._id}`,
         data
@@ -129,8 +128,6 @@ const AuctioneerProfile = () => {
     }
   }
   
-
-
   return  (
   
     <div className="flex h-full">
@@ -373,36 +370,36 @@ const AuctioneerProfile = () => {
             )}
           />
 
-            <div className="flex items-center justify-between mb-5">
-            <AlertDialog>
-            <AlertDialogTrigger asChild>
-              <Button className="font-akshar w-40 text-white bg-red-700 hover:bg-red-500 ease-in-out hover:text-white tw-50 mt-4">
-              Close Account
-              </Button>
-            </AlertDialogTrigger>
-            <AlertDialogContent>
-              <AlertDialogHeader>
-                <AlertDialogTitle className="font-akshar text-2xl text-brownMedium">
-                  Are you absolutely sure to permanently delete
-                  your account??
-                </AlertDialogTitle>
-              </AlertDialogHeader>
-              <AlertDialogFooter>
-                <AlertDialogCancel className="font-akshar">
-                  Cancel
-                </AlertDialogCancel>
-                <AlertDialogAction>
-                  <Button onClick={onDelete} className="font-akshar w-full">
-                    Delete Account Permanently
-                  </Button>
-                </AlertDialogAction>
-              </AlertDialogFooter>
-            </AlertDialogContent>
-          </AlertDialog>
-          <div> 
-          <Button className="font-akshar w-40 text-white bg-primary hover:bg-secondary ease-in-out hover:text-white tw-50 mt-4" type="submit">Edit profile</Button>
-            </div>
-          </div> 
+          <div className="flex items-center justify-between mb-5">
+  <AlertDialog>
+    <AlertDialogTrigger asChild>
+      <Button className="font-akshar w-40 text-white bg-red-700 hover:bg-red-500 ease-in-out hover:text-white tw-50 mt-4">
+        Close Account
+      </Button>
+    </AlertDialogTrigger>
+    <AlertDialogContent>
+      <AlertDialogHeader>
+        <AlertDialogTitle className="font-akshar text-2xl text-brownMedium">
+          Are you absolutely sure to permanently delete your account??
+        </AlertDialogTitle>
+      </AlertDialogHeader>
+      <AlertDialogFooter>
+        <AlertDialogCancel className="font-akshar">
+          Cancel
+        </AlertDialogCancel>
+        <AlertDialogAction>
+          <Button onClick={onDelete} className="font-akshar w-full">
+            Delete Account Permanently
+          </Button>
+        </AlertDialogAction>
+      </AlertDialogFooter>
+    </AlertDialogContent>
+  </AlertDialog>
+  <div> 
+    <Button className="font-akshar w-40 text-white bg-primary hover:bg-secondary ease-in-out hover:text-white tw-50 mt-4" type="submit">Edit profile</Button>
+  </div>
+</div> 
+
             </form>
           </Form>
     </CardContent>

@@ -1,13 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuRadioGroup,
-  DropdownMenuRadioItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+import { PDFDownloadLink } from "@react-pdf/renderer";
+import { FinancialReport } from "../Report Generation/FinancialReport";
+import { UserReport } from "../Report Generation/UserReport";
 
 const SideMenu = () => {
   return (
@@ -15,13 +11,13 @@ const SideMenu = () => {
       <div className="flex flex-col mx-4">
         <nav>
           <ul className="space-y-2">
-            <h2 className="text-brownDark font-akshar text-xl font-semibold mb-2">
+            <h2 className="text-brownDark  font-akshar text-xl font-semibold mb-2">
               Analytics Dashboard
             </h2>
             <li>
               <Link
                 to="/admin"
-                className="flex items-center px-4 py-2 rounded-md bg-white hover:bg-brownMedium transition-colors duration-200"
+                className="flex items-center px-4 py-2 rounded-md bg-white hover:bg-brownMedium hover:text-white transition-colors duration-200"
               >
                 <svg
                   className="w-5 h-5 mr-2"
@@ -44,7 +40,7 @@ const SideMenu = () => {
             <li>
               <Link
                 to="/adminAuctions"
-                className="flex items-center px-4 py-2 rounded-md bg-white hover:bg-brownMedium transition-colors duration-200"
+                className="flex items-center px-4 py-2 rounded-md bg-white hover:bg-brownMedium  hover:text-white transition-colors duration-200"
               >
                 <svg
                   className="w-5 h-5 mr-2"
@@ -78,9 +74,12 @@ const SideMenu = () => {
             <li>
               <Link
                 to="/adminUsers"
-                className="flex  items-center px-4 py-2 rounded-md bg-white hover:bg-brownMedium transition-colors duration-200"
+                className="flex  items-center px-4 py-2 rounded-md bg-white hover:bg-brownMedium  hover:text-white  transition-colors duration-200"
               >
-                <svg className="w-5 h-5 mr-2" viewBox="0 0 20 20">
+                <svg
+                  className="w-5 h-5 mr-2 hover:fill-white"
+                  viewBox="0 0 20 20"
+                >
                   <path d="M15.573,11.624c0.568-0.478,0.947-1.219,0.947-2.019c0-1.37-1.108-2.569-2.371-2.569s-2.371,1.2-2.371,2.569c0,0.8,0.379,1.542,0.946,2.019c-0.253,0.089-0.496,0.2-0.728,0.332c-0.743-0.898-1.745-1.573-2.891-1.911c0.877-0.61,1.486-1.666,1.486-2.812c0-1.79-1.479-3.359-3.162-3.359S4.269,5.443,4.269,7.233c0,1.146,0.608,2.202,1.486,2.812c-2.454,0.725-4.252,2.998-4.252,5.685c0,0.218,0.178,0.396,0.395,0.396h16.203c0.218,0,0.396-0.178,0.396-0.396C18.497,13.831,17.273,12.216,15.573,11.624 M12.568,9.605c0-0.822,0.689-1.779,1.581-1.779s1.58,0.957,1.58,1.779s-0.688,1.779-1.58,1.779S12.568,10.427,12.568,9.605 M5.06,7.233c0-1.213,1.014-2.569,2.371-2.569c1.358,0,2.371,1.355,2.371,2.569S8.789,9.802,7.431,9.802C6.073,9.802,5.06,8.447,5.06,7.233 M2.309,15.335c0.202-2.649,2.423-4.742,5.122-4.742s4.921,2.093,5.122,4.742H2.309z M13.346,15.335c-0.067-0.997-0.382-1.928-0.882-2.732c0.502-0.271,1.075-0.429,1.686-0.429c1.828,0,3.338,1.385,3.535,3.161H13.346z"></path>
                 </svg>
                 <span>User Analytics</span>
@@ -88,8 +87,8 @@ const SideMenu = () => {
             </li>
             <li>
               <Link
-                to="/adminAuctions"
-                className="flex items-center px-4 py-2 rounded-md bg-white hover:bg-brownMedium transition-colors duration-200"
+                to="/customerCare"
+                className="flex items-center px-4 py-2 rounded-md bg-white hover:bg-brownMedium  hover:text-white transition-colors duration-200"
               >
                 <svg
                   className="w-5 h-5 mr-2"
@@ -110,44 +109,51 @@ const SideMenu = () => {
               </Link>
             </li>
             <li>
-              <Button className="mt-14 flex items-start w-full text-md text-white px-4 py-2 rounded-md bg-brownDark hover:bg-brownMedium transition-colors duration-200">
-                <svg
-                  className="w-5 h-5 mr-2"
-                  width="15"
-                  height="15"
-                  viewBox="0 0 15 15"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M7.50005 1.04999C7.74858 1.04999 7.95005 1.25146 7.95005 1.49999V8.41359L10.1819 6.18179C10.3576 6.00605 10.6425 6.00605 10.8182 6.18179C10.994 6.35753 10.994 6.64245 10.8182 6.81819L7.81825 9.81819C7.64251 9.99392 7.35759 9.99392 7.18185 9.81819L4.18185 6.81819C4.00611 6.64245 4.00611 6.35753 4.18185 6.18179C4.35759 6.00605 4.64251 6.00605 4.81825 6.18179L7.05005 8.41359V1.49999C7.05005 1.25146 7.25152 1.04999 7.50005 1.04999ZM2.5 10C2.77614 10 3 10.2239 3 10.5V12C3 12.5539 3.44565 13 3.99635 13H11.0012C11.5529 13 12 12.5528 12 12V10.5C12 10.2239 12.2239 10 12.5 10C12.7761 10 13 10.2239 13 10.5V12C13 13.1041 12.1062 14 11.0012 14H3.99635C2.89019 14 2 13.103 2 12V10.5C2 10.2239 2.22386 10 2.5 10Z"
-                    fill="currentColor"
-                    fill-rule="evenodd"
-                    clip-rule="evenodd"
-                  ></path>
-                </svg>
-                <span>Financial Report</span>
-              </Button>
+              <PDFDownloadLink
+                document={<FinancialReport />}
+                fileName="FinancialReport"
+              >
+                <Button className="mt-14 flex items-start w-full text-md text-white px-4 py-2 rounded-md bg-brownDark  hover:text-white hover:bg-brownMedium transition-colors duration-200">
+                  <svg
+                    className="w-5 h-5 mr-2"
+                    width="15"
+                    height="15"
+                    viewBox="0 0 15 15"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M7.50005 1.04999C7.74858 1.04999 7.95005 1.25146 7.95005 1.49999V8.41359L10.1819 6.18179C10.3576 6.00605 10.6425 6.00605 10.8182 6.18179C10.994 6.35753 10.994 6.64245 10.8182 6.81819L7.81825 9.81819C7.64251 9.99392 7.35759 9.99392 7.18185 9.81819L4.18185 6.81819C4.00611 6.64245 4.00611 6.35753 4.18185 6.18179C4.35759 6.00605 4.64251 6.00605 4.81825 6.18179L7.05005 8.41359V1.49999C7.05005 1.25146 7.25152 1.04999 7.50005 1.04999ZM2.5 10C2.77614 10 3 10.2239 3 10.5V12C3 12.5539 3.44565 13 3.99635 13H11.0012C11.5529 13 12 12.5528 12 12V10.5C12 10.2239 12.2239 10 12.5 10C12.7761 10 13 10.2239 13 10.5V12C13 13.1041 12.1062 14 11.0012 14H3.99635C2.89019 14 2 13.103 2 12V10.5C2 10.2239 2.22386 10 2.5 10Z"
+                      fill="currentColor"
+                      fill-rule="evenodd"
+                      clip-rule="evenodd"
+                    ></path>
+                  </svg>
+                  <span>Financial Report</span>
+                </Button>
+              </PDFDownloadLink>
             </li>
             <li>
-              <Button className="mb-5 flex items-center w-full text-md text-white px-4 py-2 rounded-md bg-brownDark hover:bg-brownMedium transition-colors duration-200">
-                <svg
-                  className="w-5 h-5 mr-2"
-                  width="15"
-                  height="15"
-                  viewBox="0 0 15 15"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M7.50005 1.04999C7.74858 1.04999 7.95005 1.25146 7.95005 1.49999V8.41359L10.1819 6.18179C10.3576 6.00605 10.6425 6.00605 10.8182 6.18179C10.994 6.35753 10.994 6.64245 10.8182 6.81819L7.81825 9.81819C7.64251 9.99392 7.35759 9.99392 7.18185 9.81819L4.18185 6.81819C4.00611 6.64245 4.00611 6.35753 4.18185 6.18179C4.35759 6.00605 4.64251 6.00605 4.81825 6.18179L7.05005 8.41359V1.49999C7.05005 1.25146 7.25152 1.04999 7.50005 1.04999ZM2.5 10C2.77614 10 3 10.2239 3 10.5V12C3 12.5539 3.44565 13 3.99635 13H11.0012C11.5529 13 12 12.5528 12 12V10.5C12 10.2239 12.2239 10 12.5 10C12.7761 10 13 10.2239 13 10.5V12C13 13.1041 12.1062 14 11.0012 14H3.99635C2.89019 14 2 13.103 2 12V10.5C2 10.2239 2.22386 10 2.5 10Z"
-                    fill="currentColor"
-                    fill-rule="evenodd"
-                    clip-rule="evenodd"
-                  ></path>
-                </svg>
-                <span>User analysis Report</span>
-              </Button>
+              <PDFDownloadLink document={<UserReport />} fileName="UserReport">
+                <Button className="mb-5 flex items-center w-full text-md text-white px-4 py-2 rounded-md bg-brownDark  hover:text-white hover:bg-brownMedium transition-colors duration-200">
+                  <svg
+                    className="w-5 h-5 mr-2"
+                    width="15"
+                    height="15"
+                    viewBox="0 0 15 15"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M7.50005 1.04999C7.74858 1.04999 7.95005 1.25146 7.95005 1.49999V8.41359L10.1819 6.18179C10.3576 6.00605 10.6425 6.00605 10.8182 6.18179C10.994 6.35753 10.994 6.64245 10.8182 6.81819L7.81825 9.81819C7.64251 9.99392 7.35759 9.99392 7.18185 9.81819L4.18185 6.81819C4.00611 6.64245 4.00611 6.35753 4.18185 6.18179C4.35759 6.00605 4.64251 6.00605 4.81825 6.18179L7.05005 8.41359V1.49999C7.05005 1.25146 7.25152 1.04999 7.50005 1.04999ZM2.5 10C2.77614 10 3 10.2239 3 10.5V12C3 12.5539 3.44565 13 3.99635 13H11.0012C11.5529 13 12 12.5528 12 12V10.5C12 10.2239 12.2239 10 12.5 10C12.7761 10 13 10.2239 13 10.5V12C13 13.1041 12.1062 14 11.0012 14H3.99635C2.89019 14 2 13.103 2 12V10.5C2 10.2239 2.22386 10 2.5 10Z"
+                      fill="currentColor"
+                      fill-rule="evenodd"
+                      clip-rule="evenodd"
+                    ></path>
+                  </svg>
+                  <span>User analysis Report</span>
+                </Button>
+              </PDFDownloadLink>
             </li>
           </ul>
         </nav>
@@ -159,7 +165,7 @@ const SideMenu = () => {
             <li>
               <Link
                 to="/adminProfile"
-                className="flex items-center px-4 py-2 rounded-md bg-white hover:bg-brownMedium transition-colors duration-200"
+                className="flex items-center px-4 py-2 rounded-md bg-white hover:bg-brownMedium  hover:text-white transition-colors duration-200"
               >
                 <svg
                   className="w-5 h-5 mr-2"
@@ -182,7 +188,7 @@ const SideMenu = () => {
             <li>
               <Link
                 to="/adminRegister"
-                className="flex items-center px-4 py-2 rounded-md bg-white hover:bg-brownMedium transition-colors duration-200"
+                className="flex items-center px-4 py-2 rounded-md bg-white hover:bg-brownMedium  hover:text-white transition-colors duration-200"
               >
                 <svg
                   className="w-5 h-5 mr-2"

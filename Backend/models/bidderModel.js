@@ -32,10 +32,10 @@ const bidderSchema = mongoose.Schema(
       type: Boolean,
       required: true,
     },
-    // howtoknow: {
-    //   type: String,
-    //   required: false,
-    // },
+    howtoknow: {
+      type: String,
+      required: false,
+    },
     interests: {
       type: Boolean,
       required: true,
@@ -44,18 +44,18 @@ const bidderSchema = mongoose.Schema(
       type: String,
       required: true,
     },
-    termscondition: {
-      type: Boolean,
-      required: true,
-    },
+    // termscondition: {
+    //   type: Boolean,
+    //   required: true,
+    // },
     isActive: {
       type: Boolean,
       default: true,
     },
-    // type: {
-    //   type: String,
-    //   default: "Bidder",
-    // },
+    type: {
+      type: String,
+      default: "Bidder",
+    },
     profileImage: {
       type: String,
       default: "",

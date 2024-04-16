@@ -19,8 +19,13 @@ const FeedbackSchema = mongoose.Schema({
     },
     Rate : {
               type : Number,
-               required : true
+              required : true
+    },
+    Need : {
+        type : String,
+        required : true
     }
+
 },{ timestamps: true }
 );
 

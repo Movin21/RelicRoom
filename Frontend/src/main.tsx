@@ -35,6 +35,10 @@ import { AdminAuctions } from "./pages/AdminPortal/AdminAuctions.tsx";
 import AdminProfile from "./pages/AdminPortal/AdminProfile.tsx";
 import { AdminUsers } from "./pages/AdminPortal/AdminUsers.tsx";
 import CustomerCareLayout from "./pages/layouts/CustomerCareLayout.tsx";
+import FeedbackReview from "./pages/Customer Care/FeedbackReview.tsx";
+import FAQmanage from "./pages/Customer Care/FAQmanage.tsx";
+import FeedbackManage from "./pages/Customer Care/FeedbackManage.tsx";
+import Update from "./pages/Customer Care/Update.tsx";
 import CustomerCare from "./pages/Customer Care/CustomerCare.tsx";
 import AuctionDashboardLayout from "./pages/layouts/AuctionDashboardLayout.tsx";
 import AuctionDashboard from "./pages/Auction Listing/AuctionDashboard.tsx";
@@ -76,9 +80,11 @@ const router = createBrowserRouter([
       { path: "/bidderLogin", element: <BidderLogin /> },
       { path: "/bidderSignup", element: <BidderSignup /> },
       { path: "/bidderProfile", element: <BidderProfile /> },
+      { path: "/feedbackreview", element: <FeedbackReview/> },
       { path: "/bidderDashboard", element: <BidderDashboard /> },
       { path: "/bidderWishlist", element: <BidderWishlist /> },
       { path: "/bidderMybids", element: <BidderMybids /> },
+
     ],
   },
 
@@ -108,7 +114,12 @@ const router = createBrowserRouter([
   },
   {
     element: <CustomerCareLayout />,
-    children: [{ path: "/customerCare", element: <CustomerCare /> }],
+    children: [
+      { path: "/feedbackManage", element: <FeedbackManage/> },
+      { path: "/FAQManage", element: <FAQmanage/> },
+      { path: "/FAQupdate/:id", element: <Update/> },
+    ],
+    
   },
 ]);
 

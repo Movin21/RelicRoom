@@ -2,6 +2,7 @@ import RevenueChart from "./Charts/RevenueCharts";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import USerPieChart from "./Charts/UserPieChart";
+import AuctionCarousel from "./Charts/AuctionCarousel";
 
 const AdminPortal = () => {
   const [users, setUsers] = useState(0);
@@ -144,14 +145,16 @@ const AdminPortal = () => {
           </div>
         </div>
       </div>
-
       <div className="bg-white rounded-lg shadow-md p-4 ">
         <div className="text-brownMedium text-2xl font-bold mb-2 md:mb-4 font-akshar">
           Revenue
         </div>
         <RevenueChart />
       </div>
-      <USerPieChart />
+      <div className="flex items-center">
+        <AuctionCarousel />
+        <USerPieChart />
+      </div>
     </>
   );
 };

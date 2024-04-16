@@ -30,7 +30,7 @@ const AuctionCarousel = () => {
 
   const fetchAllAuctions = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/admin/auctions");
+      const response = await axios.get("http://localhost:3000/admin/auctions");
       setAuctions(
         response.data.filter((auction: Auction) => !auction.isExpired)
       );

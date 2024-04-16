@@ -53,7 +53,7 @@ export function AdminAuctions() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/admin/auctions")
+      .get("http://localhost:3000/admin/auctions")
       .then((response) => {
         setAuctions(response.data);
         setActiveAuctions(
@@ -82,7 +82,7 @@ export function AdminAuctions() {
 
   const terminateAuction = (auctionId: string) => {
     axios
-      .patch(`http://localhost:5000/admin/auctions/expire/${auctionId}`)
+      .patch(`http://localhost:3000/admin/auctions/expire/${auctionId}`)
       .then((response) => {
         // If successful, update the state to reflect the terminated auction
         setAuctions((prevAuctions) =>

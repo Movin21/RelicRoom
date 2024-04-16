@@ -48,7 +48,7 @@ const auctioneerSchema = mongoose.Schema(
       type: String,
       default: "Auctioneer",
     },
-    profileImage: {
+    profilePicture: {
       type: String,
       default: "",
     },

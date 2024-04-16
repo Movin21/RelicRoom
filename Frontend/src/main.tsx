@@ -14,10 +14,14 @@ import AdminRegister from "./pages/AdminPortal/AdminRegister.tsx";
 import BidderLogin from "./pages/Bidder/BidderLogin.tsx";
 import BidderSignup from "./pages/Bidder/BidderSignup.tsx";
 import BidderProfile from "./pages/Bidder/BidderProfile.tsx";
+import BidderDashboard from "./pages/Bidder/BidderDashboard.tsx";
+import BidderWishlist from "./pages/Bidder/BidderWishlist.tsx";
+import BidderMybids from "./pages/Bidder/BidderMybids.tsx";
 import AuctioneerLogin from "./pages/Auctioneer/AuctioneerLogin.tsx";
 import AuctioneerRegister from "./pages/Auctioneer/AuctioneerRegister.tsx";
 import AuctioneerPortal from "./pages/Auctioneer/AuctioneerPortal.tsx";
 import AuctioneerProfile from "./pages/Auctioneer/AuctioneerProfile.tsx";
+import AuctioneerReportG from "./pages/Auctioneer/AuctioneerReportG.tsx"; 
 import AuctionList from "./pages/Auction Listing/AuctionList.tsx";
 import { Provider } from "react-redux";
 import { store, persistor } from "./redux/store.ts";
@@ -35,15 +39,22 @@ import FeedbackReview from "./pages/Customer Care/FeedbackReview.tsx";
 import FAQmanage from "./pages/Customer Care/FAQmanage.tsx";
 import FeedbackManage from "./pages/Customer Care/FeedbackManage.tsx";
 import Update from "./pages/Customer Care/Update.tsx";
+import CustomerCare from "./pages/Customer Care/CustomerCare.tsx";
+import AuctionDashboardLayout from "./pages/layouts/AuctionDashboardLayout.tsx";
+import AuctionDashboard from "./pages/Auction Listing/AuctionDashboard.tsx";
+import ManageAuctions from "./pages/Auction Listing/ManageAuctions.tsx";
+import UpdateAuction from "./pages/Auction Listing/UpdateAuction.tsx";
 
+
+// Initialize Firebase
 const firebaseConfig = {
-  apiKey: "AIzaSyA2zhpGMIkd9iN2SmlLkcVz1mlKRy23v60",
-  authDomain: "relicroom-632b8.firebaseapp.com",
-  projectId: "relicroom-632b8",
-  storageBucket: "relicroom-632b8.appspot.com",
-  messagingSenderId: "134645367706",
-  appId: "1:134645367706:web:05ce85a588a5f36c4af023",
-  measurementId: "G-00NWB1RQTG",
+  apiKey: "AIzaSyD4SG__snQ7W-DqFBLnlIq8zSV9yNCa4PY",
+  authDomain: "relicroom-db857.firebaseapp.com",
+  projectId: "relicroom-db857",
+  storageBucket: "relicroom-db857.appspot.com",
+  messagingSenderId: "840710799785",
+  appId: "1:840710799785:web:cfa46e6e62eb0d00f504b8",
+  measurementId: "G-X3ZEJPNV24",
 };
 firebase.initializeApp(firebaseConfig);
 
@@ -56,6 +67,7 @@ const router = createBrowserRouter([
       { path: "/auctioneerRegister", element: <AuctioneerRegister /> },
       { path: "/auctioneerPortal", element: <AuctioneerPortal /> },
       { path: "/auctioneerProfile", element: <AuctioneerProfile /> },
+      { path: "/auctioneerReportG", element:  <AuctioneerReportG /> },
       { path: "/auction/postAuction", element: <PostAuction /> },
       { path: "/auction/listedAuctions", element: <AuctionList /> },
       { path: "/bidderLogin", element: <BidderLogin /> },
@@ -69,6 +81,10 @@ const router = createBrowserRouter([
       { path: "/bidderSignup", element: <BidderSignup /> },
       { path: "/bidderProfile", element: <BidderProfile /> },
       { path: "/feedbackreview", element: <FeedbackReview/> },
+      { path: "/bidderDashboard", element: <BidderDashboard /> },
+      { path: "/bidderWishlist", element: <BidderWishlist /> },
+      { path: "/bidderMybids", element: <BidderMybids /> },
+
     ],
   },
 
@@ -80,6 +96,16 @@ const router = createBrowserRouter([
       { path: "/adminProfile", element: <AdminProfile /> },
       { path: "/adminAuctions", element: <AdminAuctions /> },
       { path: "/adminUsers", element: <AdminUsers /> },
+    ],
+  },
+
+  {
+    element: <AuctionDashboardLayout />,
+    children: [
+      { path: "/auctionDashboard", element: <AuctionDashboard /> },
+      { path: "/manageAuctions", element: <ManageAuctions /> },
+      { path: "/auction/postAuction", element: <PostAuction /> },
+      { path: "/auction/updateAuction/:id", element: <UpdateAuction /> },
     ],
   },
   {

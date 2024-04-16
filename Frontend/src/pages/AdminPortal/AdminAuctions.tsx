@@ -80,6 +80,33 @@ export function AdminAuctions() {
     auction.auctionTitle.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
+  const terminateAuction = (auctionId: string) => {
+    axios
+      .patch(`http://localhost:3000/admin/auctions/expire/${auctionId}`)
+      .then((response) => {
+        // If successful, update the state to reflect the terminated auction
+        setAuctions((prevAuctions) =>
+          prevAuctions.map((auction) =>
+            auction._id === auctionId
+              ? { ...auction, isExpired: true }
+              : auction
+          )
+        );
+        // Update active and expired auctions accordingly
+        setActiveAuctions((prevActiveAuctions) =>
+          prevActiveAuctions.filter((auction) => auction._id !== auctionId)
+        );
+        setExpiredAuctions((prevExpiredAuctions) =>
+          prevExpiredAuctions.concat(
+            activeAuctions.find((auction) => auction._id === auctionId)!
+          )
+        );
+      })
+      .catch((error) => {
+        console.error("Error terminating auction:", error);
+      });
+  };
+
   return (
     <div className="flex min-h-screen w-full flex-col bg-muted/40">
       <div>
@@ -111,13 +138,13 @@ export function AdminAuctions() {
         </div>
 
         <main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
-          <Tabs defaultValue="all">
+          <Tabs defaultValue="active">
             <div className="flex items-center">
               <div className="ml-auto flex items-center gap-2">
                 <TabsList>
-                  <TabsTrigger value="all">All</TabsTrigger>
                   <TabsTrigger value="active">Active</TabsTrigger>
                   <TabsTrigger value="expired">Expired</TabsTrigger>
+                  <TabsTrigger value="all">All</TabsTrigger>
                 </TabsList>
               </div>
             </div>
@@ -202,7 +229,7 @@ export function AdminAuctions() {
             <TabsContent value="active">
               <Card>
                 <CardHeader>
-                  <CardTitle>Active Auctions</CardTitle>
+                  <CardTitle>Featuring Auctions</CardTitle>
                   <CardDescription>
                     Manage all active auctions and view their performance.
                   </CardDescription>
@@ -260,7 +287,12 @@ export function AdminAuctions() {
                             {new Date(auction.createdAt).toLocaleString()}
                           </TableCell>
                           <TableCell>
-                            <Button className="bg-red-500">Terminate</Button>
+                            <Button
+                              className="hover:bg-red-500 font-amethysta"
+                              onClick={() => terminateAuction(auction._id)}
+                            >
+                              Terminate
+                            </Button>
                           </TableCell>
                         </TableRow>
                       ))}
@@ -277,7 +309,7 @@ export function AdminAuctions() {
             <TabsContent value="expired">
               <Card>
                 <CardHeader>
-                  <CardTitle>Expired Auctions</CardTitle>
+                  <CardTitle>Featured Auctions</CardTitle>
                   <CardDescription>
                     Manage all expired auctions and view their performance.
                   </CardDescription>

@@ -9,6 +9,7 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { AlertCircle } from "lucide-react";
 import { useDispatch } from "react-redux";
 import { login } from "./slice/adminSlice";
+import adminLoginBG from "../../assets/admin/adminLoginBG.jpg";
 const schema = z.object({
   username: z.string().min(1, "Username is required"),
   password: z.string().min(1, "Password is required"),
@@ -48,8 +49,16 @@ const AdminPortalLogin = () => {
   };
 
   return (
-    <div className="flex justify-center items-center h-screen bg-gradient-to-r from-brownMedium to-brownDark">
-      <div className="bg-white p-8 rounded-lg shadow-md max-w-md w-full">
+    <div
+      className="flex justify-center items-center h-screen bg-gradient-to-r from-brownMedium to-brownDark"
+      style={{
+        backgroundImage: `url(${adminLoginBG})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+      }}
+    >
+      <div className="backdrop-blur-sm bg-white/30 p-8 rounded-lg shadow-md max-w-md w-full">
         <h2 className="font-akshar text-brownDark text-4xl text-center font-bold mb-6">
           Welcome to Admin Portal
         </h2>
@@ -61,7 +70,7 @@ const AdminPortalLogin = () => {
           <div className="mb-4">
             <label
               htmlFor="username"
-              className="font-poppins block text-sm font-medium mb-2"
+              className="font-poppins block text-sm mb-2 font-medium"
             >
               Username:
             </label>
@@ -136,10 +145,7 @@ const AdminPortalLogin = () => {
         </form>
         <p className="font-poppins mt-4 text-sm">
           Don't have an account?
-          <Link
-            to="#"
-            className="font-poppins text-brownMedium hover:underline"
-          >
+          <Link to="#" className="font-poppins text-brownDark hover:underline">
             Create Account
           </Link>
         </p>

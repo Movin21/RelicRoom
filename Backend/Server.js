@@ -16,6 +16,7 @@ const rsRouter = require("./Application/Repair Specialist/routes/rsControl.js");
 const vintageexpertRouter = require("./Application/Vintage Item Expert/routes/vintageitemexpertrouter.js");
 const customerCareRouter = require("./Application/Customer Care/routes/customerCareRouter.js");
 const bidderRoutes = require("./Application/Bidder/routes/bidderRoutes.js");
+const paymentRoutes = require("./Application/Delivery Tracking/PaymentRoute.js");
 
 const app = express();
 
@@ -34,9 +35,6 @@ connectDB();
   }
 }, 1000); // Check every 24 hours*/
 
-
-
-
 //Route Middleware
 app.use("/admin", adminRouter);
 app.use("/auctions", auctionRoutes);
@@ -46,8 +44,11 @@ app.use("/customerCare", customerCareRouter);
 app.use("/bidder", bidderRoutes);
 app.use("/repairSpecialist", rsRouter);
 app.use("/vintageexpert", vintageexpertRouter);
+app.use("/payment", paymentRoutes);
 
+
+//errorHandler
 app.use(errorHandler);
-app.listen(process.env.PORT || 5000, () => {
-  console.log(`Server running on Port ${process.env.PORT || 5000}`);
+app.listen(process.env.PORT || 3000, () => {
+  console.log(`Server running on Port ${process.env.PORT || 3000}`);
 });

@@ -35,11 +35,15 @@ import { AdminAuctions } from "./pages/AdminPortal/AdminAuctions.tsx";
 import AdminProfile from "./pages/AdminPortal/AdminProfile.tsx";
 import { AdminUsers } from "./pages/AdminPortal/AdminUsers.tsx";
 import CustomerCareLayout from "./pages/layouts/CustomerCareLayout.tsx";
-import CustomerCare from "./pages/Customer Care/CustomerCare.tsx";
+import FeedbackReview from "./pages/Customer Care/FeedbackReview.tsx";
+import FAQmanage from "./pages/Customer Care/FAQmanage.tsx";
+import FeedbackManage from "./pages/Customer Care/FeedbackManage.tsx";
+import Update from "./pages/Customer Care/Update.tsx";
 import AuctionDashboardLayout from "./pages/layouts/AuctionDashboardLayout.tsx";
 import AuctionDashboard from "./pages/Auction Listing/AuctionDashboard.tsx";
 import ManageAuctions from "./pages/Auction Listing/ManageAuctions.tsx";
 import UpdateAuction from "./pages/Auction Listing/UpdateAuction.tsx";
+
 
 
 // Initialize Firebase
@@ -79,6 +83,12 @@ const router = createBrowserRouter([
       { path: "/bidderDashboard", element: <BidderDashboard /> },
       { path: "/bidderWishlist", element: <BidderWishlist /> },
       { path: "/bidderMybids", element: <BidderMybids /> },
+      { path: "/feedbackreview", element: <FeedbackReview/> },
+      { path: "/bidderDashboard", element: <BidderDashboard /> },
+      { path: "/bidderWishlist", element: <BidderWishlist /> },
+      { path: "/bidderMybids", element: <BidderMybids /> },
+
+
     ],
   },
 

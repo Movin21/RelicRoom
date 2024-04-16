@@ -17,6 +17,7 @@ const rootReducer = combineReducers({
   admin: adminSlice,
   bidder: bidderSlice,
   auctioneer: auctioneerSlice,
+  
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

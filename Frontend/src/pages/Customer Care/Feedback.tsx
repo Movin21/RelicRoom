@@ -5,6 +5,8 @@ import { useForm } from "react-hook-form"
 import { z } from "zod"
 import axios from "axios"
 import { Textarea } from "@/components/ui/textarea";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+
 
 import {
     Card,
@@ -35,17 +37,8 @@ import {
     SelectValue,
   } from "@/components/ui/select"
 import { toast } from "@/components/ui/use-toast"  
+import { Link } from "react-router-dom";
 
-import {
-    NavigationMenu,
-    NavigationMenuContent,
-    NavigationMenuIndicator,
-    NavigationMenuItem,
-    NavigationMenuLink,
-    NavigationMenuList,
-    NavigationMenuTrigger,
-    NavigationMenuViewport,
-  } from "@/components/ui/navigation-menu"
   
   
 
@@ -104,20 +97,15 @@ const formSchema = z.object({
     <>
     <h1 className='flex justify-center text-2xl font-bold h-500 item-center w-500 font-akshar text-yellow-950'>Customer Care </h1>
     
-    <NavigationMenu className='mx-auto mb-3 text-lg font-akshar text-yellow-950'>
-     <NavigationMenuList>
-     <NavigationMenuItem>
-        <NavigationMenuTrigger>Suggestions</NavigationMenuTrigger>
-     </NavigationMenuItem>
-     <NavigationMenuItem>
-        <NavigationMenuTrigger>Complaints</NavigationMenuTrigger>
-     </NavigationMenuItem>
-     <NavigationMenuItem>
-        <NavigationMenuTrigger>Feedbacks</NavigationMenuTrigger>
-     </NavigationMenuItem>
-     </NavigationMenuList>
-    </NavigationMenu>
-
+    <Tabs defaultValue="account" className="w-[400px] flex item-center justify-center">
+     <TabsList>
+      <TabsTrigger value="complaint"><Link to="/complaints">Complaint</Link></TabsTrigger>
+      <TabsTrigger value="suggestion"><Link to="/suggestion">Suggestion</Link></TabsTrigger>
+      <TabsTrigger value="feedback">Feedback</TabsTrigger>
+     </TabsList>
+     
+    </Tabs>
+    
     
     
     <div className="flex justify-center h-500 item-center w-500">

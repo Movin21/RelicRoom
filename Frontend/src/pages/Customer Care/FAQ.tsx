@@ -8,13 +8,15 @@ import {
 } from "@/components/ui/accordion";
 
 interface Faq {
-  _id: string; // Assuming the unique identifier is '_id', adjust accordingly if it's different
+  _id: string;
   Question: string;
   Answer: string;
 }
 
 function FAQ() {
   const [data, setData] = useState<Faq[]>([]);
+  const [filteredData, setFilteredData] = useState<Faq[]>([]); // State to hold filtered data
+  const [searchQuery, setSearchQuery] = useState<string>("");
 
   useEffect(() => {
     axios
@@ -28,18 +30,41 @@ function FAQ() {
       });
   }, []);
 
+  useEffect(() => {
+    // Filter data whenever searchQuery changes
+    const filtered = data.filter((faq) =>
+      faq.Question.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+    setFilteredData(filtered);
+  }, [searchQuery, data]);
+
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(event.target.value);
+  };
+
   return (
-    <div>
-      
-      <Accordion type="single" collapsible className="w-full">
-        {data.map((faq) => (
-          <AccordionItem key={faq._id} value={faq._id}>
-            <AccordionTrigger>{faq.Question}</AccordionTrigger>
-            <AccordionContent>{faq.Answer}</AccordionContent>
-          </AccordionItem>
-        ))}
-      </Accordion>
-    </div>
+    <>
+      <div>
+        <h1 className="text-2xl text-center font-akshar text-yellow-950">
+          Frequently Asked Questions
+        </h1>
+        <input
+          type="text"
+          value={searchQuery}
+          onChange={handleSearchChange}
+          placeholder="Search FAQs"
+          className="p-2 mt-4 border border-gray-300 rounded-md "
+        />
+        <Accordion type="single" collapsible className="m-16">
+          {filteredData.map((faq) => (
+            <AccordionItem key={faq._id} value={faq._id}>
+              <AccordionTrigger>{faq.Question}</AccordionTrigger>
+              <AccordionContent>{faq.Answer}</AccordionContent>
+            </AccordionItem>
+          ))}
+        </Accordion>
+      </div>
+    </>
   );
 }
 

@@ -76,6 +76,9 @@ const router = createBrowserRouter([
       { path: "/bidderLogin", element: <BidderLogin /> },
       { path: "/bidderSignup", element: <BidderSignup /> },
       { path: "/bidderProfile", element: <BidderProfile /> },
+      { path: "/bidderDashboard", element: <BidderDashboard /> },
+      { path: "/bidderWishlist", element: <BidderWishlist /> },
+      { path: "/bidderMybids", element: <BidderMybids /> },
     ],
   },
 

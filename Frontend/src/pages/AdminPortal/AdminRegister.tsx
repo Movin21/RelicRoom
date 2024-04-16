@@ -101,7 +101,6 @@ const AdminRegister = () => {
       console.log("Admin created successfully");
       form.reset();
       navigate("/adminLogin");
-      setImgUrl("https://github.com/shadcn.png");
     } catch (error) {
       console.error("Error creating admin:", error);
     }

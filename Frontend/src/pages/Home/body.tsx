@@ -1,12 +1,17 @@
+import { Home } from "lucide-react";
 import React from "react";
+import Section3 from "./Section3";
+import Section2 from "./Section2";
+import Section1 from "./Section1";
+import Section4 from "./Section4";
 
 function Body() {
   return (
     <div>
-      <img
-        src="https://img.freepik.com/free-photo/top-view-beautiful-rpg-still-life-items_23-2149282433.jpg?t=st=1710744406~exp=1710748006~hmac=9fb7c404e42d1f8b25fcd73526e18c0f40be094ae909643bbf1c55b74c2c3fee&w=1060"
-        alt=""
-      />
+      <Section4 />
+      <Section1 />
+      <Section2 />
+      <Section3 />
     </div>
   );
 }

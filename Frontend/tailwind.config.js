@@ -1,4 +1,14 @@
 /** @type {import('tailwindcss').Config} */
+
+const withMT = require("@material-tailwind/react/utils/withMT");
+
+module.exports = withMT({
+  content: [],
+  theme: {
+    extend: {},
+  },
+  plugins: [],
+});
 module.exports = {
   darkMode: ["class"],
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
@@ -13,10 +23,14 @@ module.exports = {
     },
     extend: {
       fontFamily: {
+        sourceSans3: ["SourceSans3", "sans-serif"],
         akshar: ["Akshar", "sans-serif"],
         poppins: ["Poppins", "sans-serif"],
         amethysta: ["Amethysta", "sans-serif"],
         nunitoSans: ["Nunito Sans", "sans-serif"],
+        alatsi: ["Alatsi", "sans-serif"],
+        manrope: ["Manrope", "sans-serif"],
+        sangbleu: ["SangBleu-Sunrise", "sans-serif"],
       },
       colors: {
         brownDark: "#302300",

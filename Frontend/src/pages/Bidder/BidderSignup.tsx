@@ -8,9 +8,8 @@ import { z } from "zod";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Checkbox } from "@/components/ui/checkbox"
 import axios from 'axios';
-import { Label } from "@/components/ui/label"
+import { useNavigate } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { toast } from "sonner";
 
 const FormSchema = z.object({
   firstname: z.string().min(1,{
@@ -32,11 +31,9 @@ const FormSchema = z.object({
   contactnumber: z.string().length(10, {
       message: "Mobile number must be 10 digits.",
     }),
+  // area:z.boolean(),
   payment: z.string().min(1, {
       message: "Payemnt method is required.",
-    }),
-  profileImage: z.string().min(1, {
-      message: "Profile image is required.",
     })
 });
  
@@ -52,13 +49,12 @@ const BidderSignup = () => {
       password:"",
       address: "",
       contactnumber: "",
-      payment: "",
-      profileImage: ""
+      payment: ""
     },
   })
-
+  const navigate = useNavigate(); // Utilize useNavigate for redirection
   const onSubmit = async (values: z.infer<typeof FormSchema>) => {
-    
+    console.log("Error");
     const bidderData = {
       firstname: values.firstname,
       lastname: values.lastname,
@@ -77,6 +73,7 @@ const BidderSignup = () => {
      
       .then(response => {
         console.log('Bidder has been created successfully:', response.data);
+        navigate('/bidderLogin');
       })
       .catch(error => {
         console.error('Error has been in bidder:', error.response.data);
@@ -84,28 +81,26 @@ const BidderSignup = () => {
       });
   };
   
+  const handleLoginClick = () => {
+    navigate('/bidderLogin');
+  };
 
   return  (
     
      <> <Tabs defaultValue="bidderSign" className="flex items-center justify-center  h-ful">
-        <TabsList>
-          <TabsTrigger value="login">Login</TabsTrigger>
-          <TabsTrigger value="register">Register</TabsTrigger>
+        <TabsList className="hover:scale-110 transition duration-300 ease-in-out">
+          <TabsTrigger className="font-akshar hover:bg-white hover:scale-110 transition duration-300 ease-in-out" value="login" onClick={handleLoginClick}>Login</TabsTrigger>
+          <TabsTrigger className="font-akshar hover:bg-white hover:scale-110 transition duration-300 ease-in-out" value="register">Register</TabsTrigger>
         </TabsList>
       </Tabs>
       <CardHeader>
-            <CardTitle className="font-akshar text-primary  text-center text-2xl">
+            <CardTitle className="font-akshar text-primary  text-center text-2xl mb-0">
             REGISTER AS A BIDDER
             </CardTitle>
           </CardHeader>
     
     <div className="flex items-center justify-center">
-      <Card className=" md:w-180 p-6 mt-10 mb-10">
-      {/* <CardHeader>
-            <CardTitle className="font-akshar text-secondary  text-center text-2xl">
-            REGISTER AS A BIDDER
-            </CardTitle>
-          </CardHeader> */}
+      <Card className=" w-full md:w-96 p-6 mt-0 mb-10 shadow-2xl" style={{ width: '700px' }}>
           <CardContent>
           <Form {...form} >
           <form onSubmit={form.handleSubmit(onSubmit)} 
@@ -115,12 +110,12 @@ const BidderSignup = () => {
             control={form.control}
             name="firstname"
             render={({ field }) => (
-                <FormItem>
+                <FormItem style={{ marginBottom: '20px' }}>
                 <FormLabel className="font-akshar">First Name :</FormLabel>
                   <FormControl>
-                    <Input placeholder="Enter first name" {...field} />
+                    <Input className="font-akshar" placeholder="Enter first name" {...field} style={{ fontSize: '14px' }}/>
                   </FormControl>
-                <FormMessage className="text-red-500"/> 
+                <FormMessage className="text-red-500 font-akshar"/> 
                 </FormItem>
             )}
           />
@@ -132,9 +127,9 @@ const BidderSignup = () => {
                 <FormItem>
                 <FormLabel className="font-akshar">Last Name :</FormLabel>
                   <FormControl>
-                    <Input placeholder="Enter last name" {...field} />
+                    <Input className="font-akshar" placeholder="Enter last name" {...field} style={{ fontSize: '14px' }}/>
                   </FormControl>
-                <FormMessage className="text-red-500"/> 
+                <FormMessage className="text-red-500 font-akshar"/> 
                 </FormItem>
             )}
           />
@@ -146,9 +141,9 @@ const BidderSignup = () => {
                 <FormItem>
                   <FormLabel className="font-akshar">Email :</FormLabel>
                   <FormControl>
-                    <Input placeholder="Enter email" type='email'{...field} />
+                    <Input className="font-akshar" placeholder="Enter email" type='email'{...field} style={{ fontSize: '14px' }}/>
                   </FormControl>
-                  <FormMessage className="text-red-500"/>
+                  <FormMessage className="text-red-500 font-akshar"/>
                 </FormItem>
               )}
             />
@@ -160,9 +155,9 @@ const BidderSignup = () => {
                 <FormItem>
                   <FormLabel className="font-akshar">Passsword :</FormLabel>
                   <FormControl>
-                    <Input placeholder="Enter passsword" type="password" {...field} />
-                  </FormControl>
-                  <FormMessage className="text-red-500"/>
+                    <Input className="font-akshar" placeholder="Enter passsword" type="password" {...field} style={{ fontSize: '14px' }}/>
+                  </FormControl>       
+                    <FormMessage className="text-red-500 font-akshar"/>
                 </FormItem>
               )}
             />
@@ -174,9 +169,9 @@ const BidderSignup = () => {
               <FormItem>
                 <FormLabel className="font-akshar">Address :</FormLabel>
                 <FormControl>
-                  <Input placeholder="Enter address" {...field} />
+                  <Input className="font-akshar" placeholder="Enter address" {...field} style={{ fontSize: '14px' }}/>
                 </FormControl>
-                <FormMessage className="text-red-500"/> 
+                <FormMessage className="text-red-500 font-akshar"/> 
               </FormItem>
             )}
           />
@@ -188,28 +183,28 @@ const BidderSignup = () => {
               <FormItem>
                 <FormLabel className="font-akshar">Contact number :</FormLabel>
                 <FormControl>
-                  <Input placeholder="Enter contact number" {...field} />
+                  <Input className="font-akshar" placeholder="Enter contact number" {...field} style={{ fontSize: '14px' }}/>
                 </FormControl>  
-                <FormMessage className="text-red-500"/> 
+                <FormMessage className="text-red-500 font-akshar"/> 
               </FormItem>
             )}
           />
            <div >
            <FormLabel className="font-akshar">Area you are based :</FormLabel>
            </div>
-            <div>
-              <Checkbox id="sweden" />
+            <div className="flex items-center">
+              <Checkbox id="sweden"/>
               <label
                 htmlFor="sweden"
-                className="ml-2 text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70" >
+                className="font-akshar ml-2 text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70" >
                 Sweden
               </label>
             </div>
-            <div>
+            <div className="flex items-center">
               <Checkbox id="global" />
               <label
                 htmlFor="global"
-                className="ml-2 text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70" >
+                className="font-akshar ml-2 text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70" >
                 Global
               </label>
             </div>
@@ -221,10 +216,10 @@ const BidderSignup = () => {
                 <FormItem>
                 <FormLabel className="font-akshar">Payment method :</FormLabel>
                   <FormControl>
-                    <select {...field} className="w-full px-3 py-1.5 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-                    <option value="">Select payment method</option>
-                    <option value="Credit">Credit card payments</option>
-                    <option value="Debit">Debit card payments</option>
+                    <select {...field} className="font-akshar w-full px-3 py-1.5 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <option className="font-akshar" value="">Select payment method</option>
+                    <option className="font-akshar" value="Credit">Credit card payments</option>
+                    <option className="font-akshar" value="Debit">Debit card payments</option>
                     </select>
                   </FormControl>
                 <FormMessage className="text-red-500"/> 
@@ -232,48 +227,20 @@ const BidderSignup = () => {
             )}
             />
             
-            <div className="grid w-full max-w-sm items-center gap-1.5">
-              <Label htmlFor="picture" className="font-akshar">Add Profile Image :</Label>
-              <Input id="picture" type="file" className="h-10"/>
-            </div>
-
-            {/* <FormField
-              control={form.control}
-              name="profileImage"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Profile Image :</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Upload your profile image"{...field} />
-                  </FormControl>
-                  <FormMessage className="text-red-500"/>
-                </FormItem>
-            )}
-            /> */}
-            <div>
+            <div className="flex items-center">
               <Checkbox id="termscondition" />
               <label
                 htmlFor="termscondition"
-                className="ml-2 text-sm font-akshar leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70" >
+                className="ml-2 text-xs font-akshar leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70" >
                 Accept terms and conditions
               </label>
             </div>
-      
-    {/* <div className="flex items-center space-x-2 ml-6">
-          <Checkbox id="termscondition" />
-          <label
-            htmlFor="termscondition"
-            className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70" >
-            Accept terms and conditions
-          </label>
-        </div> */}
 
             <div className="flex items-center justify-center mb-5">
-            {/* <Button className="w-96 text-white bg-primary hover:bg-secondary ease-in-out hover:text-white tw-50 mt-4" type="submit">Submit</Button> */}
             <Button
                 disabled={form.formState.isSubmitting} // Disable the button while submitting
                 type="submit"
-                className="w-full text-white bg-primary hover:bg-secondary ease-in-out hover:text-white tw-50 mt-4"
+                className="font-akshar w-full text-white bg-primary hover:bg-secondary ease-in-out hover:text-white tw-50 mt-4 hover:scale-110 transition duration-300"
                 variant="outline"
               >Submit</Button>
             </div>
@@ -286,3 +253,4 @@ const BidderSignup = () => {
 };
 
 export default BidderSignup;
+

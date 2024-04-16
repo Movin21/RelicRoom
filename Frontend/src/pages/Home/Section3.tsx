@@ -19,8 +19,11 @@ export default function SliderTestimonial() {
 
   return (
     <>
+      <h1 className="text-3xl font-amethysta mt-10 mb-2  pl-10 font-semibold text-primary">
+        Testimonials
+      </h1>
       {/*<!-- Component: Testimonial slider --> */}
-      <div className=" relative w-3/5 glide-08 rounded-lg items-center ml-80 mt-24">
+      <div className=" relative w-3/5 glide-08 rounded-lg items-center ml-80 mt-10">
         {/*    <!-- Slides --> */}
         <div
           className="overflow-hidden text-center bg-white rounded shadow-2xl text-slate-500 shadow-slate-200 items-center"

@@ -12,7 +12,7 @@ import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import axios from "axios";
 import { useDispatch } from "react-redux";
@@ -41,7 +41,7 @@ const AuctioneerLogin = () => {
       password: "",
     },
   });
-
+  const navigate = useNavigate(); // Utilize useNavigate for redirection
   const onSubmit = async (values: z.infer<typeof FormSchema>) => {
     console.log(values);
     try {
@@ -57,6 +57,7 @@ const AuctioneerLogin = () => {
       console.log("Login successful:", response.data);
       dispatch(login(response.data));
       console.log(response.data);
+      navigate('/auctioneerDashboard');
     } catch (error) {
       // Handle login error, e.g., display error message to the user
       console.error("Login error:", error);

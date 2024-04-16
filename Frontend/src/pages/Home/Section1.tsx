@@ -160,7 +160,7 @@ const Section1 = () => {
       <div className="glide-06  relative w-full overflow-hidden rounded bg-white shadow-xl shadow-slate-200 ">
         {/*    <!-- Slides --> */}
         <div className="overflow-hidden" data-glide-el="track">
-          <ul className="gap-4  whitespace-no-wrap flex-no-wrap [backface-visibility: hidden] [transform-style: preserve-3d] [touch-action: pan-Y] [will-change: transform] relative flex w-full overflow-hidden p-0">
+          <ul className="gap-6  whitespace-no-wrap flex-no-wrap [backface-visibility: hidden] [transform-style: preserve-3d] [touch-action: pan-Y] [will-change: transform] relative flex w-full overflow-hidden p-0">
             <div></div> <div></div>
             {/* Render each auction card in a single line */}
             {filteredAuctions.map((auction) => (

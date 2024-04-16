@@ -17,7 +17,6 @@ async function updateExpiredAuctions() {
       auction.isExpired = true;
       await auction.save();
     }
-    console.log("Expired auctions updated successfully");
   } catch (error) {
     console.error("Error updating expired auctions:", error);
   }

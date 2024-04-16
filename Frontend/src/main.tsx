@@ -21,7 +21,7 @@ import AuctioneerLogin from "./pages/Auctioneer/AuctioneerLogin.tsx";
 import AuctioneerRegister from "./pages/Auctioneer/AuctioneerRegister.tsx";
 import AuctioneerPortal from "./pages/Auctioneer/AuctioneerPortal.tsx";
 import AuctioneerProfile from "./pages/Auctioneer/AuctioneerProfile.tsx";
-import AuctioneerReportG from "./pages/Auctioneer/AuctioneerReportG.tsx"; 
+import AuctioneerReportG from "./pages/Auctioneer/AuctioneerReportG.tsx";
 import AuctionList from "./pages/Auction Listing/AuctionList.tsx";
 import { Provider } from "react-redux";
 import { store, persistor } from "./redux/store.ts";
@@ -44,8 +44,6 @@ import AuctionDashboard from "./pages/Auction Listing/AuctionDashboard.tsx";
 import ManageAuctions from "./pages/Auction Listing/ManageAuctions.tsx";
 import UpdateAuction from "./pages/Auction Listing/UpdateAuction.tsx";
 
-
-
 // Initialize Firebase
 const firebaseConfig = {
   apiKey: "AIzaSyD4SG__snQ7W-DqFBLnlIq8zSV9yNCa4PY",
@@ -67,8 +65,7 @@ const router = createBrowserRouter([
       { path: "/auctioneerRegister", element: <AuctioneerRegister /> },
       { path: "/auctioneerPortal", element: <AuctioneerPortal /> },
       { path: "/auctioneerProfile", element: <AuctioneerProfile /> },
-      { path: "/auctioneerReportG", element:  <AuctioneerReportG /> },
-      { path: "/auction/postAuction", element: <PostAuction /> },
+      { path: "/auctioneerReportG", element: <AuctioneerReportG /> },
       { path: "/auction/listedAuctions", element: <AuctionList /> },
       { path: "/bidderLogin", element: <BidderLogin /> },
       { path: "/bidderSignup", element: <BidderSignup /> },
@@ -83,12 +80,10 @@ const router = createBrowserRouter([
       { path: "/bidderDashboard", element: <BidderDashboard /> },
       { path: "/bidderWishlist", element: <BidderWishlist /> },
       { path: "/bidderMybids", element: <BidderMybids /> },
-      { path: "/feedbackreview", element: <FeedbackReview/> },
+      { path: "/feedbackreview", element: <FeedbackReview /> },
       { path: "/bidderDashboard", element: <BidderDashboard /> },
       { path: "/bidderWishlist", element: <BidderWishlist /> },
       { path: "/bidderMybids", element: <BidderMybids /> },
-
-
     ],
   },
 
@@ -118,7 +113,11 @@ const router = createBrowserRouter([
   },
   {
     element: <CustomerCareLayout />,
-    children: [{ path: "/customerCare", element: <CustomerCare /> }],
+    children: [
+      { path: "/feedbackManage", element: <FeedbackManage /> },
+      { path: "/faqManage", element: <FAQmanage /> },
+      { path: "/FAQUpdate", element: <Update /> },
+    ],
   },
 ]);
 

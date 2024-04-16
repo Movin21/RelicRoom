@@ -9,7 +9,7 @@ import { Breadcrumb, Button, Input } from "antd";
 import "react-rater/lib/react-rater.css";
 import "react-image-gallery/styles/css/image-gallery.css";
 import { Icon } from "@iconify/react";
-import visibilityIcon from "@iconify-icons/mdi/visibility";
+
 import {
   AlertDialog,
   AlertDialogAction,
@@ -256,7 +256,6 @@ const SingleAuction: React.FC = () => {
                   {auction.auctionTitle}
                 </h2>
                 <p className="  text-gray-500  text-sm flex items-center font-semibold font-sourceSans3  mb-2">
-                  <Icon icon={visibilityIcon} className="mr-1" />
                   {auction.viewCount} Views
                 </p>
 

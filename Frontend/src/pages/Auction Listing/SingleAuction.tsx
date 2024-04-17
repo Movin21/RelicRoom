@@ -163,6 +163,7 @@ const SingleAuction: React.FC = () => {
         if (auction && auctioneer) {
           const response = await axios.post("http://localhost:3000/bids/save", {
             auctionId: auction._id,
+            bidderName: bidder.firstname,
             auctioneerId: auctioneer._id,
             bidderId: bidder._id,
             bidPrice: bidValue,

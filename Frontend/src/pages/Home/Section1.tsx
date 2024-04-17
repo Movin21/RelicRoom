@@ -153,10 +153,10 @@ const Section1 = () => {
   return (
     <>
       {/*<!-- Component: Card Carousel --> */}
-      <h1 className="text-3xl font-amethysta mt-20 mb-20 pl-10 font-semibold text-primary">
+      <h1 className="text-3xl font-amethysta mt-20 mb-20 pl-10 font-semibold text-primary ml-9">
         Recommended auctions
       </h1>
-      <div className="glide-06  relative w-full overflow-hidden rounded bg-white shadow-xl shadow-slate-200 ">
+      <div className="glide-06  relative w-full overflow-hidden rounded bg-white  shadow-slate-200 ">
         {/*    <!-- Slides --> */}
         <div className="overflow-hidden" data-glide-el="track">
           <ul className="gap-6  whitespace-no-wrap flex-no-wrap [backface-visibility: hidden] [transform-style: preserve-3d] [touch-action: pan-Y] [will-change: transform] relative flex w-full overflow-hidden p-0">
@@ -272,7 +272,7 @@ const Section1 = () => {
         </div>
         {/*    <!-- Indicators --> */}
         <div
-          className="flex right-0 bottom-0  items-center justify-center gap-2 "
+          className="flex right-0 bottom-0  items-center justify-center gap-2 mb-10 "
           data-glide-el="controls[nav]"
         >
           <button

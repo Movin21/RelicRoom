@@ -19,7 +19,7 @@ export default function SliderTestimonial() {
 
   return (
     <>
-      <h1 className="text-3xl font-amethysta mt-10 mb-2  pl-10 font-semibold text-primary">
+      <h1 className="text-3xl font-amethysta mt-10 mb-2  pl-10 font-semibold text-primary ml-9">
         Testimonials
       </h1>
       {/*<!-- Component: Testimonial slider --> */}

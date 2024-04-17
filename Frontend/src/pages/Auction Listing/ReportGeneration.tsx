@@ -144,7 +144,7 @@ export function ReportGeneration() {
             <BreadcrumbSeparator />
             <BreadcrumbItem>
               <BreadcrumbLink asChild>
-                <Link to="/manageAuctions">Generate Reports</Link>
+                <Link to="/auction/generateReports">Generate Reports</Link>
               </BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbSeparator />

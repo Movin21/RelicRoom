@@ -193,7 +193,7 @@ export function ManageAuctions() {
                           Auctioneer
                         </TableHead>
                         <TableHead className="hidden md:table-cell">
-                          Created at
+                          Posted at
                         </TableHead>
                         <TableHead>
                           <p className="ml-4 md:ml-0">{`Actions (Update/Delete)`}</p>

@@ -153,7 +153,7 @@ const Section1 = () => {
   return (
     <>
       {/*<!-- Component: Card Carousel --> */}
-      <h1 className="text-3xl font-amethysta mt-20 mb-20 pl-10 font-semibold text-primary ml-9">
+      <h1 className="text-3xl font-amethysta mt-20 mb-20 pl-10 font-semibold text-primary">
         Recommended auctions
       </h1>
       <div className="glide-06  relative w-full overflow-hidden rounded bg-white  shadow-slate-200 ">
@@ -272,7 +272,7 @@ const Section1 = () => {
         </div>
         {/*    <!-- Indicators --> */}
         <div
-          className="flex right-0 bottom-0  items-center justify-center gap-2 mb-10 "
+          className="flex right-0 bottom-0 mt-5 items-center justify-center gap-2 mb-10 "
           data-glide-el="controls[nav]"
         >
           <button

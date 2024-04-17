@@ -3,8 +3,8 @@ import React from "react";
 const Section2 = () => {
   return (
     <div className="bg-gray-100 ">
-      <div className="relative bg-gray-100 px-6 pt-16 pb-20 lg:px-8 lg:pt-24 lg:pb-28">
-        <h1 className="text-3xl font-amethysta  mb-20  pl-10 font-semibold text-primary">
+      <div className="relative bg-gray-100 px-6 pt-10 pb-20 lg:px-8 lg:pt-18 lg:pb-28">
+        <h1 className="text-3xl font-amethysta  mb-20   font-semibold text-primary">
           Blogs and Stories
         </h1>
         <div className="absolute inset-0">

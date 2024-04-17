@@ -19,7 +19,7 @@ export default function SliderTestimonial() {
 
   return (
     <>
-      <h1 className="text-3xl font-amethysta mt-10 mb-2  pl-10 font-semibold text-primary ml-9">
+      <h1 className="text-3xl font-amethysta mt-10 mb-2  pl-10 font-semibold text-primary">
         Testimonials
       </h1>
       {/*<!-- Component: Testimonial slider --> */}
@@ -422,7 +422,7 @@ export default function SliderTestimonial() {
         </div>
         {/*    <!-- Indicators --> */}
         <div
-          className="flex items-center justify-center w-full gap-2 pt-6"
+          className="flex items-center justify-center w-full gap-2 pt-6 mb-10"
           data-glide-el="controls[nav]"
         >
           <button

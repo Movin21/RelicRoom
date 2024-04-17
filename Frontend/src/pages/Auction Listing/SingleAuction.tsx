@@ -264,7 +264,7 @@ const SingleAuction: React.FC = () => {
                 </p>
 
                 <p className="text-sm  text-gray-500 font-semibold  mb-3 font-sourceSans3">
-                  Created Date: {new Date(auction.createdAt).toLocaleString()}
+                  Posted Date: {new Date(auction.createdAt).toLocaleString()}
                 </p>
                 <p className="text-lg  font-semibold mb-3 font-sourceSans3">
                   Starting At: ${auction.auctionStartingPrice}

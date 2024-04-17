@@ -77,10 +77,11 @@ export function ManageAuctions() {
   }, [auctioneer]);
 
   useEffect(() => {
-    // Fetch auctions for the logged-in auctioneer
-    axios
-      .get(`http://localhost:3000/admin/auctions/${auctioneerId}`)
-      .then((response) => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:3000/admin/auctions/${auctioneerId}`
+        );
         setAuctions(response.data);
         setActiveAuctions(
           response.data.filter((auction: Auction) => !auction.isExpired)
@@ -88,11 +89,13 @@ export function ManageAuctions() {
         setExpiredAuctions(
           response.data.filter((auction: Auction) => auction.isExpired)
         );
-      })
-      .catch((error) => {
+      } catch (error) {
         console.error("Error fetching auctions:", error);
-      });
-  }, [auctioneerId]); // Dependency on auctioneerId
+      }
+    };
+
+    fetchData();
+  }, [auctioneerId]);
 
   const handleDeleteConfirmation = (auctionId: string) => {
     axios

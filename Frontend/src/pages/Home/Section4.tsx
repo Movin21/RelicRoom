@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const Section4 = () => {
   return (
-    <section className="sm:mt-6 lg:mt-8 mt-12 max-w-8xl mx-auto px-4 sm:px-6 lg:px-8 font-amethysta  ml-5">
+    <section className="sm:mt-6 lg:mt-8 mt-12 max-w-8xl mx-auto px-4 sm:px-6 lg:px-8 font-amethysta  ml-9">
       <div className="my-20 mx-auto max-w-8xl px-4 sm:mt-12 sm:px-6 md:mt-16 lg:mt-20 lg:px-8 xl:mt-28 flex gap-3 lg:flex-justify lg:flex flex-col lg:flex-row">
         <div className="sm:text-center lg:text-left">
           <h1 className="text-2xl tracking-tight font-extrabold text-gray-800 sm:text-3xl md:text-5xl mt-7">
@@ -28,7 +28,7 @@ const Section4 = () => {
           </div>
         </div>
 
-        <div className="lg:inset-y-0 lg:right-0 lg:w-2/5 my-4 ml-20">
+        <div className="lg:inset-y-0 lg:right-0 lg:w-2/5 my-4 ml-28">
           <img
             className="h-56 w-full object-cover sm:h-72 md:h-96 lg:w-full lg:h-full mb-5"
             src="https://firebasestorage.googleapis.com/v0/b/relicroom-db857.appspot.com/o/Asset%206%404x.png?alt=media&token=e9a594cf-159c-48e2-8e53-cbcde8d06f73"

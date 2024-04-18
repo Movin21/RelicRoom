@@ -2,15 +2,15 @@ import React from "react";
 
 const Section2 = () => {
   return (
-    <>
-      <h1 className="text-3xl font-amethysta mt-10 mb-2  pl-10 font-semibold text-primary">
-        Blogs and Stories
-      </h1>
-      <div className="relative bg-gray-50 px-6 pt-16 pb-20 lg:px-8 lg:pt-24 lg:pb-28">
+    <div className="bg-gray-100 ">
+      <div className="relative bg-gray-100 px-6 pt-10 pb-20 lg:px-8 lg:pt-18 lg:pb-28">
+        <h1 className="text-3xl font-amethysta  mb-20   font-semibold text-primary">
+          Blogs and Stories
+        </h1>
         <div className="absolute inset-0">
-          <div className="h-1/3 bg-white sm:h-2/3"></div>
+          <div className="h-1/3 sm:h-2/3"></div>
         </div>
-        <div className="relative mx-auto max-w-7xl">
+        <div className="relative mx-auto max-w-7xl bg-gray-100">
           <div className="text-center">
             <h2 className="text-3xl font-bold tracking-tight text-primary sm:text-4xl">
               Latest Blogs
@@ -72,7 +72,6 @@ const Section2 = () => {
                 </div>
               </div>
             </div>
-
             <div className="flex flex-col overflow-hidden rounded-lg shadow-lg">
               <div className="flex-shrink-0">
                 <img
@@ -126,7 +125,6 @@ const Section2 = () => {
                 </div>
               </div>
             </div>
-
             <div className="flex flex-col overflow-hidden rounded-lg shadow-lg">
               <div className="flex-shrink-0">
                 <img
@@ -183,7 +181,7 @@ const Section2 = () => {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

@@ -422,7 +422,7 @@ export default function SliderTestimonial() {
         </div>
         {/*    <!-- Indicators --> */}
         <div
-          className="flex items-center justify-center w-full gap-2 pt-6"
+          className="flex items-center justify-center w-full gap-2 pt-6 mb-10"
           data-glide-el="controls[nav]"
         >
           <button

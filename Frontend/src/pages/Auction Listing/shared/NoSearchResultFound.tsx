@@ -19,7 +19,7 @@ const NoSearchResultFound = () => {
           </g>
         </svg>
         <h3 className="text-xl font-medium mt-4 text-gray-700 dark:text-gray-200">
-          File not found
+          Auction not found
         </h3>
         <p className="text-gray-500 dark:text-gray-400 mt-2">
           The Auction you are looking for could not be located.

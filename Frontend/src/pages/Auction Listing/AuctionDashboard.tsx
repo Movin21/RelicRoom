@@ -55,33 +55,44 @@ const AuctionDashboard = () => {
         <h1 className="text-xl font-semibold font-nunitoSans mr-2 text-primary">
           Hi,
         </h1>
-        <h1 className="text-xl font-mono font-semibold text-secondary">
+        <h1
+          className="text-xl font-mono font-semibold "
+          style={{ color: "#6F6200" }}
+        >
           {auctioneer.companyname}
         </h1>
       </div>
-      <section className="flex flex-col mt-16 items-center justify-center gap-3">
+      <div className="flex justify-center mt-8 ">
+        <h1 className="text-3xl font-semibold font-akshar text-primary">
+          Auction Summary
+        </h1>
+      </div>
+      <section className="flex flex-col mt-10 items-center justify-center gap-3">
         <div className="grid grid-cols-3 gap-8">
           <div className="p-6 bg-white rounded-lg shadow-md">
-            <h2 className="text-3xl font-amethysta font-semibold text-primary text-center">
+            <h2 className="text-2xl font-amethysta font-semibold text-primary text-center">
               Total Auctions
             </h2>
-            <div className="text-6xl font-alatsi text-secondary text-center mt-3">
+            <div
+              className="text-5xl font-alatsi text-center mt-3"
+              style={{ color: "#776900" }}
+            >
               <CountUp end={totalAuctions} className="font-bold" />
             </div>
           </div>
           <div className="p-6 bg-white rounded-lg shadow-md text-center">
-            <h2 className="text-3xl font-amethysta font-semibold text-primary">
+            <h2 className="text-2xl font-amethysta font-semibold text-primary">
               Ongoing Auctions
             </h2>
-            <div className="text-6xl font-alatsi text-secondary text-center mt-3">
+            <div className="text-5xl font-alatsi text-blue-800 text-center mt-3">
               <CountUp end={ongoingAuctions} className="font-bold" />
             </div>
           </div>
           <div className="p-6 bg-white rounded-lg shadow-md">
-            <h2 className="text-3xl font-amethysta font-semibold text-primary text-center">
+            <h2 className="text-2xl font-amethysta font-semibold text-primary text-center">
               Expired Auctions
             </h2>
-            <div className="text-6xl font-alatsi text-secondary text-center mt-3">
+            <div className="text-5xl font-alatsi text-red-800 text-center mt-3">
               <CountUp end={expiredAuctions} className="font-bold" />
             </div>
           </div>

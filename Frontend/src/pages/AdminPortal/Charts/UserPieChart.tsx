@@ -109,7 +109,7 @@ const USerPieChart = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:5000/admin/users/chart"
+          "http://localhost:3000/admin/users/chart"
         );
         // Check if the response data is an array
         if (Array.isArray(response.data)) {

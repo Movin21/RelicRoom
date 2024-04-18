@@ -9,7 +9,7 @@ import { Breadcrumb, Button, Input } from "antd";
 import "react-rater/lib/react-rater.css";
 import "react-image-gallery/styles/css/image-gallery.css";
 import { Icon } from "@iconify/react";
-import visibilityIcon from "@iconify-icons/mdi/visibility";
+
 import {
   AlertDialog,
   AlertDialogAction,
@@ -52,7 +52,6 @@ const SingleAuction: React.FC = () => {
   const [remainingTime, setRemainingTime] = useState<string>("");
   const [bidValue, setBidValue] = useState<number>(0);
   const [alertMessage, setAlertMessage] = useState<string>("");
-  const [leadingBiddername, setLeadingBiddername] = useState<string>("");
 
   //Fetch the Selected Auction
   useEffect(() => {
@@ -78,6 +77,7 @@ const SingleAuction: React.FC = () => {
     leadingBidder: string
   ) => {
     try {
+      console.log("leadingBidder", leadingBidder);
       await axios.put(
         `http://localhost:3000/auctions/updateBidAndLeadingBidder/${id}`,
         {
@@ -181,9 +181,9 @@ const SingleAuction: React.FC = () => {
     const fetchBidderName = async () => {
       try {
         const response = await axios.get<{
-          [x: string]: SetStateAction<string>;
+          [x: string]: string;
         }>(`http://localhost:3000/bidder/getOne/${bidder?._id}`);
-        setLeadingBiddername(response.data.firstname);
+        updateBidAndLeadingBidder(bidValue, response.data.firstname);
       } catch (error) {
         console.error("Error fetching bidder:", error);
       } finally {
@@ -191,7 +191,6 @@ const SingleAuction: React.FC = () => {
       }
     };
     fetchBidderName();
-    updateBidAndLeadingBidder(bidValue, leadingBiddername);
   };
 
   return (
@@ -257,7 +256,6 @@ const SingleAuction: React.FC = () => {
                   {auction.auctionTitle}
                 </h2>
                 <p className="  text-gray-500  text-sm flex items-center font-semibold font-sourceSans3  mb-2">
-                  <Icon icon={visibilityIcon} className="mr-1" />
                   {auction.viewCount} Views
                 </p>
 

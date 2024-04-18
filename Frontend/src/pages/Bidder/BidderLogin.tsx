@@ -13,9 +13,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useDispatch } from "react-redux";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import axios from "axios";
 import { login } from "./slice/bidderSlice";
+import { useNavigate } from "react-router-dom";
+import { CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card } from "antd";
 
 const FormSchema = z.object({
   email: z.string().min(1, {
@@ -32,7 +35,9 @@ const FormSchema = z.object({
 });
 
 const BidderLogin = () => {
+ 
   const dispatch = useDispatch();
+  const navigate = useNavigate(); // Utilize useNavigate for redirection
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -40,7 +45,7 @@ const BidderLogin = () => {
       password: "",
     },
   });
-
+  // const navigate = useNavigate(); 
   const onSubmit = async (values: z.infer<typeof FormSchema>) => {
     try {
       const response = await axios.post("http://localhost:3000/bidder/login", {
@@ -52,73 +57,88 @@ const BidderLogin = () => {
       console.log("Login successful:", response.data);
       dispatch(login(response.data));
       console.log(response.data);
+      navigate('/bidderDashboard');
     } catch (error) {
       // Handle login error, e.g., display error message to the user
       console.error("Login error:", error);
     }
   };
 
-  return (
-    <Form {...form}>
-      {
-        <div className=" ">
-          <Tabs defaultValue="bidderLogin" className="w-[400px]">
-            <TabsList>
-              <TabsTrigger value="login">Login</TabsTrigger>
-              <TabsTrigger value="register">Register</TabsTrigger>
-            </TabsList>
-            <TabsContent value="login">Log to your account here.</TabsContent>
-            <TabsContent value="register">
-              Register to your account here.
-            </TabsContent>
-          </Tabs>
-        </div>
-      }
+  const handleRegisterClick = () => {
+    navigate('/bidderSignup');
+  };
 
-      <div className="text-center">Login To Your Profile</div>
+  return (
+    <>
+    <Tabs defaultValue="bidderLogin" className="flex items-center justify-center  h-ful">
+        <TabsList className="hover:scale-110 transition duration-300 ease-in-out">
+        <TabsTrigger className="font-akshar hover:bg-white hover:scale-110 transition duration-300 ease-in-out" value="login" >Login</TabsTrigger>
+        <TabsTrigger className="font-akshar hover:bg-white hover:scale-110 transition duration-300 ease-in-out" value="register" onClick={handleRegisterClick}>Register</TabsTrigger>
+        </TabsList>
+      </Tabs>
+      <CardHeader>
+            <CardTitle className="font-akshar text-primary  text-center text-2xl mb-0">
+            Login To Your Profile
+            </CardTitle>
+          </CardHeader>
+    
+    <div className="flex items-center justify-center">
+      <Card className="w-full md:w-96 p-6 mt-0 mb-10 shadow-2xl" style={{ width: '700px' }}>
+          <CardContent>
+    <Form {...form}>
+
       <form onSubmit={form.handleSubmit(onSubmit)} className="w-full">
-        <div className="space-y-2 items-center space-x-4 rounded-md border p-4">
+       
           <FormField
             control={form.control}
             name="email"
             render={({ field }) => (
-              <FormItem>
-                <FormLabel>Email</FormLabel>
+              <FormItem className="mb-4">
+                <FormLabel className="font-akshar">Email :</FormLabel>
                 <FormControl>
-                  <Input
+                  <Input className="font-akshar"
                     placeholder="example@email.com"
                     type="email"
                     {...field}
+                    style={{ fontSize: '14px' }}
                   />
                 </FormControl>
-                <FormMessage />
+                <FormMessage className="text-red-500 font-akshar"/>
               </FormItem>
             )}
           />
+
+          <div>
           <FormField
             control={form.control}
             name="password"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Passsword</FormLabel>
+                <FormLabel className="font-akshar">Passsword :</FormLabel>
                 <FormControl>
-                  <Input
-                    placeholder="Enter your Passsword"
+                  <Input className="font-akshar"
+                    placeholder="Enter your passsword"
                     type="password"
                     {...field}
+                    style={{ fontSize: '14px' }}
                   />
                 </FormControl>
-                <FormMessage />
+                <FormMessage className="text-red-500 font-akshar"/>
               </FormItem>
             )}
-          />
-        </div>
-        <Button className="w-full mt-6 mb-6" type="submit">
+          /></div>
+       
+       <div className="flex justify-end mt-6">
+      <Button className="w-full font-akshar bg-primary hover:bg-secondary ease-in-out hover:text-white tw-50 mt-4 hover:scale-110 transition duration-300" type="submit" style={{ padding: '4px', margin: '0px', fontSize: '20px' }}>
           Log In
         </Button>
+    </div>
       </form>
-    </Form>
+    </Form></CardContent></Card>
+    </div></>
   );
 };
 
 export default BidderLogin;
+
+

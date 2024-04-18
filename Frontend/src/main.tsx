@@ -36,6 +36,11 @@ import AuctionDashboardLayout from "./pages/layouts/AuctionDashboardLayout.tsx";
 import AuctionDashboard from "./pages/Auction Listing/AuctionDashboard.tsx";
 import ManageAuctions from "./pages/Auction Listing/ManageAuctions.tsx";
 import UpdateAuction from "./pages/Auction Listing/UpdateAuction.tsx";
+import Winsabidder from "./pages/Delivery Tracking/Winsabidder.tsx";
+import Inform from "./pages/Delivery Tracking/Inform.tsx";
+import Notifi from "./pages/Delivery Tracking/Notification.tsx";
+import Paymentmange from "./pages/Delivery Tracking/PaymetMange.tsx";
+import Tracki from "./pages/Delivery Tracking/TrackingDetails.tsx";
 
 // Initialize Firebase
 const firebaseConfig = {
@@ -70,6 +75,8 @@ const router = createBrowserRouter([
       { path: "/bidderLogin", element: <BidderLogin /> },
       { path: "/bidderSignup", element: <BidderSignup /> },
       { path: "/bidderProfile", element: <BidderProfile /> },
+      { path: "/Notifi", element: <Notifi /> },
+      { path: "/trackig", element: <Tracki /> },
     ],
   },
 
@@ -91,6 +98,9 @@ const router = createBrowserRouter([
       { path: "/manageAuctions", element: <ManageAuctions /> },
       { path: "/auction/postAuction", element: <PostAuction /> },
       { path: "/auction/updateAuction/:id", element: <UpdateAuction /> },
+      { path: "/Winsabidder", element: <Winsabidder /> },
+      { path: "/auctionwins/:winsid", element: <Inform /> },
+      { path: "/MangePaymet", element: <Paymentmange /> },
     ],
   },
   {

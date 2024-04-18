@@ -1,92 +1,103 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import axios from "axios";
+import CountUp from "react-countup";
+
+interface Auction {
+  _id: string;
+  auctionTitle: string;
+  auctionDescription: string;
+  auctionImages: string[];
+  auctionCategory: string;
+  auctionStartingPrice: number;
+  auctionDuration: Date;
+  currentBid: number;
+  isExpired: boolean;
+  viewCount: number;
+  createdAt: Date;
+}
 
 const AuctionDashboard = () => {
+  const auctioneer = useSelector((state: any) => state.auctioneer.auctioneer);
+
+  const [totalAuctions, setTotalAuctions] = useState(0);
+  const [ongoingAuctions, setOngoingAuctions] = useState(0);
+  const [expiredAuctions, setExpiredAuctions] = useState(0);
+
+  useEffect(() => {
+    const fetchAuctions = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:3000/auctions/auctioneer/${auctioneer._id}`
+        );
+        const auctions = response.data;
+        const total = auctions.length;
+        const ongoing = auctions.filter(
+          (auction: Auction) => !auction.isExpired
+        ).length;
+        const expired = auctions.filter(
+          (auction: Auction) => auction.isExpired
+        ).length;
+        setTotalAuctions(total);
+        setOngoingAuctions(ongoing);
+        setExpiredAuctions(expired);
+      } catch (error) {
+        console.error("Error fetching auctions:", error);
+      }
+    };
+
+    fetchAuctions();
+  }, [auctioneer._id]);
+
   return (
     <>
-      <div className="flex flex-row ">
-        <div className="bg-white rounded-lg shadow-md p-4 mb-3 w-100 mr-3">
-          <div className="flex items-center">
-            <div className="text-brownMedium font-akshar font-bold text-lg ">
-              Total Auctions
-            </div>
-            <div className="ml-44 bg-brownDark text-white rounded-full px-2 py-1 text-sm">
-              <svg
-                width="24"
-                height="30"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 64 64"
-                aria-labelledby="title"
-                aria-describedby="desc"
-                role="img"
-              >
-                <title>Auction</title>
-
-                <path
-                  data-name="layer1"
-                  fill="white"
-                  d="M34 51h30v12H34z"
-                ></path>
-                <path
-                  data-name="layer2"
-                  d="M35.2 35.5l10.2-10.2 2.6-2.5a2 2 0 0 0-2.9-2.8L29.6 4.4a2 2 0 0 0-2.8-2.8L14 14.3a2 2 0 1 0 2.8 2.8l6.4 6.4L.6 46.1A2 2 0 1 0 3.4 49L26 26.3l6.4 6.4a2 2 0 1 0 2.8 2.8z"
-                  fill="white"
-                ></path>
-                <path
-                  data-name="layer1"
-                  d="M36 47a2 2 0 0 0 2 2h22a2 2 0 0 0 0-4H38a2 2 0 0 0-2 2z"
-                  fill="white"
-                ></path>
-              </svg>
-            </div>
-          </div>
-          <div className="flex items-center">
-            <div className="text-black font-al text-4xl font-bold ml-5 mt-2"></div>
-          </div>
-
-          <div className="text-gray-400 mt-3">Live Auction Count</div>
-        </div>
-        <div className="bg-white rounded-lg shadow-md p-4 mb-3 w-100 mr-3">
-          <div className="flex items-center">
-            <div className="text-brownMedium font-akshar font-bold text-lg ">
-              Expired Auctions
-            </div>
-            <div className="ml-44 bg-brownDark text-white rounded-full px-2 py-1 text-sm">
-              <svg
-                width="24"
-                height="30"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 64 64"
-                aria-labelledby="title"
-                aria-describedby="desc"
-                role="img"
-              >
-                <title>Auction</title>
-
-                <path
-                  data-name="layer1"
-                  fill="white"
-                  d="M34 51h30v12H34z"
-                ></path>
-                <path
-                  data-name="layer2"
-                  d="M35.2 35.5l10.2-10.2 2.6-2.5a2 2 0 0 0-2.9-2.8L29.6 4.4a2 2 0 0 0-2.8-2.8L14 14.3a2 2 0 1 0 2.8 2.8l6.4 6.4L.6 46.1A2 2 0 1 0 3.4 49L26 26.3l6.4 6.4a2 2 0 1 0 2.8 2.8z"
-                  fill="white"
-                ></path>
-                <path
-                  data-name="layer1"
-                  d="M36 47a2 2 0 0 0 2 2h22a2 2 0 0 0 0-4H38a2 2 0 0 0-2 2z"
-                  fill="white"
-                ></path>
-              </svg>
-            </div>
-          </div>
-          <div className="flex items-center">
-            <div className="text-black font-al text-4xl font-bold ml-5 mt-2"></div>
-          </div>
-
-          <div className="text-gray-400 mt-3">Expired Auction Count</div>
-        </div>
+      <div className="flex">
+        <h1 className="text-xl font-semibold font-nunitoSans mr-2 text-primary">
+          Hi,
+        </h1>
+        <h1
+          className="text-xl font-mono font-semibold "
+          style={{ color: "#6F6200" }}
+        >
+          {auctioneer.companyname}
+        </h1>
       </div>
+      <div className="flex justify-center mt-8 ">
+        <h1 className="text-3xl font-semibold font-akshar text-primary">
+          Auction Summary
+        </h1>
+      </div>
+      <section className="flex flex-col mt-10 items-center justify-center gap-3">
+        <div className="grid grid-cols-3 gap-8">
+          <div className="p-6 bg-white rounded-lg shadow-md">
+            <h2 className="text-2xl font-amethysta font-semibold text-primary text-center">
+              Total Auctions
+            </h2>
+            <div
+              className="text-5xl font-alatsi text-center mt-3"
+              style={{ color: "#776900" }}
+            >
+              <CountUp end={totalAuctions} className="font-bold" />
+            </div>
+          </div>
+          <div className="p-6 bg-white rounded-lg shadow-md text-center">
+            <h2 className="text-2xl font-amethysta font-semibold text-primary">
+              Ongoing Auctions
+            </h2>
+            <div className="text-5xl font-alatsi text-blue-800 text-center mt-3">
+              <CountUp end={ongoingAuctions} className="font-bold" />
+            </div>
+          </div>
+          <div className="p-6 bg-white rounded-lg shadow-md">
+            <h2 className="text-2xl font-amethysta font-semibold text-primary text-center">
+              Expired Auctions
+            </h2>
+            <div className="text-5xl font-alatsi text-red-800 text-center mt-3">
+              <CountUp end={expiredAuctions} className="font-bold" />
+            </div>
+          </div>
+        </div>
+      </section>
     </>
   );
 };

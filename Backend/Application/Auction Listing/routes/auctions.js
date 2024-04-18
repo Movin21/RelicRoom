@@ -23,7 +23,7 @@ async function updateExpiredAuctions() {
 }
 
 // Invoke the function to update expired auctions
-cron.schedule("* * * * *", () => {
+cron.schedule("* * * * * *", () => {
   updateExpiredAuctions();
 });
 
@@ -176,6 +176,18 @@ router.delete("/delete/:id", async (req, res) => {
       message: "Delete unsuccessful",
       error: err,
     });
+  }
+});
+
+// Get auctions by auctioneer ID
+router.get("/auctioneer/:id", async (req, res) => {
+  try {
+    const auctioneerId = req.params.id;
+    const auctions = await Auctions.find({ auctioneerId: auctioneerId });
+    res.status(200).json(auctions);
+  } catch (error) {
+    console.error("Error fetching auctions by auctioneer ID:", error);
+    res.status(500).json({ error: "Internal server error" });
   }
 });
 

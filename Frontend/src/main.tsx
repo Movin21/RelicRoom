@@ -43,6 +43,8 @@ import AuctionDashboardLayout from "./pages/layouts/AuctionDashboardLayout.tsx";
 import AuctionDashboard from "./pages/Auction Listing/AuctionDashboard.tsx";
 import ManageAuctions from "./pages/Auction Listing/ManageAuctions.tsx";
 import UpdateAuction from "./pages/Auction Listing/UpdateAuction.tsx";
+import ReportGeneration from "./pages/Auction Listing/ReportGeneration.tsx";
+import ReportView from "./pages/Auction Listing/ReportView.tsx";
 
 // Initialize Firebase
 const firebaseConfig = {
@@ -105,6 +107,8 @@ const router = createBrowserRouter([
       { path: "/manageAuctions", element: <ManageAuctions /> },
       { path: "/auction/postAuction", element: <PostAuction /> },
       { path: "/auction/updateAuction/:id", element: <UpdateAuction /> },
+      { path: "/auction/generateReports", element: <ReportGeneration /> },
+      { path: "/auction/ReportView/:id", element: <ReportView /> },
     ],
   },
   {

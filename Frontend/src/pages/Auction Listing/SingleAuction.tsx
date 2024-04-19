@@ -163,6 +163,7 @@ const SingleAuction: React.FC = () => {
         if (auction && auctioneer) {
           const response = await axios.post("http://localhost:3000/bids/save", {
             auctionId: auction._id,
+            bidderName: bidder.firstname,
             auctioneerId: auctioneer._id,
             bidderId: bidder._id,
             bidPrice: bidValue,
@@ -264,7 +265,7 @@ const SingleAuction: React.FC = () => {
                 </p>
 
                 <p className="text-sm  text-gray-500 font-semibold  mb-3 font-sourceSans3">
-                  Created Date: {new Date(auction.createdAt).toLocaleString()}
+                  Posted Date: {new Date(auction.createdAt).toLocaleString()}
                 </p>
                 <p className="text-lg  font-semibold mb-3 font-sourceSans3">
                   Starting At: ${auction.auctionStartingPrice}

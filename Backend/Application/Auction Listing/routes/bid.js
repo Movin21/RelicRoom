@@ -7,8 +7,8 @@ const router = express.Router();
 router.post("/save", async (req, res) => {
   try {
     let newBid = new Bids(req.body);
+
     const savedBid = await newBid.save();
-    console.log("Bid has saved Successfully", savedBid);
     return res.status(200).json({
       success: "Bid saved successfully",
       bid: savedBid,
@@ -40,21 +40,21 @@ router.get("/", async (req, res) => {
   }
 });
 
-// Get Bid by id
+// Get Bids by Auction ID
 router.get("/:id", async (req, res) => {
   try {
-    const bid = await Bids.findById(req.params.id);
-    if (!bid) {
-      throw new Error("Bid is not found");
+    const bids = await Bids.find({ auctionId: req.params.id }); // Corrected parameter name
+    if (!bids || bids.length === 0) {
     }
     res.status(200).json({
       success: true,
-      bid: bid,
+      bids: bids,
     });
   } catch (err) {
+    console.error("Error:", err);
     res.status(400).json({
       success: false,
-      error: "An error occurred while fetching the bid",
+      error: "An error occurred while fetching the bids",
     });
   }
 });
@@ -94,14 +94,12 @@ router.delete("/delete/:id", async (req, res) => {
 
 //getlast  bidders
 
-router.get('/last3bidders', async (req, res) => {
+router.get("/last3bidders", async (req, res) => {
   try {
-    
     const lastThreeBids = await Bids.find()
-      .sort({ createdAt: -1, updatedAt: -1 }) 
+      .sort({ createdAt: -1, updatedAt: -1 })
       .limit(3);
 
-  
     const firstBid = lastThreeBids[0];
     const secondBid = lastThreeBids[1];
     const thirdBid = lastThreeBids[2];
@@ -109,7 +107,7 @@ router.get('/last3bidders', async (req, res) => {
     res.json({ firstBid, secondBid, thirdBid });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ message: 'Server Error' });
+    res.status(500).json({ message: "Server Error" });
   }
 });
 

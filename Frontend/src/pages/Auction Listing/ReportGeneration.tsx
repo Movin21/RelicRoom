@@ -61,7 +61,7 @@ interface Auction {
   createdAt: Date;
 }
 
-export function ManageAuctions() {
+export function ReportGeneration() {
   const [auctions, setAuctions] = useState<Auction[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [activeAuctions, setActiveAuctions] = useState<Auction[]>([]);
@@ -144,22 +144,12 @@ export function ManageAuctions() {
             <BreadcrumbSeparator />
             <BreadcrumbItem>
               <BreadcrumbLink asChild>
-                <Link to="/manageAuctions">Manage Auctions</Link>
+                <Link to="/auction/generateReports">Generate Reports</Link>
               </BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbSeparator />
           </BreadcrumbList>
         </Breadcrumb>
-        <div className="relative flex-1 md:grow-0 mt-2 ml-7">
-          <Search className="absolute left-2.5 top-3 h-4 w-4 text-muted-foreground" />
-          <Input
-            type="search"
-            placeholder="Search..."
-            className="w-full rounded-lg bg-background pl-8 md:w-[200px] lg:w-[336px]"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-          />
-        </div>
 
         <main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
           <Tabs defaultValue="active">
@@ -176,9 +166,7 @@ export function ManageAuctions() {
               <Card>
                 <CardHeader>
                   <CardTitle>Ongoing Auctions</CardTitle>
-                  <CardDescription>
-                    Manage all created active auctions.
-                  </CardDescription>
+                  <CardDescription>View all expired auctions</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <Table>
@@ -189,14 +177,8 @@ export function ManageAuctions() {
                         </TableHead>
                         <TableHead>Name</TableHead>
 
-                        <TableHead className="hidden md:table-cell">
-                          Auctioneer
-                        </TableHead>
-                        <TableHead className="hidden md:table-cell">
-                          Posted at
-                        </TableHead>
                         <TableHead>
-                          <p className="ml-4 md:ml-0">{`Actions (Update/Delete)`}</p>
+                          <p>{`View Report`}</p>
                         </TableHead>
                       </TableRow>
                     </TableHeader>
@@ -214,48 +196,12 @@ export function ManageAuctions() {
                             {auction.auctionTitle}
                           </TableCell>
 
-                          <TableCell className="hidden md:table-cell font-amethysta">
-                            {auctioneer.companyname}
-                          </TableCell>
-                          <TableCell className="hidden md:table-cell font-amethysta">
-                            {new Date(auction.createdAt).toLocaleString()}
-                          </TableCell>
                           <TableCell className="flex items-center">
-                            <Link to={`/auction/updateAuction/${auction._id}`}>
+                            <Link to={`/auction/ReportView/${auction._id}`}>
                               <Button className="bg-blue-800 text-white px-3 py-1 rounded-md hover:bg-blue-600 mr-2">
-                                Update
+                                View Report
                               </Button>
                             </Link>
-                            <AlertDialog>
-                              <AlertDialogTrigger asChild>
-                                <Button className="bg-red-800 text-white px-3 py-1 rounded-md hover:bg-red-600">
-                                  Delete
-                                </Button>
-                              </AlertDialogTrigger>
-                              <AlertDialogContent>
-                                <AlertDialogHeader>
-                                  <AlertDialogTitle>
-                                    Are you absolutely sure?
-                                  </AlertDialogTitle>
-                                  <AlertDialogDescription>
-                                    This action cannot be undone. This will
-                                    permanently delete your Auction and remove
-                                    the data from our system.
-                                  </AlertDialogDescription>
-                                </AlertDialogHeader>
-                                <AlertDialogFooter>
-                                  <AlertDialogCancel>Cancel</AlertDialogCancel>
-                                  <AlertDialogAction
-                                    onClick={() =>
-                                      handleDeleteConfirmation(auction._id)
-                                    }
-                                    className="bg-red-800 text-white px-3 py-1 rounded-md hover:bg-red-600 ml-2"
-                                  >
-                                    Delete
-                                  </AlertDialogAction>
-                                </AlertDialogFooter>
-                              </AlertDialogContent>
-                            </AlertDialog>
                           </TableCell>
                         </TableRow>
                       ))}
@@ -284,15 +230,8 @@ export function ManageAuctions() {
                           <span>Image</span>
                         </TableHead>
                         <TableHead>Name</TableHead>
-
-                        <TableHead className="hidden md:table-cell">
-                          Current Bid
-                        </TableHead>
-                        <TableHead className="hidden md:table-cell">
-                          Created at
-                        </TableHead>
                         <TableHead>
-                          <p className="ml-4 md:ml-0">{`Actions (Update/Delete)`}</p>
+                          <p>{`View Report`}</p>
                         </TableHead>
                       </TableRow>
                     </TableHeader>
@@ -310,43 +249,12 @@ export function ManageAuctions() {
                             {auction.auctionTitle}
                           </TableCell>
 
-                          <TableCell className="hidden md:table-cell font-amethysta">
-                            {auction.currentBid}
-                          </TableCell>
-                          <TableCell className="hidden md:table-cell font-amethysta">
-                            {new Date(auction.createdAt).toLocaleString()}
-                          </TableCell>
                           <TableCell className="flex items-center">
-                            <AlertDialog>
-                              <AlertDialogTrigger asChild>
-                                <Button className="bg-red-800 text-white px-3 py-1 rounded-md hover:bg-red-600">
-                                  Remove
-                                </Button>
-                              </AlertDialogTrigger>
-                              <AlertDialogContent>
-                                <AlertDialogHeader>
-                                  <AlertDialogTitle>
-                                    Are you absolutely sure?
-                                  </AlertDialogTitle>
-                                  <AlertDialogDescription>
-                                    This action cannot be undone. This will
-                                    permanently delete your Auction and remove
-                                    the data from our system.
-                                  </AlertDialogDescription>
-                                </AlertDialogHeader>
-                                <AlertDialogFooter>
-                                  <AlertDialogCancel>Cancel</AlertDialogCancel>
-                                  <AlertDialogAction
-                                    onClick={() =>
-                                      handleDeleteConfirmation(auction._id)
-                                    }
-                                    className="bg-red-800 text-white px-3 py-1 rounded-md hover:bg-red-600 ml-2"
-                                  >
-                                    Delete
-                                  </AlertDialogAction>
-                                </AlertDialogFooter>
-                              </AlertDialogContent>
-                            </AlertDialog>
+                            <Link to={`/auction/ReportView/${auction._id}`}>
+                              <Button className="bg-blue-800 text-white px-3 py-1 rounded-md hover:bg-blue-600 mr-2">
+                                View Report
+                              </Button>
+                            </Link>
                           </TableCell>
                         </TableRow>
                       ))}
@@ -367,4 +275,4 @@ export function ManageAuctions() {
   );
 }
 
-export default ManageAuctions;
+export default ReportGeneration;

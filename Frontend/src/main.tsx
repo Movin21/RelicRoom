@@ -49,8 +49,20 @@ import LogRS from "./pages/Repair Specialist/RSlogin.tsx";
 import RSProfile from "./pages/Repair Specialist/userProfile.tsx";
 import RSListing from "./pages/Repair Specialist/RSlisting.tsx";
 
+import BlogCreate from "./pages/Vintage Item Expert/BlogCreate.tsx";
+import BlogPostView from "./pages/Vintage Item Expert/BlogPostView.tsx";
+import BlogPostReadMore from "./pages/Vintage Item Expert/BlogPostReadMore.tsx";
+import VintageexpertUpdate from "./pages/Vintage Item Expert/VintageexpertUpdate.tsx";
+import BlogPostUpdate from "./pages/Vintage Item Expert/BlogPostUpdate.tsx";
+import VintageexpertRegister from "./pages/Vintage Item Expert/VintageexpertRegister.tsx";
+import VintageitemexpertLogin from "./pages/Vintage Item Expert/VintageexpertLogin.tsx";
+import VintageexpertProfile from "./pages/Vintage Item Expert/VintageexpertProfile.tsx";
+
+
 import ReportGeneration from "./pages/Auction Listing/ReportGeneration.tsx";
 import ReportView from "./pages/Auction Listing/ReportView.tsx";
+
+
 
 
 // Initialize Firebase
@@ -99,6 +111,16 @@ const router = createBrowserRouter([
       { path: "/bidderDashboard", element: <BidderDashboard /> },
       { path: "/bidderWishlist", element: <BidderWishlist /> },
       { path: "/bidderMybids", element: <BidderMybids /> },
+
+
+      { path: "/vintageexpert/Register", element: <VintageexpertRegister /> },
+      { path: "/vintageexpert/Login", element: <VintageitemexpertLogin /> },
+      { path: "/vintageexpert/Profile/:id", element: <VintageexpertProfile /> },
+      { path: "/blog/Post", element: <BlogCreate /> },
+      { path: "/blog/PostView", element: <BlogPostView /> },
+      { path: "/blog/PostReadMore/:id", element: <BlogPostReadMore /> },
+      { path: "/vintageexpert/Update/:id", element: <VintageexpertUpdate /> },
+      { path: "/blog/Update/:id", element: <BlogPostUpdate /> },
 
     ],
   },

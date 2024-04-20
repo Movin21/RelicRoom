@@ -44,6 +44,15 @@ import AuctionDashboard from "./pages/Auction Listing/AuctionDashboard.tsx";
 import ManageAuctions from "./pages/Auction Listing/ManageAuctions.tsx";
 import UpdateAuction from "./pages/Auction Listing/UpdateAuction.tsx";
 
+import SaveRs from "./pages/Repair Specialist/SaveRs.tsx";
+import LogRS from "./pages/Repair Specialist/RSlogin.tsx";
+import RSProfile from "./pages/Repair Specialist/userProfile.tsx";
+import RSListing from "./pages/Repair Specialist/RSlisting.tsx";
+
+import ReportGeneration from "./pages/Auction Listing/ReportGeneration.tsx";
+import ReportView from "./pages/Auction Listing/ReportView.tsx";
+
+
 // Initialize Firebase
 const firebaseConfig = {
   apiKey: "AIzaSyD4SG__snQ7W-DqFBLnlIq8zSV9yNCa4PY",
@@ -77,6 +86,12 @@ const router = createBrowserRouter([
       { path: "/bidderLogin", element: <BidderLogin /> },
       { path: "/bidderSignup", element: <BidderSignup /> },
       { path: "/bidderProfile", element: <BidderProfile /> },
+
+      { path: "/repairSpacialist/saveRs", element: <SaveRs /> },
+      { path: "/repairSpacialist/logRS", element: <LogRS /> },
+      { path: "/repairSpacialist/rsprofile", element: <RSProfile /> },
+      { path: "/repairSpacialist/rslist", element: <RSListing /> },
+
       { path: "/bidderDashboard", element: <BidderDashboard /> },
       { path: "/bidderWishlist", element: <BidderWishlist /> },
       { path: "/bidderMybids", element: <BidderMybids /> },
@@ -84,6 +99,7 @@ const router = createBrowserRouter([
       { path: "/bidderDashboard", element: <BidderDashboard /> },
       { path: "/bidderWishlist", element: <BidderWishlist /> },
       { path: "/bidderMybids", element: <BidderMybids /> },
+
     ],
   },
 
@@ -105,6 +121,8 @@ const router = createBrowserRouter([
       { path: "/manageAuctions", element: <ManageAuctions /> },
       { path: "/auction/postAuction", element: <PostAuction /> },
       { path: "/auction/updateAuction/:id", element: <UpdateAuction /> },
+      { path: "/auction/generateReports", element: <ReportGeneration /> },
+      { path: "/auction/ReportView/:id", element: <ReportView /> },
     ],
   },
   {

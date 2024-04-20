@@ -88,7 +88,27 @@ router.delete('/delete/:id', async (req, res) => {
     }
 });
 
-
+router.post('/log',async(req,res)=>{
+	const{username,password} = req.body;
+	
+	try{
+		const RepairSpecialist= await repairSpecialist.findOne({username});
+		if (!RepairSpecialist){
+			return res.status(404).json({message: "Repair Specialist not Found"});
+		}
+		if (!RepairSpecialist.isActive){
+			return res.status(404).json({message: "Repair Specialist not Active"});
+		}
+		if (password!==RepairSpecialist.password){
+			return res.status(404).json({message: "Password incorrect"});
+		}
+		res.status(200).json(RepairSpecialist);
+	}
+	catch(error) {
+		console.error("Login Error:",error);
+		res.status(500).json({message:"Error"});
+	}
+});
 
 
 module.exports = router;

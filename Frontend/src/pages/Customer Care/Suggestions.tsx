@@ -44,18 +44,18 @@ import { Link } from "react-router-dom";
   
 
 const formSchema = z.object({
-    Name: z.string().min(2).max(50, {
-        message: "Name should be atleast four characters",
+    Name: z.string().min(4).max(50, {
+        message: "Name should be atleast 4 characters",
     }),
     Email: z.string().min(10).max(50, {
         message: "Email should be atleast 10 characters",
     }),
-    Message: z.string().min(10).max(100, {
+    Message: z.string().min(10).max(1000, {
         message: "Message should be atleast 10 characters",
     }),
     Recommend: z
     .string({
-      required_error: "Please select.",
+      required_error: "Choose this.",
     })
     
     
@@ -94,7 +94,7 @@ const formSchema = z.object({
     <>
     <h1 className='flex justify-center text-2xl font-bold h-500 item-center w-500 font-akshar text-yellow-950'>Customer Care </h1>
     
-    <Tabs defaultValue="account" className="w-[400px] flex item-center justify-center">
+    <Tabs defaultValue="suggestion" className="w-[400px] flex item-center justify-center">
      <TabsList>
       <TabsTrigger value="complaint"><Link to="/complaint">Complaint</Link></TabsTrigger>
       <TabsTrigger value="suggestion">Suggestion</TabsTrigger>
@@ -111,7 +111,7 @@ const formSchema = z.object({
           </CardHeader>
           <CardContent>
             <div>
-                 <Card className="mx-5 mt-5 mb-5 bg-gradient-to-tl from-orange-950 to-yellow-100">
+                 <Card className="mx-5 mt-5 mb-5 ">
                     <CardContent>
                     <Form {...form}>
                         <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-8 text-yellow-950 font-akshar">
@@ -122,11 +122,11 @@ const formSchema = z.object({
                               render={({ field }) => (
                                 <FormItem>
                                  <FormLabel>Name</FormLabel>
-                                 <FormControl className='w-50'>
+                                 <FormControl className='w-full'>
                                   <Input placeholder="Enter the your name.." {...field} />
                                  </FormControl>
               
-                                 <FormMessage />
+                                 <FormMessage  className='text-red-500 font-akshar'/>
                                 </FormItem>
                                     )}
                         />
@@ -138,11 +138,11 @@ const formSchema = z.object({
                               render={({ field }) => (
                                 <FormItem>
                                  <FormLabel>Email</FormLabel>
-                                 <FormControl className='w-50'>
+                                 <FormControl className='w-full'>
                                   <Input placeholder="Enter the your Email address.." {...field} />
                                  </FormControl>
               
-                                 <FormMessage />
+                                 <FormMessage  className='text-red-500 font-akshar'/>
                                 </FormItem>
                                     )}
                         />
@@ -157,7 +157,7 @@ const formSchema = z.object({
                                  <FormLabel>How would you like to recommend our site</FormLabel>
                                  <Select onValueChange={field.onChange}>
                                  <FormControl>
-                                   <SelectTrigger className='w-5/12'>
+                                   <SelectTrigger className='w-full'>
                                    <SelectValue placeholder="Select" />
                                    </SelectTrigger>
                                  </FormControl>
@@ -169,7 +169,7 @@ const formSchema = z.object({
                                      <SelectItem value="five">5</SelectItem>   
                                  </SelectContent>
                                  </Select>
-                                 <FormMessage />
+                                 <FormMessage  className='text-red-500 font-akshar' />
                                 </FormItem>
                                     )}
                         />
@@ -184,7 +184,7 @@ const formSchema = z.object({
                                     <Textarea placeholder="Type your message here.."{...field} />
                                  </FormControl>
               
-                                 <FormMessage />
+                                 <FormMessage  className='text-red-500 font-akshar'/>
                                 </FormItem>
                                     )}
                         />     

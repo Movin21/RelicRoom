@@ -17,7 +17,6 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 
-
 interface FormValues {
   id: string;
   Question: string;
@@ -51,16 +50,24 @@ function Update() {
     }
   }, [id]);
 
-  const handleSubmit: SubmitHandler<FormValues> = (Values) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setValues({
+      ...values,
+      [name]: value,
+    });
+  };
+
+  const handleSubmit: SubmitHandler<FormValues> = () => {
     axios
-      .patch(`http://localhost:3000/customerCare/faq/update/${id}`, Values)
+      .patch(`http://localhost:3000/customerCare/faq/update/${id}`, values)
       .then((res) => {
-        console.log(res)
-        navigate('/FAQManage');
+        console.log(res);
+        navigate('/FaqManage');
       })
       .catch((err) => console.log(err));
   };
-  
+
   return (
     <div>
       <Card className='w-2/4 mx-auto mt-20 bg-gradient-to-tl from-orange-950 to-yellow-100'>
@@ -82,12 +89,7 @@ function Update() {
                           placeholder='Enter the Question..'
                           {...field}
                           value={values.Question}
-                          onChange={(e) =>
-                            setValues({
-                              ...values,
-                              Question: e.target.value,
-                            })
-                          }
+                          onChange={handleInputChange}
                         />
                       </FormControl>
                       <FormMessage />
@@ -107,9 +109,7 @@ function Update() {
                         placeholder='Enter the answer..'
                         {...field}
                         value={values.Answer}
-                        onChange={(e) =>
-                          setValues({ ...values, Answer: e.target.value })
-                        }
+                        onChange={handleInputChange}
                       />
                     </FormControl>
                     <FormMessage />

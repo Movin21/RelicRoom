@@ -1,45 +1,39 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
 import DataTable from 'react-data-table-component';
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { useForm } from "react-hook-form"
-import {Link} from "react-router-dom";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
-
+import { Link } from "react-router-dom";
+import { useReactToPrint } from "react-to-print";
 
 interface Feedback {
-  _id: string; 
+  _id: string;
   Name: string;
   IsFeedback: string;
   Feedback: string;
 }
 
 interface Suggestion {
-  _id: string; 
+  _id: string;
   Name: string;
   IsSuggestion: string;
   Suggestions: string;
 }
 
 interface Complaints {
-  _id: string; 
+  _id: string;
   Name: string;
   IsComplaint: string;
   Complaints: string;
 }
 
-interface Faq {
-  _id: string; 
-  Question: string;
-  Answer: string;
-}
-
 function FeedbackManage() {
   const [dataFeedback, setDataFeedback] = useState<(Feedback | Suggestion | Complaints)[]>([]);
-  const [dataFaq, setDataFaq] = useState<Faq[]>([]);
-  const form = useForm();
+  const [searchTerm, setSearchTerm] = useState("");
+  const [isPrinting, setIsPrinting] = useState(false);
+
 
   useEffect(() => {
     Promise.all([
@@ -47,24 +41,22 @@ function FeedbackManage() {
       axios.get("http://localhost:3000/customerCare/suggestion/getAll"),
       axios.get("http://localhost:3000/customerCare/complaints/getAll")
     ])
-    .then(([feedbackResponse, suggestionResponse, complaintsResponse]) => {
-      setDataFeedback([
-        ...feedbackResponse.data,
-        ...suggestionResponse.data,
-        ...complaintsResponse.data
-      ]);
-    })
-    .catch((error) => {
-      console.error("Error fetching data:", error);
-    });
+      .then(([feedbackResponse, suggestionResponse, complaintsResponse]) => {
+        setDataFeedback([
+          ...feedbackResponse.data,
+          ...suggestionResponse.data,
+          ...complaintsResponse.data
+        ]);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
   }, []);
-
-  
 
   const columnsFeedback = [
     {
       name: "UserID",
-      selector: (row: Feedback | Suggestion | Complaints) => row._id,
+      selector: (_row: Feedback | Suggestion | Complaints, index: number) => index + 1,
     },
     {
       name: "Name",
@@ -85,41 +77,29 @@ function FeedbackManage() {
     },
     {
       name: "Message",
-      selector: (row: Feedback | Suggestion | Complaints) => {
-        if ('Feedback' in row) return row.Feedback;
-        if ('Suggestions' in row) return row.Suggestions;
-        if ('Complaints' in row) return row.Complaints;
-        return ''; // Handle other types if necessary
-      },
+      cell: (row: { _id: string, Feedback?: string, Suggestions?: string, Complaints?: string }, handleRowExpand: (id: string) => void) => (
+        <div onClick={() => handleRowExpand(row._id)} style={{ cursor: 'pointer' }}>
+          {row.Feedback ? row.Feedback : row.Suggestions ? row.Suggestions : row.Complaints}
+        </div>
+      ),
+      
     },
     {
-      name:"Action",
-      cell: (row: Feedback | Suggestion | Complaints) =>(
-        <Button type="button" className='w-3/6 bg-red-950' onClick={() => handleDelete(row._id)}>Delete</Button>
+      name: "Action",
+      cell: (row: Feedback | Suggestion | Complaints) => (
+        !isPrinting && <Button type="button" className='w-3/6 bg-red-950' onClick={() => handleDelete(row._id)}>Delete</Button>
       ),
     },
   ];
 
-  
+  const filteredData = dataFeedback.filter((item) =>
+    Object.values(item).some((value) =>
+      value.toString().toLowerCase().includes(searchTerm.toLowerCase())
+    )
+  );
 
-  const handleSubmit = async (values: Record<string, any>) => {
-    console.log(values);
-    try {
-      const response = await axios.post(
-        "http://localhost:3000/customerCare/complaints/create",
-        {
-          Name: values.Name,
-          Email: values.Email,
-          Type: values.Type,
-          Recommend: values.Recommend,
-          Message: values.Message  
-        }
-      );
-      console.log(response);
-      console.log("Response:", response.data);
-    } catch (error) {
-      console.error("Error:", error);
-    }
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(e.target.value);
   };
 
   const handleDelete = (id: string) => {
@@ -131,7 +111,7 @@ function FeedbackManage() {
       .catch((error) => {
         console.error("Error deleting feedback:", error);
       });
-  
+
     axios
       .delete("http://localhost:3000/customerCare/suggestion/delete/" + id)
       .then(() => {
@@ -140,7 +120,7 @@ function FeedbackManage() {
       .catch((error) => {
         console.error("Error deleting suggestion:", error);
       });
-  
+
     axios
       .delete("http://localhost:3000/customerCare/complaints/delete/" + id)
       .then(() => {
@@ -151,30 +131,46 @@ function FeedbackManage() {
         console.error("Error deleting complaint:", error);
       });
   };
-  
-  
-  return (  
-    <>
+
+
+
+  const ComponentsRef = useRef<HTMLDivElement>(null);
+  const handlePrint = useReactToPrint({
+    content: () => ComponentsRef.current,
+    documentTitle: "Details Report",
+    onBeforeGetContent: () => setIsPrinting(true),
+    onAfterPrint: () => {
+      setIsPrinting(false);
+      alert("Details Report Successfully Downloaded");
+    }
+  });
+
+  return (
+    <div className="max-w-screen-lg px-4 mx-auto">
+      <Button className='btnfeed' onClick={handlePrint}>Details Download</Button>
       <Tabs defaultValue="feedbackManage" className="w-full">
         <TabsList className='flex justify-center text-2xl font-bold h-500 item-center w-500 font-akshar text-yellow-950'>
           <TabsTrigger value="feedbackManage" className='text-lg'>Feedback Manage</TabsTrigger>
           <TabsTrigger value="faqManage" className='text-lg'><Link to="/FAQManage">FAQ Manage</Link></TabsTrigger>
         </TabsList>
-       
-          <h1 className='flex justify-center text-2xl font-bold h-500 item-center w-500 font-akshar text-yellow-950'>Customer Message </h1>
-          <DataTable
-            columns={columnsFeedback}
-            data={dataFeedback}
-            pagination
-            fixedHeader
-            fixedHeaderScrollHeight='450px'
-            selectableRows
-            selectableRowsHighlight
-            highlightOnHover 
+
+        <div className="flex flex-col items-center justify-center">
+          <input
+            type="text"
+            placeholder="Search..."
+            value={searchTerm}
+            onChange={handleSearch}
+            className="w-full p-2 mb-4 border border-gray-300 rounded-lg"
           />
-      
+          <div className='w-full' ref={ComponentsRef}>
+            <DataTable
+              columns={columnsFeedback}
+              data={filteredData}
+            />
+          </div>
+        </div>
       </Tabs>
-    </>
+    </div>
   );
 }
 

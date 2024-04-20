@@ -2,23 +2,18 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import DataTable from 'react-data-table-component';
 import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
 import { useForm } from "react-hook-form"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Link, useNavigate } from "react-router-dom";
+
 import {
     Card,
     CardContent,
-    CardDescription,
-    CardFooter,
-    CardHeader,
-    CardTitle,
 } from "@/components/ui/card"
 
 import {
     Form,
     FormControl,
-    FormDescription,
     FormField,
     FormItem,
     FormLabel,
@@ -34,6 +29,7 @@ interface Faq {
 
 function FAQmanage() {
 
+    
     const [data, setData] = useState<Faq[]>([]);
     const form = useForm(); // Define the form variable using useForm hook
     const navigate = useNavigate(); // Initialize the navigate function
@@ -50,6 +46,8 @@ function FAQmanage() {
             });
     }, []);
 
+    
+
     const handleDelete = (id: string) => {
         axios
             .delete("http://localhost:3000/customerCare/faq/delete/" + id)
@@ -63,13 +61,13 @@ function FAQmanage() {
 
     const handleUpdate = (id: string) => {
         // Navigate to the update page with the ID as a parameter
-        navigate(`/FAQupdate/${id}`);
+        navigate("/FAQUpdate/"+ id);
     }
 
     const columns = [
         {
             name: "ID",
-            selector:(row: Faq, index: number) => index + 1,
+            selector: (row:Faq,index:number) => index +1
         },
         {
             name: "Question",
@@ -98,13 +96,11 @@ function FAQmanage() {
         try {
 
             const response = await axios.post(
-                "http://localhost:3000/customerCare/complaints/create",
+                "http://localhost:3000/customerCare/faq/create",
                 {
-                    Name: values.Name,
-                    Email: values.Email,
-                    Type: values.Type,
-                    Recommend: values.Recommend,
-                    Message: values.Message
+                    Question: values.Question,
+                    Answer: values.Answer,
+                    
                 }
             );
             console.log(response);
@@ -119,21 +115,21 @@ function FAQmanage() {
 
         <>
             <Tabs defaultValue="faqManage" className="w-full">
-                <TabsList className='flex justify-center text-2xl font-bold h-500 item-center w-500 font-akshar text-yellow-950'>
+                <TabsList className='flex justify-center mb-10 text-2xl font-bold h-500 item-center w-500 font-akshar text-yellow-950'>
                     <TabsTrigger value="feedbackManage" className='text-lg'><Link to="/feedbackManage">Feedback Manage</Link></TabsTrigger>
                     <TabsTrigger value="faqManage" className='text-lg'>FAQ Manage</TabsTrigger>
                 </TabsList>
                 <h1 className='flex justify-center text-2xl font-bold h-500 item-center w-500 font-akshar text-yellow-950'>FAQ Management </h1>
-                <DataTable
+               <DataTable
                     columns={columns}
                     data={data}
-                    pagination
-                    fixedHeader
-                    fixedHeaderScrollHeight='450px'
-                    selectableRows
-                    selectableRowsHighlight
-                    highlightOnHover
-                />
+                    //pagination
+                    //fixedHeader
+                    //fixedHeaderScrollHeight='450px'
+                    //selectableRows
+                    //selectableRowsHighlight
+                    //highlightOnHover
+    />
                 <Card className='w-2/4 mx-auto mt-20 bg-gradient-to-tl from-orange-950 to-yellow-100'>
                     <CardContent className='mx-auto'>
                         <Form {...form}>
@@ -186,3 +182,4 @@ function FAQmanage() {
 }
 
 export default FAQmanage;
+

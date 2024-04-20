@@ -77,10 +77,11 @@ export function ManageAuctions() {
   }, [auctioneer]);
 
   useEffect(() => {
-    // Fetch auctions for the logged-in auctioneer
-    axios
-      .get(`http://localhost:3000/admin/auctions/${auctioneerId}`)
-      .then((response) => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:3000/admin/auctions/${auctioneerId}`
+        );
         setAuctions(response.data);
         setActiveAuctions(
           response.data.filter((auction: Auction) => !auction.isExpired)
@@ -88,11 +89,13 @@ export function ManageAuctions() {
         setExpiredAuctions(
           response.data.filter((auction: Auction) => auction.isExpired)
         );
-      })
-      .catch((error) => {
+      } catch (error) {
         console.error("Error fetching auctions:", error);
-      });
-  }, [auctioneerId]); // Dependency on auctioneerId
+      }
+    };
+
+    fetchData();
+  }, [auctioneerId]);
 
   const handleDeleteConfirmation = (auctionId: string) => {
     axios
@@ -163,7 +166,7 @@ export function ManageAuctions() {
             <div className="flex items-center">
               <div className="ml-auto flex items-center gap-2">
                 <TabsList>
-                  <TabsTrigger value="active">Active</TabsTrigger>
+                  <TabsTrigger value="active">Ongoing</TabsTrigger>
                   <TabsTrigger value="expired">Expired</TabsTrigger>
                 </TabsList>
               </div>
@@ -172,7 +175,7 @@ export function ManageAuctions() {
             <TabsContent value="active">
               <Card>
                 <CardHeader>
-                  <CardTitle>Active Auctions</CardTitle>
+                  <CardTitle>Ongoing Auctions</CardTitle>
                   <CardDescription>
                     Manage all created active auctions.
                   </CardDescription>
@@ -185,12 +188,12 @@ export function ManageAuctions() {
                           <span>Image</span>
                         </TableHead>
                         <TableHead>Name</TableHead>
-                        <TableHead>Status</TableHead>
+
                         <TableHead className="hidden md:table-cell">
                           Auctioneer
                         </TableHead>
                         <TableHead className="hidden md:table-cell">
-                          Created at
+                          Posted at
                         </TableHead>
                         <TableHead>
                           <p className="ml-4 md:ml-0">{`Actions (Update/Delete)`}</p>
@@ -210,14 +213,7 @@ export function ManageAuctions() {
                           <TableCell className="font-medium">
                             {auction.auctionTitle}
                           </TableCell>
-                          <TableCell>
-                            <Badge
-                              variant="outline"
-                              className="bg-green-400 font-amethysta"
-                            >
-                              Active
-                            </Badge>
-                          </TableCell>
+
                           <TableCell className="hidden md:table-cell font-amethysta">
                             {auctioneer.companyname}
                           </TableCell>
@@ -288,7 +284,7 @@ export function ManageAuctions() {
                           <span>Image</span>
                         </TableHead>
                         <TableHead>Name</TableHead>
-                        <TableHead>Status</TableHead>
+
                         <TableHead className="hidden md:table-cell">
                           Current Bid
                         </TableHead>
@@ -313,14 +309,7 @@ export function ManageAuctions() {
                           <TableCell className="font-medium">
                             {auction.auctionTitle}
                           </TableCell>
-                          <TableCell>
-                            <Badge
-                              variant="outline"
-                              className="bg-red-400 font-amethysta"
-                            >
-                              Expired
-                            </Badge>
-                          </TableCell>
+
                           <TableCell className="hidden md:table-cell font-amethysta">
                             {auction.currentBid}
                           </TableCell>

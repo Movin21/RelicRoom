@@ -11,7 +11,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-const renderActiveShape = (props: {
+const renderActiveShape: any = (props: {
   cx: any;
   cy: any;
   midAngle: any;
@@ -134,7 +134,7 @@ const USerPieChart = () => {
 
   return (
     <ResponsiveContainer width="100%" height="100%">
-      <Card className="w-[480px] h-[400px] bg-white rounded-lg shadow-md mt-3">
+      <Card className="w-full h-[400px] bg-white rounded-lg shadow-md mt-3">
         <CardHeader>
           <CardTitle>
             <div className="text-brownMedium text-2xl font-bold font-akshar">

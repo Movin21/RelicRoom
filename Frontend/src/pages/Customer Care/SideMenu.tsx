@@ -4,14 +4,14 @@ import { Button } from "@/components/ui/button";
 
 const SideMenu = () => {
   return (
-    <div className="w-64 shadow bg-white text-black rounded-lg h-full py-6">
+    <div className="w-64 h-full py-6 text-black bg-white rounded-lg shadow">
       <div className="flex flex-col mx-4">
         <nav>
           <ul className="space-y-2">
             <li>
               <Link
-                to="/admin"
-                className="flex items-center px-4 py-2 rounded-md bg-white hover:bg-brownMedium transition-colors duration-200"
+                to="/feedbackManage"
+                className="flex items-center px-4 py-2 transition-colors duration-200 bg-white rounded-md hover:bg-brownMedium"
               >
                 <svg
                   className="w-5 h-5 mr-2"
@@ -33,8 +33,8 @@ const SideMenu = () => {
             </li>
             <li>
               <Link
-                to="#"
-                className="flex items-center px-4 py-2 rounded-md bg-white hover:bg-brownMedium transition-colors duration-200"
+                to="/faqManage"
+                className="flex items-center px-4 py-2 transition-colors duration-200 bg-white rounded-md hover:bg-brownMedium"
               >
                 <svg
                   className="w-5 h-5 mr-2"
@@ -67,7 +67,7 @@ const SideMenu = () => {
             </li>
 
             <li>
-              <Button className="mb-5 flex items-center w-full text-md text-white px-4 py-2 rounded-md bg-brownDark hover:bg-brownMedium transition-colors duration-200">
+              <Button className="flex items-center w-full px-4 py-2 mb-5 text-white transition-colors duration-200 rounded-md text-md bg-brownDark hover:bg-brownMedium">
                 <svg
                   className="w-5 h-5 mr-2"
                   width="15"

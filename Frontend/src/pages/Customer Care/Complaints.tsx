@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form"
 import { z } from "zod"
 import axios from "axios"
 import { Textarea } from "@/components/ui/textarea";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
 import {
     Card,
@@ -28,16 +29,7 @@ import {
 import { Input } from "@/components/ui/input"
 
 
-import {
-    NavigationMenu,
-    NavigationMenuContent,
-    NavigationMenuIndicator,
-    NavigationMenuItem,
-    NavigationMenuLink,
-    NavigationMenuList,
-    NavigationMenuTrigger,
-    NavigationMenuViewport,
-  } from "@/components/ui/navigation-menu"
+
 
   import {
     Select,
@@ -47,6 +39,7 @@ import {
     SelectValue,
   } from "@/components/ui/select"
 import { toast } from "@/components/ui/use-toast"
+import { Link } from "react-router-dom";
   
   
 
@@ -70,7 +63,7 @@ const formSchema = z.object({
     })
   
     
-    
+
   })
 
  export default  function Complaints() {
@@ -106,22 +99,15 @@ const formSchema = z.object({
   return (
     <>
     <h1 className='flex justify-center text-2xl font-bold h-500 item-center w-500 font-akshar text-yellow-950'>Customer Care </h1>
+    <Tabs defaultValue="account" className="w-[400px] flex item-center justify-center">
+     <TabsList>
+      <TabsTrigger value="complaint">Complaint</TabsTrigger>
+      <TabsTrigger value="suggestion"><Link to="/suggestion">Suggestion</Link></TabsTrigger>
+      <TabsTrigger value="feedback"><Link to="/feedback">Feedback</Link></TabsTrigger>
+      
+     </TabsList>
     
-    <NavigationMenu className='mx-auto mb-3 text-lg font-akshar text-yellow-950'>
-     <NavigationMenuList>
-     <NavigationMenuItem>
-        <NavigationMenuTrigger>Suggestions</NavigationMenuTrigger>
-     </NavigationMenuItem>
-     <NavigationMenuItem>
-        <NavigationMenuTrigger>Complaints</NavigationMenuTrigger>
-     </NavigationMenuItem>
-     <NavigationMenuItem>
-        <NavigationMenuTrigger>Feedbacks</NavigationMenuTrigger>
-     </NavigationMenuItem>
-     </NavigationMenuList>
-    </NavigationMenu>
-
-    
+    </Tabs>
     
     <div className="flex justify-center h-500 item-center w-500">
         <Card className="w-3/5 mt-5 mb-52">

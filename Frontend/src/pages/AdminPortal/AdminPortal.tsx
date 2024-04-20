@@ -2,6 +2,7 @@ import RevenueChart from "./Charts/RevenueCharts";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import USerPieChart from "./Charts/UserPieChart";
+import AuctionCarousel from "./Charts/AuctionCarousel";
 
 const AdminPortal = () => {
   const [users, setUsers] = useState(0);
@@ -25,7 +26,7 @@ const AdminPortal = () => {
         // Update state with fetched data
         setUsers(usersResponse.data);
         setAuctions(auctionsResponse.data);
-        setRevenue(revenueResponse.data);
+        setRevenue(revenueResponse.data.totalValue);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -115,7 +116,7 @@ const AdminPortal = () => {
         <div className="bg-white rounded-lg shadow-md p-4 mb-3 w-100 mr-3">
           <div className="flex items-center">
             <div className="text-brownMedium font-akshar font-bold text-lg ">
-              Revenue
+              Total Revenue
             </div>
             <div className="ml-52 bg-green-400 text-white rounded-full px-2 py-1 text-sm">
               <svg
@@ -144,14 +145,16 @@ const AdminPortal = () => {
           </div>
         </div>
       </div>
-
       <div className="bg-white rounded-lg shadow-md p-4 ">
         <div className="text-brownMedium text-2xl font-bold mb-2 md:mb-4 font-akshar">
-          Revenue
+          Featuring Auctions Revenue
         </div>
         <RevenueChart />
       </div>
-      <USerPieChart />
+      <div className="flex items-center">
+        <AuctionCarousel />
+        <USerPieChart />
+      </div>
     </>
   );
 };

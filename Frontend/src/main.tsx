@@ -14,10 +14,14 @@ import AdminRegister from "./pages/AdminPortal/AdminRegister.tsx";
 import BidderLogin from "./pages/Bidder/BidderLogin.tsx";
 import BidderSignup from "./pages/Bidder/BidderSignup.tsx";
 import BidderProfile from "./pages/Bidder/BidderProfile.tsx";
+import BidderDashboard from "./pages/Bidder/BidderDashboard.tsx";
+import BidderWishlist from "./pages/Bidder/BidderWishlist.tsx";
+import BidderMybids from "./pages/Bidder/BidderMybids.tsx";
 import AuctioneerLogin from "./pages/Auctioneer/AuctioneerLogin.tsx";
 import AuctioneerRegister from "./pages/Auctioneer/AuctioneerRegister.tsx";
 import AuctioneerPortal from "./pages/Auctioneer/AuctioneerPortal.tsx";
 import AuctioneerProfile from "./pages/Auctioneer/AuctioneerProfile.tsx";
+import AuctioneerReportG from "./pages/Auctioneer/AuctioneerReportG.tsx";
 import AuctionList from "./pages/Auction Listing/AuctionList.tsx";
 import { Provider } from "react-redux";
 import { store, persistor } from "./redux/store.ts";
@@ -31,15 +35,23 @@ import { AdminAuctions } from "./pages/AdminPortal/AdminAuctions.tsx";
 import AdminProfile from "./pages/AdminPortal/AdminProfile.tsx";
 import { AdminUsers } from "./pages/AdminPortal/AdminUsers.tsx";
 import CustomerCareLayout from "./pages/layouts/CustomerCareLayout.tsx";
-import CustomerCare from "./pages/Customer Care/CustomerCare.tsx";
+import FeedbackReview from "./pages/Customer Care/FeedbackReview.tsx";
+import FAQmanage from "./pages/Customer Care/FAQmanage.tsx";
+import FeedbackManage from "./pages/Customer Care/FeedbackManage.tsx";
+import Update from "./pages/Customer Care/Update.tsx";
 import AuctionDashboardLayout from "./pages/layouts/AuctionDashboardLayout.tsx";
 import AuctionDashboard from "./pages/Auction Listing/AuctionDashboard.tsx";
 import ManageAuctions from "./pages/Auction Listing/ManageAuctions.tsx";
 import UpdateAuction from "./pages/Auction Listing/UpdateAuction.tsx";
+
 import SaveRs from "./pages/Repair Specialist/SaveRs.tsx";
 import LogRS from "./pages/Repair Specialist/RSlogin.tsx";
 import RSProfile from "./pages/Repair Specialist/userProfile.tsx";
 import RSListing from "./pages/Repair Specialist/RSlisting.tsx";
+
+import ReportGeneration from "./pages/Auction Listing/ReportGeneration.tsx";
+import ReportView from "./pages/Auction Listing/ReportView.tsx";
+
 
 // Initialize Firebase
 const firebaseConfig = {
@@ -62,7 +74,7 @@ const router = createBrowserRouter([
       { path: "/auctioneerRegister", element: <AuctioneerRegister /> },
       { path: "/auctioneerPortal", element: <AuctioneerPortal /> },
       { path: "/auctioneerProfile", element: <AuctioneerProfile /> },
-
+      { path: "/auctioneerReportG", element: <AuctioneerReportG /> },
       { path: "/auction/listedAuctions", element: <AuctionList /> },
       { path: "/bidderLogin", element: <BidderLogin /> },
       { path: "/bidderSignup", element: <BidderSignup /> },
@@ -74,10 +86,20 @@ const router = createBrowserRouter([
       { path: "/bidderLogin", element: <BidderLogin /> },
       { path: "/bidderSignup", element: <BidderSignup /> },
       { path: "/bidderProfile", element: <BidderProfile /> },
+
       { path: "/repairSpacialist/saveRs", element: <SaveRs /> },
       { path: "/repairSpacialist/logRS", element: <LogRS /> },
       { path: "/repairSpacialist/rsprofile", element: <RSProfile /> },
       { path: "/repairSpacialist/rslist", element: <RSListing /> },
+
+      { path: "/bidderDashboard", element: <BidderDashboard /> },
+      { path: "/bidderWishlist", element: <BidderWishlist /> },
+      { path: "/bidderMybids", element: <BidderMybids /> },
+      { path: "/feedbackreview", element: <FeedbackReview /> },
+      { path: "/bidderDashboard", element: <BidderDashboard /> },
+      { path: "/bidderWishlist", element: <BidderWishlist /> },
+      { path: "/bidderMybids", element: <BidderMybids /> },
+
     ],
   },
 
@@ -99,6 +121,8 @@ const router = createBrowserRouter([
       { path: "/manageAuctions", element: <ManageAuctions /> },
       { path: "/auction/postAuction", element: <PostAuction /> },
       { path: "/auction/updateAuction/:id", element: <UpdateAuction /> },
+      { path: "/auction/generateReports", element: <ReportGeneration /> },
+      { path: "/auction/ReportView/:id", element: <ReportView /> },
     ],
   },
   {
@@ -107,7 +131,11 @@ const router = createBrowserRouter([
   },
   {
     element: <CustomerCareLayout />,
-    children: [{ path: "/customerCare", element: <CustomerCare /> }],
+    children: [
+      { path: "/feedbackManage", element: <FeedbackManage /> },
+      { path: "/faqManage", element: <FAQmanage /> },
+      { path: "/FAQUpdate", element: <Update /> },
+    ],
   },
 ]);
 

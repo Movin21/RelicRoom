@@ -1,4 +1,5 @@
 const Admin = require("../../../models/admin");
+const Revenue = require("../../../models/revenue");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
@@ -97,6 +98,14 @@ const deleteAdmin = async (req, res, next) => {
   }
 };
 
+const revenueChart = async (req, res, next) => {
+  try {
+    const revenue = await Revenue.find();
+    res.status(200).json(revenue);
+  } catch (error) {
+    next(error);
+  }
+};
 module.exports = {
   createAdmin,
   getAllAdmins,
@@ -104,4 +113,5 @@ module.exports = {
   updateAdmin,
   deleteAdmin,
   LoginAdmin,
+  revenueChart
 };

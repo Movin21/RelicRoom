@@ -52,7 +52,6 @@ import RSListing from "./pages/Repair Specialist/RSlisting.tsx";
 import ReportGeneration from "./pages/Auction Listing/ReportGeneration.tsx";
 import ReportView from "./pages/Auction Listing/ReportView.tsx";
 
-
 // Initialize Firebase
 const firebaseConfig = {
   apiKey: "AIzaSyD4SG__snQ7W-DqFBLnlIq8zSV9yNCa4PY",
@@ -99,7 +98,6 @@ const router = createBrowserRouter([
       { path: "/bidderDashboard", element: <BidderDashboard /> },
       { path: "/bidderWishlist", element: <BidderWishlist /> },
       { path: "/bidderMybids", element: <BidderMybids /> },
-
     ],
   },
 
@@ -134,7 +132,7 @@ const router = createBrowserRouter([
     children: [
       { path: "/feedbackManage", element: <FeedbackManage /> },
       { path: "/faqManage", element: <FAQmanage /> },
-      { path: "/FAQUpdate", element: <Update /> },
+      { path: "/FAQUpdate/:id", element: <Update /> },
     ],
   },
 ]);

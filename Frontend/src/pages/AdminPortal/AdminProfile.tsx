@@ -52,7 +52,7 @@ const FormSchema = z
       .regex(/\d/, {
         message: "Username must contain at least one digit.",
       }),
-    profilePicture: z.string(),
+    profileImage: z.string(),
     password: z
       .string()
       .min(6, { message: "Password must be at least 8 characters." })
@@ -79,7 +79,7 @@ const AdminRegister = () => {
   const admin = useSelector((state: any) => state.admin.admin);
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
-  const [ImgUrl, setImgUrl] = useState(admin.profilePicture);
+  const [ImgUrl, setImgUrl] = useState(admin.profileImage);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
   const form = useForm<z.infer<typeof FormSchema>>({
@@ -89,7 +89,7 @@ const AdminRegister = () => {
       lastName: admin.lastName,
       username: admin.username,
       password: "",
-      profilePicture: admin.profilePicture,
+      profileImage: admin.profileImage,
     },
   });
 
@@ -102,8 +102,9 @@ const AdminRegister = () => {
       fileRef.put(selectedFile).then((snapshot) => {
         snapshot.ref.getDownloadURL().then((downloadURL) => {
           setImgUrl(downloadURL);
+          console.log(downloadURL);
           setIsLoading(false);
-          form.setValue("profilePicture", downloadURL);
+          form.setValue("profileImage", downloadURL);
         });
       });
     }
@@ -124,7 +125,6 @@ const AdminRegister = () => {
   }
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
-    data.profilePicture = ImgUrl;
     try {
       await axios.patch(
         `http://localhost:3000/admin/adminUser/${admin._id}`,

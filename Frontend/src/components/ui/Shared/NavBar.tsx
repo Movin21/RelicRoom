@@ -116,7 +116,7 @@ function NavBar() {
               <NavigationMenuLink
                 className={`font-akshar text-lg md:text-xl lg:text-lg text-primary hover:text-secondary hover:bg-white ${navigationMenuTriggerStyle()}`}
               >
-                <Link to="#">Customer Care</Link>
+                <Link to="/complaint">Customer Care</Link>
               </NavigationMenuLink>
             </NavigationMenuItem>
             <DropdownMenu>

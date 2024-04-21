@@ -46,7 +46,7 @@ const AdminPortal = () => {
         </div>
         <div className="flex items-center sm:ml-4">
           <Avatar>
-            <AvatarImage src={admin.profilePicture} />
+            <AvatarImage src={admin.profileImage} />
             <AvatarFallback>CN</AvatarFallback>
           </Avatar>
           <div className="ml-2 hidden sm:block">

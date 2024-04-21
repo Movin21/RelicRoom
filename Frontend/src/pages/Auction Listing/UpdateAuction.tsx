@@ -195,7 +195,6 @@ export default function UpdateAuction() {
           auctionCategory: values.category,
           auctionStartingPrice: values.startingPrice,
           auctionDuration: auctionEndDate,
-          auctionImages: downloadURLs,
         }
       );
 
@@ -372,7 +371,7 @@ export default function UpdateAuction() {
                 />
               </div>
               <FormLabel className="font-sourceSans3 font-semibold text-md mt-4">
-                {`Add Images (Upload all the images again)`}
+                {`Add Images `}
               </FormLabel>
 
               <Dropzone

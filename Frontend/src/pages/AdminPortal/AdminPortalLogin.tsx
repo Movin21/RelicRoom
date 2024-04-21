@@ -10,6 +10,7 @@ import { AlertCircle } from "lucide-react";
 import { useDispatch } from "react-redux";
 import { login } from "./slice/adminSlice";
 import adminLoginBG from "../../assets/admin/adminLoginBG.jpg";
+
 const schema = z.object({
   username: z.string().min(1, "Username is required"),
   password: z.string().min(1, "Password is required"),
@@ -49,16 +50,18 @@ const AdminPortalLogin = () => {
   };
 
   return (
-    <div
-      className="flex justify-center items-center h-screen bg-gradient-to-r from-brownMedium to-brownDark"
-      style={{
-        backgroundImage: `url(${adminLoginBG})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
-      }}
-    >
-      <div className="backdrop-blur-sm bg-white/30 p-8 rounded-lg shadow-md max-w-md w-full">
+    <div className="flex justify-center items-center h-screen bg-gradient-to-r from-brownMedium to-brownDark">
+      <div
+        className="absolute inset-0 z-0"
+        style={{
+          backgroundImage: `url(${adminLoginBG})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+          filter: "blur(5px)", // Apply blur effect to the background image
+        }}
+      />
+      <div className="backdrop-blur-sm bg-white/30 p-8 rounded-lg shadow-md max-w-md w-full z-10">
         <h2 className="font-akshar text-brownDark text-4xl text-center font-bold mb-6">
           Welcome to Admin Portal
         </h2>

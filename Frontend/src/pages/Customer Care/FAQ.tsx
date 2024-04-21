@@ -15,7 +15,7 @@ interface Faq {
 
 function FAQ() {
   const [data, setData] = useState<Faq[]>([]);
-  const [filteredData, setFilteredData] = useState<Faq[]>([]); // State to hold filtered data
+  const [filteredData, setFilteredData] = useState<Faq[]>([]);
   const [searchQuery, setSearchQuery] = useState<string>("");
 
   useEffect(() => {
@@ -31,7 +31,6 @@ function FAQ() {
   }, []);
 
   useEffect(() => {
-    // Filter data whenever searchQuery changes
     const filtered = data.filter((faq) =>
       faq.Question.toLowerCase().includes(searchQuery.toLowerCase())
     );
@@ -43,28 +42,26 @@ function FAQ() {
   };
 
   return (
-    <>
-      <div>
-        <h1 className="text-2xl text-center font-akshar text-yellow-950">
-          Frequently Asked Questions
-        </h1>
-        <input
-          type="text"
-          value={searchQuery}
-          onChange={handleSearchChange}
-          placeholder="Search FAQs"
-          className="p-2 mt-4 border border-gray-300 rounded-md "
-        />
-        <Accordion type="single" collapsible className="m-16">
-          {filteredData.map((faq) => (
-            <AccordionItem key={faq._id} value={faq._id}>
-              <AccordionTrigger>{faq.Question}</AccordionTrigger>
-              <AccordionContent>{faq.Answer}</AccordionContent>
-            </AccordionItem>
-          ))}
-        </Accordion>
-      </div>
-    </>
+    <div className="flex flex-col items-center">
+      <h1 className="mt-10 text-2xl font-akshar text-yellow-950">
+        Frequently Asked Questions
+      </h1>
+      <input
+        type="text"
+        value={searchQuery}
+        onChange={handleSearchChange}
+        placeholder="Search FAQs"
+        className="p-2 mt-5 border border-gray-300 rounded-md"
+      />
+      <Accordion type="single" collapsible className="m-16">
+        {filteredData.map((faq) => (
+          <AccordionItem key={faq._id} value={faq._id}>
+            <AccordionTrigger className="font-akshar">{faq.Question}</AccordionTrigger>
+            <AccordionContent className='text-stone-700 font-akshar'>{faq.Answer}</AccordionContent>
+          </AccordionItem>
+        ))}
+      </Accordion>
+    </div>
   );
 }
 

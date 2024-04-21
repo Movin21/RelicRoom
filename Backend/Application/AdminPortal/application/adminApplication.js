@@ -69,17 +69,25 @@ const LoginAdmin = async (req, res, next) => {
 // Update an admin user by ID
 const updateAdmin = async (req, res, next) => {
   try {
+    // Check if the request includes a password update
+    if (req.body.password) {
+      // Hash the new password
+      req.body.password = await bcrypt.hash(req.body.password, 10);
+    }
+
     const updatedAdmin = await Admin.findByIdAndUpdate(
       req.params.id,
       req.body,
       { new: true }
     );
+
     if (!updatedAdmin) {
       return res.status(404).json({ message: "Admin not found" });
     }
+
     res
       .status(200)
-      .json({ updateAdmin, token: generateToken(updatedAdmin._id) });
+      .json({ updatedAdmin, token: generateToken(updatedAdmin._id) });
   } catch (error) {
     next(error);
   }
@@ -113,5 +121,5 @@ module.exports = {
   updateAdmin,
   deleteAdmin,
   LoginAdmin,
-  revenueChart
+  revenueChart,
 };

@@ -44,6 +44,7 @@ const SingleAuction: React.FC = () => {
   const auctioneer = useSelector((state: any) => state.auctioneer.auctioneer);
   const bidder = useSelector((state: any) => state.bidder.bidder);
 
+  //Store the id that pass by the listing page
   const { id } = useParams<{ id: string }>();
 
   const [auction, setAuction] = useState<Auction | undefined>();

@@ -76,6 +76,7 @@ export function ManageAuctions() {
     }
   }, [auctioneer]);
 
+  //Getting auctions by auctioneer id
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -97,6 +98,7 @@ export function ManageAuctions() {
     fetchData();
   }, [auctioneerId]);
 
+  // Function to handle the delete auction
   const handleDeleteConfirmation = (auctionId: string) => {
     axios
       .delete(`http://localhost:3000/auctions/delete/${auctionId}`)

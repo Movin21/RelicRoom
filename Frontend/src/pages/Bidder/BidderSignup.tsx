@@ -57,6 +57,7 @@ const BidderSignup = () => {
     },
   })
 
+
   const onSubmit = async (values: z.infer<typeof FormSchema>) => {
     
     const bidderData = {

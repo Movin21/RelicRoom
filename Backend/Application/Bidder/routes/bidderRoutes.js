@@ -1,5 +1,5 @@
 const express = require("express");
-const bidder = require("../../../models/bidderModel"); //import the created user model
+const bidder = require("../../../models/bidderModel");
 const router = express.Router(); //use to create http rreqequests
 
 //create bidder
@@ -93,5 +93,6 @@ router.post("/login", async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 });
+
 
 module.exports = router;

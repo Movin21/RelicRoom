@@ -2,6 +2,7 @@ const express = require('express');
 const inform = require('../../models/inform.Model.js'); //import the created user model
 const payment = require('../../models/payment.Model.js');
 const Bids = require('../../models/bid.js');
+const Bidders = require('../../models/bidderModel.js');
 const router = express.Router(); //use to create http rreqequests
 
 //wins bidder inform details
@@ -135,31 +136,50 @@ router.delete('/Pdelete/:idp', async (req, res) => {
 });
 
 //inform delelivery proccess
-router.put('updatestatus/:FormmId/status', async (req, res) => {
+router.put('/updatestatus/:FormmId/status', async (req, res) => {
   try {
     
 
     const { FormmId } = req.params;
     const { status } = req.body;
 
-    const updatedform = await appoimnet.findByIdAndUpdate(
+    const updatedform = await payment.findByIdAndUpdate(
       FormmId ,
       { status },
       { new: true }
     );
 
     if (!updatedform) {
-      return next(errorHandle(404, " form not found"));
+      return console.log(" form not found");
     }
 
     res.status(200).json(updatedform);
   } catch (error) {
-    next(error);
+    console.log(error);
   }
     
 });
 
 
+//getcurrent bidder payment status
+router.get('/Bidgetpay/:bidderId', async (req, res) => {
+    try {
+        const bidderId = req.params.bidderId; 
+        
+        
+        const bidder = await payment.find({ bidderId });
+    
+        if (bidder.length > 0) {
+          res.json({ message: "bidder details retrieved successfully", bidder });
+        } else {
+          return console.log("not found")
+        }
+      } catch (error) {
+        console.log(error.message);
+       
+      }
+});
+  
 
 
 

@@ -81,6 +81,7 @@ const router = createBrowserRouter([
       { path: "/auctioneerProfile", element: <AuctioneerProfile /> },
       { path: "/auctioneerReportG", element: <AuctioneerReportG /> },
       { path: "/auction/listedAuctions", element: <AuctionList /> },
+
       { path: "/bidderLogin", element: <BidderLogin /> },
       { path: "/bidderSignup", element: <BidderSignup /> },
       { path: "/feedback", element: <Feedback /> },
@@ -112,7 +113,6 @@ const router = createBrowserRouter([
       { path: "/blog/PostReadMore/:id", element: <BlogPostReadMore /> },
       { path: "/vintageexpert/Update/:id", element: <VintageexpertUpdate /> },
       { path: "/blog/Update/:id", element: <BlogPostUpdate /> },
-
     ],
   },
 

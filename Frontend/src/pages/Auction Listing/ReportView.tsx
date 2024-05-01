@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import {
@@ -8,7 +9,94 @@ import {
   Page,
   Text,
   View,
+  StyleSheet,
+  Font,
+  Image,
 } from "@react-pdf/renderer";
+
+import logo from "../../assets/Logo/Logo.png";
+
+// Import fonts
+Font.register({
+  family: "Oswald",
+  src: "https://fonts.gstatic.com/s/oswald/v13/Y_TKV6o8WovbUd3m_X9aAA.ttf",
+});
+
+Font.register({
+  family: "Roboto",
+  src: "https://fonts.gstatic.com/s/roboto/v20/KFOmCnqEu92Fr1Mu4mxP.ttf",
+});
+
+// Create styles
+const styles = StyleSheet.create({
+  page: {
+    flexDirection: "column",
+    backgroundColor: "#FFFFFF",
+    padding: "2cm",
+    borderWidth: 3,
+    borderStyle: "solid",
+    borderColor: "#000000",
+  },
+  title: {
+    fontSize: 26,
+    fontWeight: "bold",
+    marginBottom: 20,
+    fontFamily: "Oswald",
+    textAlign: "center",
+  },
+  logoContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "flex-start", // Align logo to the left
+    marginBottom: 20,
+    marginTop: 10,
+  },
+  subtitle: {
+    fontSize: 18,
+    fontWeight: "bold",
+    marginBottom: 5,
+    fontFamily: "Oswald",
+  },
+  description: {
+    fontSize: 12,
+    marginBottom: 5,
+    fontFamily: "Roboto",
+    textAlign: "justify",
+  },
+  section: {
+    marginBottom: 20,
+  },
+  tableRow: {
+    flexDirection: "row",
+    marginTop: 5,
+    borderBottomWidth: 1,
+    borderBottomColor: "#DDDDDD",
+    borderBottomStyle: "solid",
+    paddingBottom: 5,
+  },
+  tableCell: {
+    flex: 1,
+    fontSize: 12,
+    marginBottom: 5,
+    fontFamily: "Roboto",
+    textAlign: "center",
+  },
+  logo: {
+    width: 155,
+    height: 50,
+    marginRight: 10,
+  },
+  letterhead: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: 20,
+  },
+  companyInfo: {
+    flexDirection: "column",
+    alignItems: "flex-start",
+  },
+});
 
 interface Auction {
   auctioneerId: string;
@@ -88,80 +176,71 @@ const Report = () => {
   // Render PDF document
   const MyDocument = () => (
     <Document>
-      <Page style={{ padding: "2cm" }}>
-        <Text
-          style={{
-            fontSize: 26,
-            fontWeight: "bold",
-            marginBottom: 20,
-            textAlign: "center",
-          }}
-        >
-          Auction Summary Report
-        </Text>
-        <Text style={{ fontSize: 18, fontWeight: "bold", marginBottom: 15 }}>
+      <Page size="A4" style={styles.page}>
+        {/* Letterhead */}
+        <View style={styles.letterhead}>
+          <View style={styles.logoContainer}>
+            <Image style={styles.logo} src={logo} />
+          </View>
+          <View style={styles.companyInfo}>
+            <Text style={{ fontSize: 12 }}>123 Main Street</Text>
+            <Text style={{ fontSize: 12 }}>New York, NY 10001</Text>
+            <Text style={{ fontSize: 12 }}>Phone: (123) 456-7890</Text>
+            <Text style={{ fontSize: 12 }}>Email: info@relicroom.com</Text>
+          </View>
+        </View>
+
+        {/* Title */}
+        <Text style={styles.title}>Auction Summary Report</Text>
+
+        {/* Auction Details */}
+        <Text style={styles.subtitle}>Auction Details</Text>
+        <Text style={{ ...styles.description }}>
           Auction Title: {auction?.auctionTitle}
         </Text>
-        <Text style={{ fontSize: 14, marginBottom: 10 }}>
+        <Text style={styles.description}>
           Category: {auction?.auctionCategory}
         </Text>
-        <Text style={{ fontSize: "14px", marginBottom: "10px" }}>
+        <Text style={styles.description}>
           Posted Date:{" "}
           {auction?.createdAt
             ? new Date(auction.createdAt).toLocaleString()
             : ""}
         </Text>
-        <Text style={{ fontSize: 14, marginBottom: 10 }}>
+        <Text style={styles.description}>
           Starting At: ${auction?.auctionStartingPrice}
         </Text>
-        <Text style={{ fontSize: 14, marginBottom: 10 }}>
+        <Text style={styles.description}>
           {auction?.isExpired ? "Winning Bid:" : "Current Bid:"} $
           {auction?.currentBid}
         </Text>
-        <Text style={{ fontSize: 14, marginBottom: 10 }}>
+        <Text style={styles.description}>
           {auction?.isExpired ? "Winning Bidder:" : "Leading Bidder:"}{" "}
           {auction?.leadingBidderName}
         </Text>
 
-        <Text style={{ fontSize: 18, marginTop: 20, marginBottom: 10 }}>
+        {/* Bids Information */}
+        <Text style={{ ...styles.subtitle, marginTop: 20, marginBottom: 10 }}>
           Bids Information
         </Text>
-
-        <View style={{ flexDirection: "row", marginTop: 10 }}>
-          <View style={{ flex: 1 }}>
-            <Text style={{ fontSize: 12, fontWeight: "bold", marginBottom: 5 }}>
-              Bidder Name
-            </Text>
-          </View>
-          <View style={{ flex: 1 }}>
-            <Text style={{ fontSize: 12, fontWeight: "bold", marginBottom: 5 }}>
-              Bid Price
-            </Text>
-          </View>
-          <View style={{ flex: 1 }}>
-            <Text style={{ fontSize: 12, fontWeight: "bold", marginBottom: 5 }}>
-              Bided Time and Date
-            </Text>
-          </View>
+        <View style={{ ...styles.tableRow, marginTop: 10 }}>
+          <Text style={{ ...styles.tableCell, fontWeight: "bold" }}>
+            Bidder Name
+          </Text>
+          <Text style={{ ...styles.tableCell, fontWeight: "bold" }}>
+            Bid Price
+          </Text>
+          <Text style={{ ...styles.tableCell, fontWeight: "bold" }}>
+            Bided Time and Date
+          </Text>
         </View>
-
         {bids.map((bid) => (
-          <View key={bid._id} style={{ flexDirection: "row", marginTop: 5 }}>
-            <View style={{ flex: 1 }}>
-              <Text style={{ fontSize: 12, marginBottom: 5 }}>
-                {bid.bidderName}
-              </Text>
-            </View>
-            <View style={{ flex: 1 }}>
-              <Text style={{ fontSize: 12, marginBottom: 5 }}>
-                ${bid.bidPrice}
-              </Text>
-            </View>
-            <View style={{ flex: 1 }}>
-              <Text style={{ fontSize: 12, marginBottom: 5 }}>
-                {new Date(bid.createdAt).toLocaleString()}
-              </Text>
-            </View>
+          <View key={bid._id} style={{ ...styles.tableRow, marginTop: 5 }}>
+            <Text style={styles.tableCell}>{bid.bidderName}</Text>
+            <Text style={styles.tableCell}>${bid.bidPrice}</Text>
+            <Text style={styles.tableCell}>
+              {new Date(bid.createdAt).toLocaleString()}
+            </Text>
           </View>
         ))}
       </Page>

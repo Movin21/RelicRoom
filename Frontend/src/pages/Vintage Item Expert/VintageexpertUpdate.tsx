@@ -81,129 +81,130 @@ const VintageexpertUpdate = () => {
         </Alert>
       )}
 
-        <CardHeader>
-            <CardTitle className="font-akshar text-secondary  text-center text-2xl mb-0">
-            Update as an Vintage Expert
-            </CardTitle>
-          </CardHeader>
-    
-    <div className="flex items-center justify-center">
-      <Card className=" w-full md:w-96 p-6 mt-0 mb-10 shadow-2xl" style={{ width: '700px' }}>
+      <CardHeader>
+        <CardTitle className="font-akshar text-secondary text-center text-2xl mb-0">
+          Update as an Vintage Expert
+        </CardTitle>
+      </CardHeader>
+
+      <div className="flex items-center justify-center">
+        <Card className=" w-full md:w-96 p-6 mt-0 mb-10 shadow-2xl" style={{ width: '700px' }}>
           <CardContent>
-          <Form {...form} >
-          <form onSubmit={form.handleSubmit(onSubmit)} 
-          className="max-w-xl w-full flex flex-col gap-4">
+            <Form {...form} >
+              <form onSubmit={form.handleSubmit(onSubmit)} className="max-w-xl w-full flex flex-col gap-4">
 
-            <FormField
-              control={form.control}
-              name="firstname"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>First name</FormLabel>
-                  <FormControl>
-                    <Input placeholder="First Name" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="secondname"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Second name</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Second name" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+                <FormField
+                  control={form.control}
+                  name="firstname"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>First name</FormLabel>
+                      <FormControl>
+                        <Input placeholder="First Name" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="secondname"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Second name</FormLabel>
+                      <FormControl>
+                        <Input placeholder="Second name" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
 
-            <FormField
-              control={form.control}
-              name="expertisecategoryarea"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Expertise category area:</FormLabel>
-                  <FormControl>
-                    <select {...field} className="w-full px-3 py-1.5 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-                      <option value="">Select category area</option>
-                      <option value="art">art</option>
-                      <option value="clothing">clothing</option>
-                      <option value="furniture">furniture</option>
-                      <option value="jewelry">jewelry</option>
-                    </select>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+                <FormField
+                  control={form.control}
+                  name="expertisecategoryarea"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Expertise category area:</FormLabel>
+                      <FormControl>
+                        <select {...field} className="w-full px-3 py-1.5 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                          <option value="">Select category area</option>
+                          <option value="art">art</option>
+                          <option value="clothing">clothing</option>
+                          <option value="furniture">furniture</option>
+                          <option value="jewelry">jewelry</option>
+                        </select>
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
 
-            <FormField
-              control={form.control}
-              name="workingexperience"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Do you have work experience?</FormLabel>
-                  <FormControl>
-                    <select {...field} className="w-full px-3 py-1.5 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-                      <option value="">Select Industry</option>
-                      <option value="yes">yes</option>
-                      <option value="no">no</option>
-                    </select>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+                <FormField
+                  control={form.control}
+                  name="workingexperience"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Do you have work experience?</FormLabel>
+                      <FormControl>
+                        <select {...field} className="w-full px-3 py-1.5 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                          <option value="">Select Industry</option>
+                          <option value="yes">yes</option>
+                          <option value="no">no</option>
+                        </select>
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
 
-            <FormField
-              control={form.control}
-              name="email"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>E-Mail</FormLabel>
-                  <FormControl>
-                    <Input placeholder="E-mail" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="password"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Password</FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder="password"
-                      type="password"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+                <FormField
+                  control={form.control}
+                  name="email"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>E-Mail</FormLabel>
+                      <FormControl>
+                        <Input placeholder="E-mail" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="password"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Password</FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="password"
+                          type="password"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
 
-           <div className="flex items-center justify-center mb-5">
-           
-            <Button
-                disabled={form.formState.isSubmitting} // Disable the button while submitting
-                type="submit"
-                className="font-akshar w-full text-white bg-primary hover:bg-secondary ease-in-out hover:text-white tw-50 mt-4" 
-                variant="outline"
-              >Update</Button>
-            </div>
-        </form>
-      </Form>
-      </CardContent>
-    </Card>
-   </div> </>
+                <div className="flex items-center justify-center mb-5">
+                  <Button
+                    disabled={form.formState.isSubmitting} // Disable the button while submitting
+                    type="submit"
+                    className="font-akshar w-full text-white bg-primary hover:bg-secondary ease-in-out hover:text-white tw-50 mt-4"
+                    variant="outline"
+                  >
+                    Update
+                  </Button>
+                </div>
+              </form>
+            </Form>
+          </CardContent>
+        </Card>
+      </div>
+    </>
   );
 };
 

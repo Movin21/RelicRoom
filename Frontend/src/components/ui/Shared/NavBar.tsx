@@ -60,7 +60,9 @@ function NavBar() {
                 <MenubarItem
                   className={`font-akshar text-primary hover:text-secondary `}
                 >
+
                   <Link to="/bidderSignup">Bidder Account</Link>
+
                 </MenubarItem>
                 <MenubarSeparator />
                 <MenubarItem

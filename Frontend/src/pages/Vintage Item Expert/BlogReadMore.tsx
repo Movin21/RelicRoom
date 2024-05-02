@@ -1,13 +1,8 @@
-'use client';
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from 'react';
 import axios from 'axios'; // Import Axios for making HTTP requests
 import { CardHeader, CardTitle } from "@/components/ui/card";
 import { PDFDownloadLink, Document, Page, Text, View } from '@react-pdf/renderer';
-
-
-// the useParams hook from React Router to extract the id parameter from the URL path.
-
 
 const BlogPostReadMore = () => {
     const { id } = useParams(); // Get the post ID from the URL params
@@ -38,7 +33,6 @@ const BlogPostReadMore = () => {
         }
     };
     
-
     // Fetch the post when the component mounts or when the ID changes
     useEffect(() => {
         fetchPost();
@@ -47,7 +41,7 @@ const BlogPostReadMore = () => {
 
     // pdf css
     const BlogPDF = () => (
-        <Document>npm
+        <Document>
             <Page>
                 <View style={{ border: '1px solid black', padding: 10, marginBottom: 20, textAlign: 'center' }}>
                     <Text style={{ fontSize: 25, fontWeight: 'bold', marginBottom: 15, color: 'dark brown' }}>Blog Post</Text>
@@ -59,60 +53,44 @@ const BlogPostReadMore = () => {
                     <Text style={{ marginBottom: 5 , fontSize: 12}}>Telephone: +1234567890</Text>
                     <Text style={{ marginBottom: 5 , fontSize: 12}}>Location: 123 Vintage Street, Retro City</Text>
                 </View>
-                {/* Add other post details here */}
             </Page>
         </Document>
     );
-    
-    
 
     return (
         <div className="flex">
-           
             <div className="container mx-auto px-4 py-8">
-            <CardHeader>
-            <CardTitle className="font-akshar text-secondary  text-center text-3xl mb-0">
-            Blog Post Details
-            </CardTitle>
-          </CardHeader>
+                <CardHeader>
+                    <CardTitle className="font-akshar text-secondary  text-center text-3xl mb-0">
+                        Blog Post Details
+                    </CardTitle>
+                </CardHeader>
    
-    {post ? (
-        <div className="bg-white rounded-lg shadow-md p-6  ">
-            <h2 className="text-2xl  font-bold font-serif text-amber-700  mb-4">{post.blogtitle}</h2>
-            <p className="text-gray-700 mb-4">{post.blogcontent}</p>
-            {/* Additional post details can be displayed here */}
+                {post ? (
+                    <div className="bg-white rounded-lg shadow-md p-6  ">
+                        <h2 className="text-2xl  font-bold font-serif text-amber-700  mb-4">{post.blogtitle}</h2>
+                        <p className="text-gray-700 mb-4">{post.blogcontent}</p>
 
-           
-
-            <div className="flex justify-start items-start space-x-20 mb-10 ml-96 ">
-                <Link to={`/blog/Update/${post._id}`} className="w-35 text-white bg-primary hover:bg-secondary ease-in-out hover:text-white font-bold py-2 px-4 rounded transition duration-300">Update Blog</Link>
-               <button onClick={deletePost} className="bg-red-800 hover:bg-red-800 text-white font-bold py-2 px-4 rounded transition duration-300">Delete Blog</button>
-                {deletionSuccess && <p className="text-green-500">Blog Post deleted successfully. </p>}
-            
-                <PDFDownloadLink className="bg-blue-500 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded transition duration-300" document={<BlogPDF />} fileName="blog_post.pdf">
-                        {({ loading }) =>
-                            loading ? 'Loading document...' : 'Download PDF'
-                        }
-                    </PDFDownloadLink>
-            </div>
+                        <div className="flex justify-start items-start space-x-20 mb-10 ml-96 ">
+                            <PDFDownloadLink className="bg-blue-500 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded transition duration-300" document={<BlogPDF />} fileName="blog_post.pdf">
+                                {({ loading }) =>
+                                    loading ? 'Loading document...' : 'Download PDF'
+                                }
+                            </PDFDownloadLink>
+                        </div>
     
-              {/* Contact details */}
-              <div className="font-akshar text-red-950  text-start text-2xl mb-0">
-                    <p>Contact Details:</p>
-                    <p className="text-lg text-1xlfont-semibold">Email: relicroom@gmail.com</p>
-                    <p className="text-lg text-1xlfont-semibold">Telephone: +1234567890</p>
-                    <p className="text-lg text-1xlfont-semibold">Location: 123 Vintage Street, Retro City</p>
-                </div>
-
-
-                    
-        </div>
-    ) : (
-        <p className="text-center">Loading...</p>
-    )}
-</div>
-
-
+                        {/* Contact details */}
+                        <div className="font-akshar text-red-950  text-start text-2xl mb-0">
+                            <p>Contact Details:</p>
+                            <p className="text-lg text-1xlfont-semibold">Email: relicroom@gmail.com</p>
+                            <p className="text-lg text-1xlfont-semibold">Telephone: +1234567890</p>
+                            <p className="text-lg text-1xlfont-semibold">Location: 123 Vintage Street, Retro City</p>
+                        </div>
+                    </div>
+                ) : (
+                    <p className="text-center">Loading...</p>
+                )}
+            </div>
         </div>
     );
 };

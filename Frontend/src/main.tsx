@@ -50,7 +50,9 @@ import RSProfile from "./pages/Repair Specialist/userProfile.tsx";
 import RSListing from "./pages/Repair Specialist/RSlisting.tsx";
 import BlogCreate from "./pages/Vintage Item Expert/BlogCreate.tsx";
 import BlogPostView from "./pages/Vintage Item Expert/BlogPostView.tsx";
+import BlogsView from "./pages/Vintage Item Expert/BlogsView.tsx";
 import BlogPostReadMore from "./pages/Vintage Item Expert/BlogPostReadMore.tsx";
+import BlogReadMore from "./pages/Vintage Item Expert/BlogReadMore.tsx";
 import VintageexpertUpdate from "./pages/Vintage Item Expert/VintageexpertUpdate.tsx";
 import BlogPostUpdate from "./pages/Vintage Item Expert/BlogPostUpdate.tsx";
 import VintageexpertRegister from "./pages/Vintage Item Expert/VintageexpertRegister.tsx";
@@ -116,7 +118,9 @@ const router = createBrowserRouter([
       { path: "/vintageexpert/Profile/:id", element: <VintageexpertProfile /> },
       { path: "/blog/Post", element: <BlogCreate /> },
       { path: "/blog/PostView", element: <BlogPostView /> },
+      { path: "/blog/View", element: <BlogsView /> },
       { path: "/blog/PostReadMore/:id", element: <BlogPostReadMore /> },
+      { path: "/blog/ReadMore/:id", element: <BlogReadMore /> },
       { path: "/vintageexpert/Update/:id", element: <VintageexpertUpdate /> },
       { path: "/blog/Update/:id", element: <BlogPostUpdate /> },
 

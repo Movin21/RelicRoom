@@ -37,6 +37,7 @@ const FormSchema = z.object({
   
 });
  
+//using useForm hook from react-hook-form, configuring it to use the Zod schema FormSchema for validation.
 const VintageexpertRegister = () => {
   const [showSuccessAlert, setShowSuccessAlert] = useState(false); // State variable for controlling the success alert
   const form = useForm<z.infer<typeof FormSchema>>({
@@ -58,7 +59,7 @@ const VintageexpertRegister = () => {
     navigate(value);
 };
 
-
+//involves making an HTTP request to submit the form data.
   const onSubmit = async (values: z.infer<typeof FormSchema>) => {
     const vintageexpertData = {
       firstname: values.firstname,
@@ -69,10 +70,13 @@ const VintageexpertRegister = () => {
       password: values.password,
     };
   
+
+    //POST request using Axios to the specified URL (http://localhost:3000/vintageexpert/create) with the data vintageexpertData. It's awaited because it's an asynchronous operation, meaning JavaScript execution will pause until the request completes and a response is received.
     try {
       const response = await axios.post("http://localhost:3000/vintageexpert/create", vintageexpertData);
       console.log('Vintage expert registration created successfully:', response.data);
 
+//the state variable showSuccessAlert to true, triggering the display of the success alert 
       setShowSuccessAlert(true); // Show the success alert after successful form submission
       navigate(`/vintageexpert/Login`);
 
@@ -116,6 +120,7 @@ const VintageexpertRegister = () => {
           <form onSubmit={form.handleSubmit(onSubmit)} 
           className="max-w-xl w-full flex flex-col gap-4">
 
+{/*The render prop function receives a field object containing props like onChange and value, which are spread onto the Input component.*/}
           <FormField
               control={form.control}
               name="firstname"

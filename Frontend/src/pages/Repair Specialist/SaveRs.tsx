@@ -6,13 +6,13 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Input } from "@/components/ui/input";
 
+import { useNavigate } from "react-router-dom";
 import { Toaster } from "@/components/ui/sonner";
 import { toast } from "sonner";
 import { Label } from "@/components/ui/label";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Link } from "react-router-dom";
-
 
 import {
   Card,
@@ -51,9 +51,7 @@ const formSchema = z.object({
     message: "Address should be atleast four characters",
   }),
   specialization: z.enum(["art", "clothing", "furniture", "jewelry"]),
-  username: z.string().min(4).max(50, {
-    message: "Username should be atleast four characters",
-  }),
+  username: z.string().min(4).max(50, {}),
   certification: z.string().min(4).max(50, {
     message: "Ceritfications should be atleast four characters",
   }),
@@ -64,15 +62,17 @@ const formSchema = z.object({
     message: "Password should be atleast 10 characters",
   }),
   email: z.string().min(10).max(50, {
-    message: "Password should be atleast 10 characters",
-  })
+    message: "E mail should be atleast 10 characters",
+  }),
   /*addImages: z.array(z.string().url()).max(1, {
     message: "Only one photo can upload",
   }),*/
 });
 export default function RSregister() {
+  const navigate = useNavigate();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
+
     defaultValues: {},
   });
 
@@ -94,7 +94,9 @@ export default function RSregister() {
         }
       );
       console.log(response);
-      console.log("Response:", response.data);
+      navigate("/repairSpacialist/logRS");
+      toast("Repair Specialist has been created successfully", {});
+      /* history("/userProfile"); // Use push method from useHistory*/
     } catch (error) {
       console.error("Error:", error);
     }
@@ -102,12 +104,17 @@ export default function RSregister() {
 
   return (
     <div className="flex flex-col items-center justify-center">
-        <Tabs defaultValue="account" className="w-[400px] flex item-center justify-center">
-            <TabsList>
-                <TabsTrigger value="Register">Register</TabsTrigger>
-                <TabsTrigger value="Login"><Link to="/repairSpacialist/logRS">Login</Link> </TabsTrigger>
-            </TabsList>
-        </Tabs>
+      <Tabs
+        defaultValue="account"
+        className="w-[400px] flex item-center justify-center"
+      >
+        <TabsList>
+          <TabsTrigger value="Register">Register</TabsTrigger>
+          <TabsTrigger value="Login">
+            <Link to="/repairSpacialist/logRS">Login</Link>{" "}
+          </TabsTrigger>
+        </TabsList>
+      </Tabs>
 
       <Card className="w-full md:w-1/2 lg:w-2/3 xl:w-1/2 mt-10 mb-10">
         <CardHeader>
@@ -130,7 +137,7 @@ export default function RSregister() {
                     <FormControl>
                       <Input placeholder="Name" {...field} />
                     </FormControl>
-                    <FormMessage />
+                    <FormMessage className="text-red-500 font-akshar" />
                   </FormItem>
                 )}
               />
@@ -143,7 +150,7 @@ export default function RSregister() {
                     <FormControl>
                       <Input placeholder="Address" {...field} />
                     </FormControl>
-                    <FormMessage />
+                    <FormMessage className="text-red-500 font-akshar" />
                   </FormItem>
                 )}
               />
@@ -166,7 +173,7 @@ export default function RSregister() {
                         <SelectItem value="jewelry">Jewelry</SelectItem>
                       </SelectContent>
                     </Select>
-                    <FormMessage className="text-red-500" />
+                    <FormMessage className="text-red-500 font-akshar" />
                   </FormItem>
                 )}
               />
@@ -179,7 +186,7 @@ export default function RSregister() {
                     <FormControl>
                       <Input placeholder="Username" {...field} />
                     </FormControl>
-                    <FormMessage />
+                    <FormMessage className="text-red-500 font-akshar" />
                   </FormItem>
                 )}
               />
@@ -195,7 +202,7 @@ export default function RSregister() {
                         {...field}
                       />
                     </FormControl>
-                    <FormMessage />
+                    <FormMessage className="text-red-500 font-akshar" />
                   </FormItem>
                 )}
               />
@@ -212,7 +219,7 @@ export default function RSregister() {
                         {...field}
                       />
                     </FormControl>
-                    <FormMessage />
+                    <FormMessage className="text-red-500 font-akshar" />
                   </FormItem>
                 )}
               />
@@ -225,7 +232,7 @@ export default function RSregister() {
                     <FormControl>
                       <Input placeholder="E-mail" {...field} />
                     </FormControl>
-                    <FormMessage />
+                    <FormMessage className="text-red-500 font-akshar" />
                   </FormItem>
                 )}
               />
@@ -242,11 +249,11 @@ export default function RSregister() {
                         {...field}
                       />
                     </FormControl>
-                    <FormMessage />
+                    <FormMessage className="text-red-500 font-akshar" />
                   </FormItem>
                 )}
               />
-            
+
               <Button
                 type="submit"
                 variant="outline"

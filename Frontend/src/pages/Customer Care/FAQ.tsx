@@ -8,13 +8,15 @@ import {
 } from "@/components/ui/accordion";
 
 interface Faq {
-  _id: string; // Assuming the unique identifier is '_id', adjust accordingly if it's different
+  _id: string;
   Question: string;
   Answer: string;
 }
 
 function FAQ() {
   const [data, setData] = useState<Faq[]>([]);
+  const [filteredData, setFilteredData] = useState<Faq[]>([]);
+  const [searchQuery, setSearchQuery] = useState<string>("");
 
   useEffect(() => {
     axios
@@ -28,14 +30,34 @@ function FAQ() {
       });
   }, []);
 
+  useEffect(() => {
+    const filtered = data.filter((faq) =>
+      faq.Question.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+    setFilteredData(filtered);
+  }, [searchQuery, data]);
+
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(event.target.value);
+  };
+
   return (
-    <div>
-      
-      <Accordion type="single" collapsible className="w-full">
-        {data.map((faq) => (
+    <div className="flex flex-col items-center">
+      <h1 className="mt-10 text-2xl font-akshar text-yellow-950">
+        Frequently Asked Questions
+      </h1>
+      <input
+        type="text"
+        value={searchQuery}
+        onChange={handleSearchChange}
+        placeholder="Search FAQs"
+        className="p-2 mt-5 border border-gray-300 rounded-md"
+      />
+      <Accordion type="single" collapsible className="m-16">
+        {filteredData.map((faq) => (
           <AccordionItem key={faq._id} value={faq._id}>
-            <AccordionTrigger>{faq.Question}</AccordionTrigger>
-            <AccordionContent>{faq.Answer}</AccordionContent>
+            <AccordionTrigger className="font-akshar">{faq.Question}</AccordionTrigger>
+            <AccordionContent className='text-stone-700 font-akshar'>{faq.Answer}</AccordionContent>
           </AccordionItem>
         ))}
       </Accordion>

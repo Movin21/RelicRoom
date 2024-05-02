@@ -87,7 +87,7 @@ const SideMenu = () => {
             </li>
             <li>
               <Link
-                to="/customerCare"
+                to="/feedbackManage"
                 className="flex items-center px-4 py-2 rounded-md bg-white hover:bg-brownMedium  hover:text-white transition-colors duration-200"
               >
                 <svg

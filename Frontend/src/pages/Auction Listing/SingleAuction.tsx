@@ -46,6 +46,7 @@ const SingleAuction: React.FC = () => {
   const bidder = useSelector((state: any) => state.bidder.bidder);
  
 
+  //Store the id that pass by the listing page
   const { id } = useParams<{ id: string }>();
 
   const [auction, setAuction] = useState<Auction | undefined>();
@@ -166,6 +167,7 @@ const SingleAuction: React.FC = () => {
         if (auction && auctioneer) {
           const response = await axios.post("http://localhost:3000/bids/save", {
             auctionId: auction._id,
+            bidderName: bidder.firstname,
             auctioneerId: auctioneer._id,
             bidderId: bidder._id,
             bidPrice: bidValue,
@@ -271,7 +273,7 @@ const SingleAuction: React.FC = () => {
                 </p>
 
                 <p className="text-sm  text-gray-500 font-semibold  mb-3 font-sourceSans3">
-                  Created Date: {new Date(auction.createdAt).toLocaleString()}
+                  Posted Date: {new Date(auction.createdAt).toLocaleString()}
                 </p>
                 <p className="text-lg  font-semibold mb-3 font-sourceSans3">
                   Starting At: ${auction.auctionStartingPrice}

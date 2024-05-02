@@ -1,31 +1,40 @@
 const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 
-const revenueSchema = mongoose.Schema(
-  {
-    name: {
-      type: String,
-      default: () => {
-        // Get the name of the previous month
-        const currentDate = new Date();
-        const previousMonth = new Date(currentDate);
-        previousMonth.setMonth(currentDate.getMonth() - 1);
-        return new Intl.DateTimeFormat("en-US", { month: "short" }).format(
-          previousMonth
-        );
-      },
-    },
-    Revenue: {
-      type: Number,
-      required: true,
-      default: 0,
-    },
-    Cost: {
-      type: Number,
-      required: true,
-      default: 0,
+const RevenueSchema = new Schema({
+  month: {
+    type: String, // Month name
+    required: true,
+    default: () => {
+      const monthIndex = new Date().getMonth();
+      const monthNames = [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December",
+      ];
+      return monthNames[monthIndex];
     },
   },
-  { timestamps: true }
-);
+  revenue: {
+    type: Number,
+    required: true,
+  },
+  cost: {
+    type: Number,
+    required: true,
+  },
+});
 
-module.exports = mongoose.model("revenue", revenueSchema);
+
+const Revenue = mongoose.model("Revenue", RevenueSchema);
+
+module.exports = Revenue;

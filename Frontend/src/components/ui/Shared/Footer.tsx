@@ -12,7 +12,7 @@ const Footer = () => {
             <ul className="text-sm">
               <li className="mb-2">
                 <Link
-                  to="/auctions"
+                  to="/auction/listedAuctions"
                   className="text-footertxt uppercase transition duration-300 ease-in-out hover:text-white"
                 >
                   Auctions
@@ -20,7 +20,7 @@ const Footer = () => {
               </li>
               <li className="mb-1">
                 <Link
-                  to="/repair-services"
+                  to="/repairSpacialist/rslist"
                   className="text-footertxt uppercase transition duration-300 ease-in-out hover:text-white"
                 >
                   Repair Services
@@ -28,7 +28,7 @@ const Footer = () => {
               </li>
               <li className="mb-2">
                 <Link
-                  to="/blogs"
+                  to="/blog/Post"
                   className="text-footertxt uppercase transition duration-300 ease-in-out hover:text-white"
                 >
                   Blogs

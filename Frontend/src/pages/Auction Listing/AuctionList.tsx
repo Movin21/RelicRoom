@@ -283,49 +283,47 @@ const AuctionList: React.FC = () => {
                 updateViewCount(auction._id);
               }}
             >
-              <Card
-                key={auction._id}
-                className={`shadow-md transition-transform duration-300 transform hover:scale-105 ${
-                  auction.isExpired ? "opacity-50" : ""
-                } rounded-none`}
-              >
-                <div className="overflow-hidden">
-                  <img
-                    src={auction.auctionImages[0]}
-                    alt={`Image for ${auction.auctionTitle}`}
-                    className="w-full h-56 object-cover"
-                  />
-                </div>
-                <CardContent className="p-2">
-                  <CardTitle className="p-1 font-sangbleu text-lg truncate max-w-xs">
-                    {auction.auctionTitle}
-                  </CardTitle>
-                  <div>
-                    <p className="font-bold text-sm font-sourceSans3">
-                      Starting Price: ${auction.auctionStartingPrice}
-                    </p>
-                    <p className="font-bold text-sm mt-1 font-sourceSans3">
-                      Category: {auction.auctionCategory}
-                    </p>
-                  </div>
-                </CardContent>
-                <CardFooter className="p-2 flex justify-between items-center">
-                  {auction.isExpired ? (
-                    <p className="mb-1 text-red-600 font-bold text-xs mr-4">
-                      Expired
-                    </p>
-                  ) : (
-                    <p className="mb-1 text-red-600 font-bold text-xs mr-4">
-                      {calculateTimeLeft(auction.auctionDuration)} Left
-                    </p>
-                  )}
+               <Card
+          key={auction._id}
+          className={`shadow-md transition-transform duration-300 transform hover:scale-105 ${
+            auction.isExpired ? 'opacity-50' : ''
+          } rounded-none`}
+        >
+          <div className="overflow-hidden">
+            <img
+              src={auction.auctionImages[0]}
+              alt={`Image for ${auction.auctionTitle}`}
+              className="w-full h-56 object-cover"
+            />
+          </div>
+          <CardContent className="p-2">
+            <CardTitle className="p-1 font-sangbleu text-lg truncate max-w-xs">
+              {auction.auctionTitle}
+            </CardTitle>
+            <div>
+              <p className="font-bold text-sm font-sourceSans3">
+                Starting Price: ${auction.auctionStartingPrice}
+              </p>
+              <p className="font-bold text-sm mt-1 font-sourceSans3">
+                Category: {auction.auctionCategory}
+              </p>
+            </div>
+          </CardContent>
+          <CardFooter className="p-2 flex justify-between items-center">
+            {auction.isExpired ? (
+              <p className="mb-1 text-red-600 font-bold text-xs mr-4">Expired</p>
+            ) : (
+              <p className="mb-1 text-red-600 font-bold text-xs mr-4">
+                {calculateTimeLeft(auction.auctionDuration)} Left
+              </p>
+            )}
 
-                  <p className=" text-gray-500 font-bold text-xs flex items-center  ">
-                    <Icon icon={visibilityIcon} className="mr-2" />
-                    <div className="mb-0.5">{auction.viewCount} Views</div>
-                  </p>
-                </CardFooter>
-              </Card>
+            <p className="text-gray-500 font-bold text-xs flex items-center">
+              <Icon icon={visibilityIcon} className="mr-2" />
+              <div className="mb-0.5">{auction.viewCount} Views</div>
+            </p>
+          </CardFooter>
+        </Card>
             </Link>
           ))}
         </div>

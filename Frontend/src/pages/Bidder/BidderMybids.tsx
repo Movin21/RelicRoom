@@ -363,4 +363,6 @@ const BidderMybids: React.FC = () => {
   );
 };
 
-export default BidderMybids;
+export default BidderMybids
+ 
+

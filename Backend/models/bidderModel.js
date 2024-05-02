@@ -66,3 +66,5 @@ const bidderSchema = mongoose.Schema(
 
 const bidderModel = mongoose.model("Bidder", bidderSchema);
 module.exports = bidderModel;
+
+ 

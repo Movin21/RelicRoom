@@ -255,4 +255,4 @@ const BidderSignup = () => {
 };
 
 export default BidderSignup;
-
+ 

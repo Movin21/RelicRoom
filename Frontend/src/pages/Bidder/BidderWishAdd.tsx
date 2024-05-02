@@ -39,12 +39,11 @@ interface Auction {
   leadingBidderName: string;
 }
 
-
 const SingleAuction: React.FC = () => {
   //Getting the States of Auctioneer and Bidder
   const auctioneer = useSelector((state: any) => state.auctioneer.auctioneer);
   const bidder = useSelector((state: any) => state.bidder.bidder);
- const bidderId = bidder ? bidder._id : null;
+  const bidderId = bidder ? bidder._id : null;
 
   const { wishid } = useParams<{ wishid: string }>();
 
@@ -54,9 +53,8 @@ const SingleAuction: React.FC = () => {
   const [remainingTime, setRemainingTime] = useState<string>("");
   const [bidValue, setBidValue] = useState<number>(0);
   const [alertMessage, setAlertMessage] = useState<string>("");
-  console.log(auction)
+  console.log(auction);
   const [showAlert, setShowAlert] = useState<boolean>(false);
-
 
   //Fetch the Selected Auction
   useEffect(() => {
@@ -198,8 +196,6 @@ const SingleAuction: React.FC = () => {
     fetchBidderName();
   };
 
-
-
   const informWinner = async (auction: Auction) => {
     const auctionData = {
       bidderId: bidderId,
@@ -208,14 +204,14 @@ const SingleAuction: React.FC = () => {
       isExpired: auction.isExpired,
       auctionImages: auction.auctionImages[0],
     };
-  
+
     try {
       const response = await axios.post(
         `http://localhost:3000/bidder/wishcreate`,
         auctionData
       );
       console.log("Notification sent successfully", response.data);
-  
+
       setShowAlert(true);
     } catch (error) {
       console.error("Error sending notification:", error);
@@ -223,11 +219,6 @@ const SingleAuction: React.FC = () => {
       setShowAlert(false);
     }
   };
-  
-
-
-  
-
 
   return (
     <>
@@ -285,22 +276,23 @@ const SingleAuction: React.FC = () => {
 
               {/* Other Content */}
               <div className="flex flex-col flex-1 ml-10 mt-4 md:mt-0">
-               
                 <h2 className="text-3xl font-bold mb-5 font-sangbleu w-full">
                   {auction.auctionTitle}
                 </h2>
-                <label className="text-xl font-semibold mb-5 font-akshar w-full">{auction && auction.isExpired ? 'This item is Expired ' : 'This item is Ongoing. Do you want to save ? '} </label>
+                <label className="text-xl font-semibold mb-5 font-akshar w-full">
+                  {auction && auction.isExpired
+                    ? "This item is Expired "
+                    : "This item is Ongoing. Do you want to save ? "}{" "}
+                </label>
 
-
-                      <button type="submit"   onClick={() => auction && informWinner(auction)}
- className="flex items-center justify-center bg-red-800 text-white px-3 py-2 rounded-md hover:bg-red-600 w-full md:w-auto md:ml-2">
-                        <AiOutlineHeart className="mr-2" />
-                        Add to Wishlist
-                      </button>
-                     
-
-
-
+                <button
+                  type="submit"
+                  onClick={() => auction && informWinner(auction)}
+                  className="flex items-center justify-center bg-red-800 text-white px-3 py-2 rounded-md hover:bg-red-600 w-full md:w-auto md:ml-2"
+                >
+                  <AiOutlineHeart className="mr-2" />
+                  Add to Wishlist
+                </button>
               </div>
             </>
           )
@@ -321,8 +313,6 @@ const SingleAuction: React.FC = () => {
           </div>
         </div>
       )}
-
-     
     </>
   );
 };

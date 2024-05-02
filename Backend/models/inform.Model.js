@@ -3,7 +3,7 @@ const { boolean } = require("zod");
 
 const InformSchema = mongoose.Schema(
   {
-    bidderId : {
+    bidderId: {
       type: String,
       required: true,
     },
@@ -14,7 +14,6 @@ const InformSchema = mongoose.Schema(
     auctionCategory: {
       type: String,
       required: true,
-     
     },
     auctionDescription: {
       type: String,
@@ -24,13 +23,11 @@ const InformSchema = mongoose.Schema(
       type: String,
       required: true,
     },
-    auctionStartingPrice: {
+
+    bidPrice: {
       type: String,
       required: true,
-      
     },
-   
-   
   },
   { timestamp: true }
 );

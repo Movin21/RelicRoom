@@ -83,9 +83,19 @@ interface RepairSpecialist {
 
 export function AdminUsers() {
   const [auctioneers, setAuctioneers] = useState<Auctioneer[]>([]);
+  const [filteredAuctioneers, setFilteredAuctioneers] = useState<Auctioneer[]>(
+    []
+  );
   const [bidders, setBidders] = useState<Bidder[]>([]);
+  const [filteredBidders, setFilteredBidders] = useState<Bidder[]>([]);
   const [vintageExperts, setVintageExperts] = useState<VintageExpert[]>([]);
+  const [filteredVintageExperts, setFilteredVintageExperts] = useState<
+    VintageExpert[]
+  >([]);
   const [repairSpecialists, setRepairSpecialists] = useState<
+    RepairSpecialist[]
+  >([]);
+  const [filteredRepairSpecialists, setFilteredRepairSpecialists] = useState<
     RepairSpecialist[]
   >([]);
 
@@ -94,6 +104,7 @@ export function AdminUsers() {
       .get("http://localhost:3000/admin/users/auctioneers")
       .then((response) => {
         setAuctioneers(response.data);
+        setFilteredAuctioneers(response.data);
       })
       .catch((error) => {
         console.error("Error fetching auctioneers:", error);
@@ -103,6 +114,7 @@ export function AdminUsers() {
       .get("http://localhost:3000/admin/users/bidders")
       .then((response) => {
         setBidders(response.data);
+        setFilteredBidders(response.data);
       })
       .catch((error) => {
         console.error("Error fetching bidders:", error);
@@ -112,6 +124,7 @@ export function AdminUsers() {
       .get("http://localhost:3000/admin/users/vintageExperts")
       .then((response) => {
         setVintageExperts(response.data);
+        setFilteredVintageExperts(response.data);
       })
       .catch((error) => {
         console.error("Error fetching vintage experts:", error);
@@ -121,11 +134,40 @@ export function AdminUsers() {
       .get("http://localhost:3000/admin/users/repairSpecialists")
       .then((response) => {
         setRepairSpecialists(response.data);
+        setFilteredRepairSpecialists(response.data);
       })
       .catch((error) => {
         console.error("Error fetching repair specialists:", error);
       });
   }, []);
+
+  const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const searchTerm = event.target.value.toLowerCase();
+    setFilteredAuctioneers(
+      auctioneers.filter((auctioneer) =>
+        auctioneer.companyname.toLowerCase().includes(searchTerm)
+      )
+    );
+    setFilteredBidders(
+      bidders.filter(
+        (bidder) =>
+          bidder.firstname.toLowerCase().includes(searchTerm) ||
+          bidder.lastname.toLowerCase().includes(searchTerm)
+      )
+    );
+    setFilteredVintageExperts(
+      vintageExperts.filter(
+        (expert) =>
+          expert.firstname.toLowerCase().includes(searchTerm) ||
+          expert.secondname.toLowerCase().includes(searchTerm)
+      )
+    );
+    setFilteredRepairSpecialists(
+      repairSpecialists.filter((specialist) =>
+        specialist.name.toLowerCase().includes(searchTerm)
+      )
+    );
+  };
 
   const deleteAuctioneerAccount = (auctioneerId: string) => {
     axios
@@ -133,6 +175,11 @@ export function AdminUsers() {
       .then(() => {
         setAuctioneers((prevAuctioneers) =>
           prevAuctioneers.filter(
+            (auctioneer) => auctioneer._id !== auctioneerId
+          )
+        );
+        setFilteredAuctioneers(
+          filteredAuctioneers.filter(
             (auctioneer) => auctioneer._id !== auctioneerId
           )
         );
@@ -149,6 +196,9 @@ export function AdminUsers() {
         setBidders((prevBidders) =>
           prevBidders.filter((bidder) => bidder._id !== bidderId)
         );
+        setFilteredBidders(
+          filteredBidders.filter((bidder) => bidder._id !== bidderId)
+        );
       })
       .catch((error) => {
         console.error("Error deleting bidder account:", error);
@@ -161,6 +211,9 @@ export function AdminUsers() {
       .then(() => {
         setVintageExperts((prevVintageExperts) =>
           prevVintageExperts.filter((expert) => expert._id !== expertId)
+        );
+        setFilteredVintageExperts(
+          filteredVintageExperts.filter((expert) => expert._id !== expertId)
         );
       })
       .catch((error) => {
@@ -176,6 +229,11 @@ export function AdminUsers() {
       .then(() => {
         setRepairSpecialists((prevRepairSpecialists) =>
           prevRepairSpecialists.filter(
+            (specialist) => specialist._id !== specialistId
+          )
+        );
+        setFilteredRepairSpecialists(
+          filteredRepairSpecialists.filter(
             (specialist) => specialist._id !== specialistId
           )
         );
@@ -210,6 +268,7 @@ export function AdminUsers() {
             type="search"
             placeholder="Search..."
             className="w-full rounded-lg bg-background pl-8 md:w-[200px] lg:w-[336px]"
+            onChange={handleSearch}
           />
         </div>
 
@@ -256,7 +315,7 @@ export function AdminUsers() {
                       </TableRow>
                     </TableHeader>
                     <TableBody>
-                      {auctioneers.map((auctioneer) => (
+                      {filteredAuctioneers.map((auctioneer) => (
                         <TableRow key={auctioneer._id}>
                           <TableCell>{auctioneer.companyname}</TableCell>
                           <TableCell>{auctioneer.description}</TableCell>
@@ -314,7 +373,7 @@ export function AdminUsers() {
                       </TableRow>
                     </TableHeader>
                     <TableBody>
-                      {bidders.map((bidder) => (
+                      {filteredBidders.map((bidder) => (
                         <TableRow key={bidder._id}>
                           <TableCell>{bidder.firstname}</TableCell>
                           <TableCell>{bidder.lastname}</TableCell>
@@ -369,7 +428,7 @@ export function AdminUsers() {
                       </TableRow>
                     </TableHeader>
                     <TableBody>
-                      {vintageExperts.map((expert) => (
+                      {filteredVintageExperts.map((expert) => (
                         <TableRow key={expert._id}>
                           <TableCell>{expert.firstname}</TableCell>
                           <TableCell>{expert.secondname}</TableCell>
@@ -429,7 +488,7 @@ export function AdminUsers() {
                       </TableRow>
                     </TableHeader>
                     <TableBody>
-                      {repairSpecialists.map((specialist) => (
+                      {filteredRepairSpecialists.map((specialist) => (
                         <TableRow key={specialist._id}>
                           <TableCell>{specialist.name}</TableCell>
                           <TableCell>{specialist.address}</TableCell>

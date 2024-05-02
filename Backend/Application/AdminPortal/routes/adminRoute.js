@@ -7,6 +7,7 @@ const {
   updateAdmin,
   deleteAdmin,
   LoginAdmin,
+  revenueChart,
 } = require("../application/adminApplication.js");
 const {
   getAllAuctions,
@@ -35,7 +36,7 @@ const {
   countAllUsers,
   userChart,
 } = require("../application/userApplication.js");
-const { getAllData } = require("../application/revenueCalculate.js");
+const { totalCount } = require("../application/revenueCalculate.js");
 /**************************************ADMIN USER ROUTES***************************************/
 // Route to create a new admin user and get a admin user
 adminRouter.route("/adminUser").get(getAllAdmins).post(createAdmin);
@@ -101,8 +102,10 @@ adminRouter.route("/users/RepairSpecialistCount").get(countRepairSpecialists);
 adminRouter.route("/users/count").get(countAllUsers);
 //user Chart
 adminRouter.route("/users/chart").get(userChart);
+//revenue chart
+adminRouter.route("/revenue/chart").get(revenueChart);
 //Revenue Data
-adminRouter.route("/revenue").get(getAllData);
+adminRouter.route("/revenue").get(totalCount);
 //AuctionData
 adminRouter.route("/countAuctions").get(countAllAuctions);
 module.exports = adminRouter;

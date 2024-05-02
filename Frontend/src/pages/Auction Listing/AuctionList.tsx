@@ -24,6 +24,7 @@ interface Auction {
 }
 
 const AuctionList: React.FC = () => {
+  //Getting the logged auctioneer using redux
   const auctioneer = useSelector((state: any) => state.auctioneer.auctioneer);
 
   const [auctions, setAuctions] = useState<Auction[]>([]);
@@ -34,11 +35,13 @@ const AuctionList: React.FC = () => {
   const [auctionStatus, setAuctionStatus] = useState<
     "All" | "expired" | "ongoing"
   >("ongoing");
+  console.log(auctions);
 
   useEffect(() => {
     fetchAllAuctions();
   }, []);
 
+  //Getting all the auctions from the database
   const fetchAllAuctions = async () => {
     try {
       const response = await axios.get("http://localhost:3000/auctions");
@@ -53,6 +56,7 @@ const AuctionList: React.FC = () => {
     filterAuctions();
   }, [searchQuery, selectedCategory, auctions, sortOrder, auctionStatus]);
 
+  // Sort auctions by state of auction
   const filterAuctions = () => {
     let filtered: Auction[] = auctions.filter((auction) => {
       if (
@@ -119,6 +123,7 @@ const AuctionList: React.FC = () => {
     });
   };
 
+  //Updating the view count
   const updateViewCount = async (auctionId: string) => {
     try {
       await axios.put(`http://localhost:3000/auctions/${auctionId}/views`);

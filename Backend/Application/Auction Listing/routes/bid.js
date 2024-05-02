@@ -7,6 +7,7 @@ const router = express.Router();
 router.post("/save", async (req, res) => {
   try {
     let newBid = new Bids(req.body);
+
     const savedBid = await newBid.save();
     return res.status(200).json({
       success: "Bid saved successfully",
@@ -39,21 +40,21 @@ router.get("/", async (req, res) => {
   }
 });
 
-// Get Bid by id
+// Get Bids by Auction ID
 router.get("/:id", async (req, res) => {
   try {
-    const bid = await Bids.findById(req.params.id);
-    if (!bid) {
-      throw new Error("Bid is not found");
+    const bids = await Bids.find({ auctionId: req.params.id }); // Corrected parameter name
+    if (!bids || bids.length === 0) {
     }
     res.status(200).json({
       success: true,
-      bid: bid,
+      bids: bids,
     });
   } catch (err) {
+    console.error("Error:", err);
     res.status(400).json({
       success: false,
-      error: "An error occurred while fetching the bid",
+      error: "An error occurred while fetching the bids",
     });
   }
 });

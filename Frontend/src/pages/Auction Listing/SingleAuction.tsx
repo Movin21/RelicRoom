@@ -39,11 +39,14 @@ interface Auction {
   leadingBidderName: string;
 }
 
+
 const SingleAuction: React.FC = () => {
   //Getting the States of Auctioneer and Bidder
   const auctioneer = useSelector((state: any) => state.auctioneer.auctioneer);
   const bidder = useSelector((state: any) => state.bidder.bidder);
+ 
 
+  //Store the id that pass by the listing page
   const { id } = useParams<{ id: string }>();
 
   const [auction, setAuction] = useState<Auction | undefined>();
@@ -52,6 +55,7 @@ const SingleAuction: React.FC = () => {
   const [remainingTime, setRemainingTime] = useState<string>("");
   const [bidValue, setBidValue] = useState<number>(0);
   const [alertMessage, setAlertMessage] = useState<string>("");
+  console.log(auction)
 
   //Fetch the Selected Auction
   useEffect(() => {
@@ -163,6 +167,7 @@ const SingleAuction: React.FC = () => {
         if (auction && auctioneer) {
           const response = await axios.post("http://localhost:3000/bids/save", {
             auctionId: auction._id,
+            bidderName: bidder.firstname,
             auctioneerId: auctioneer._id,
             bidderId: bidder._id,
             bidPrice: bidValue,
@@ -192,6 +197,10 @@ const SingleAuction: React.FC = () => {
     };
     fetchBidderName();
   };
+
+
+  
+
 
   return (
     <>
@@ -264,7 +273,7 @@ const SingleAuction: React.FC = () => {
                 </p>
 
                 <p className="text-sm  text-gray-500 font-semibold  mb-3 font-sourceSans3">
-                  Created Date: {new Date(auction.createdAt).toLocaleString()}
+                  Posted Date: {new Date(auction.createdAt).toLocaleString()}
                 </p>
                 <p className="text-lg  font-semibold mb-3 font-sourceSans3">
                   Starting At: ${auction.auctionStartingPrice}
@@ -352,10 +361,12 @@ const SingleAuction: React.FC = () => {
                           </AlertDialogFooter>
                         </AlertDialogContent>
                       </AlertDialog>
+                      <Link to={`/wishAdd/${auction._id}`}>
                       <button className="flex items-center justify-center bg-red-800 text-white px-3 py-2 rounded-md hover:bg-red-600 w-full md:w-auto md:ml-2">
                         <AiOutlineHeart className="mr-2" />
                         Add to Wishlist
                       </button>
+                      </Link>
                     </div>
                   </>
                 )}

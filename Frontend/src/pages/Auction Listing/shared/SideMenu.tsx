@@ -43,7 +43,7 @@ const SideMenu = () => {
             </li>
             <li>
               <Link
-                to="/auctionDashboard"
+                to="/auction/generateReports"
                 className="flex items-center px-4 py-2 rounded-md bg-white hover:bg-brownMedium transition-colors duration-200 hover:text-white"
               >
                 <TbReportAnalytics className="mr-2 w-5 h-5" />

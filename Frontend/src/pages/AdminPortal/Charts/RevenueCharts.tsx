@@ -1,4 +1,5 @@
 import React, { PureComponent } from "react";
+import axios from "axios";
 import {
   AreaChart,
   Area,
@@ -6,51 +7,48 @@ import {
   YAxis,
   CartesianGrid,
   Tooltip,
-
 } from "recharts";
 
-const data = [
-  {
-    name: "Oct",
-    Revenue: 4000,
-    Cost: 2400,
-  },
-  {
-    name: "Nov",
-    Revenue: 3000,
-    Cost: 1398,
-  },
-  {
-    name: "Dec",
-    Revenue: 2000,
-    Cost: 9800,
-  },
-  {
-    name: "Jan",
-    Revenue: 5780,
-    Cost: 2908,
-  },
-  {
-    name: "Feb",
-    Revenue: 4890,
-    Cost: 1800,
-  },
-  {
-    name: "Mar",
-    Revenue: 3390,
-    Cost: 1800,
-  },
-  {
-    name: "Apr",
-    Revenue: 3490,
-    Cost: 2300,
-  },
-];
-
 export default class RevenueChart extends PureComponent {
-  static demoUrl = "https://codesandbox.io/s/stacked-area-chart-ix341";
+  state = {
+    data: [],
+    loading: true,
+    error: null,
+  };
+
+  componentDidMount() {
+    this.fetchData();
+  }
+
+  fetchData = () => {
+    axios
+      .get("http://localhost:3000/admin/revenue/chart")
+      .then((response) => {
+        this.setState({
+          data: response.data,
+          loading: false,
+          error: null,
+        });
+      })
+      .catch((error) => {
+        this.setState({
+          loading: false,
+          error: error.message,
+        });
+      });
+  };
 
   render() {
+    const { data, loading, error } = this.state;
+
+    if (loading) {
+      return <div>Loading...</div>;
+    }
+
+    if (error) {
+      return <div>Error: {error}</div>;
+    }
+
     return (
       <div>
         <AreaChart
@@ -65,19 +63,19 @@ export default class RevenueChart extends PureComponent {
           }}
         >
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="name" />
+          <XAxis dataKey="month" />
           <YAxis />
           <Tooltip />
           <Area
             type="monotone"
-            dataKey="Revenue"
+            dataKey="revenue"
             stackId="1"
             stroke="#8884d8"
             fill="#8884d8"
           />
           <Area
             type="monotone"
-            dataKey="Cost"
+            dataKey="cost"
             stackId="1"
             stroke="#FF8F6D"
             fill="#FF8F6D"

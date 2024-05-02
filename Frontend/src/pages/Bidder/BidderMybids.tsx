@@ -1,14 +1,165 @@
-import { Card, CardHeader, CardTitle } from '@/components/ui/card'
-import React from 'react'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from './slice/bidderSlice';
+import { Button } from "@/components/ui/button"
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { PDFDownloadLink, PDFViewer, Document, Page, View, Text, StyleSheet } from '@react-pdf/renderer';
+import {DropdownMenu,DropdownMenuCheckboxItem,DropdownMenuContent,DropdownMenuLabel, DropdownMenuSeparator,DropdownMenuTrigger,} from "@/components/ui/dropdown-menu"
+import { Input } from "@/components/ui/input"
+import axios from 'axios';
+import { Dialog } from '@/components/ui/dialog';
 
-const BidderMybids = () => {
+interface Bid {
+  _id: string;
+  auctionId: string;
+  auctioneerId: string;
+  bidderId: string;
+  bidPrice: number;
+  createAt: String;
+  auction?: {
+    auctionTitle: string;
+    auctionCategory: string;
+    auctionImages: string[];
+    isExpired: boolean
+  };
+  auctioneer?: {
+    companyName: string;
+  };
+}
 
-    const navigate = useNavigate();
-    const dispatch = useDispatch();
+const styles = StyleSheet.create({
+  page: {
+    flexDirection: 'row',
+    backgroundColor: '#ffffff',
+    padding: 20,
+  },
+  table: {
+    width: '100%',
+    borderWidth: 1,
+    borderColor: '#000000',
+    borderStyle: 'solid',
+    borderRadius: 4, 
+  },
+  row: {
+    flexDirection: 'row',
+    borderBottomWidth: 1,
+    borderBottomColor: '#000000',
+    borderStyle: 'solid',
+  },
+  cell: {
+    padding: 15,
+    flex: 1, // Allow cells to grow dynamically
+    textAlign: 'center',
+    border: '1px solid #ccc',
+    fontSize: 10,
+  },
+  title: {
+    textAlign: 'center',
+    fontSize: 24,
+    marginBottom: 20,
+    marginTop:5,
+  },
+   
+});
+
+
+const BidderMybids: React.FC = () => {
+
+  const [bids, setBids] = useState<Bid[]>([]); //State variable
+  const [filteredBids, setFilteredBids] = useState<Bid[]>([]);
+  const [query, setQuery] = useState<string>('');
+  const bidder = useSelector((state: any) => state.bidder.bidder);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+ 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get<Bid[]>(`http://localhost:3000/bidder/currentBidDetails/${bidder._id}`);
+        setBids(response.data);
+        setFilteredBids(response.data);
+      } catch (error) {
+        console.error("Error occurred in fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, [bidder._id]);
+
+  useEffect(() => {
+    // Filter bids based on query (auction title)
+    const filteredData = bids.filter(bid =>
+      bid.auction && bid.auction.auctionTitle && bid.auction.auctionTitle.toLowerCase().includes(query.toLowerCase())
+    );
+    setFilteredBids(filteredData);
+  }, [query, bids]);
+
+  const handleFilter = (category: string) => {
+    // Filter bids based on selected category
+    const filteredData = bids.filter(bid =>
+      bid.auction && bid.auction.auctionCategory && bid.auction.auctionCategory.toLowerCase() === category.toLowerCase()
+    );
+    setFilteredBids(filteredData);
+  };
+
+
+  const generatePDF = () => {
+    return (
+      <PDFDownloadLink document={<MyDocument data={bids} />} fileName="MyBids.pdf">
+        {({ blob, loading }) => (
+          <div onClick={() => {
+            if (blob) {
+              const url = URL.createObjectURL(blob); // Create blob URL
+
+              // Simulate a click on a hidden anchor tag (optional)
+              const link = document.createElement('a');
+              link.href = url;
+              link.download = 'MyBids.pdf';
+              link.click();
+
+              // Clean up the blob URL after download (optional)
+              URL.revokeObjectURL(url);
+            }}
+          } className="flex items-center mb-2 hover:scale-110 transition duration-300 ease-in-out">
+            {loading ? 'Please wait..' : <span className="text-brownDark font-akshar text-l font-semibold mr-4">Generate Reports</span>}
+                      <svg className="ml-auto" width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M23.2422 13.2812V19.5312C23.2422 19.8939 23.0981 20.2416 22.8417 20.498C22.5854 20.7544 22.2376 20.8984 21.875 20.8984H3.125C2.7624 20.8984 2.41465 20.7544 2.15825 20.498C1.90186 20.2416 1.75781 19.8939 1.75781 19.5312V13.2812C1.75781 12.9186 1.90186 12.5709 2.15825 12.3145C2.41465 12.0581 2.7624 11.9141 3.125 11.9141H7.03125C7.18665 11.9141 7.33569 11.9758 7.44557 12.0857C7.55545 12.1956 7.61719 12.3446 7.61719 12.5C7.61719 12.6554 7.55545 12.8044 7.44557 12.9143C7.33569 13.0242 7.18665 13.0859 7.03125 13.0859H3.125C3.0732 13.0859 3.02352 13.1065 2.98689 13.1431C2.95027 13.1798 2.92969 13.2295 2.92969 13.2812V19.5312C2.92969 19.583 2.95027 19.6327 2.98689 19.6694C3.02352 19.706 3.0732 19.7266 3.125 19.7266H21.875C21.9268 19.7266 21.9765 19.706 22.0131 19.6694C22.0497 19.6327 22.0703 19.583 22.0703 19.5312V13.2812C22.0703 13.2295 22.0497 13.1798 22.0131 13.1431C21.9765 13.1065 21.9268 13.0859 21.875 13.0859H17.9688C17.8133 13.0859 17.6643 13.0242 17.5544 12.9143C17.4445 12.8044 17.3828 12.6554 17.3828 12.5C17.3828 12.3446 17.4445 12.1956 17.5544 12.0857C17.6643 11.9758 17.8133 11.9141 17.9688 11.9141H21.875C22.2376 11.9141 22.5854 12.0581 22.8417 12.3145C23.0981 12.5709 23.2422 12.9186 23.2422 13.2812ZM12.0859 12.9141C12.1958 13.0238 12.3447 13.0854 12.5 13.0854C12.6553 13.0854 12.8042 13.0238 12.9141 12.9141L17.6016 8.22656C17.7051 8.11549 17.7614 7.96858 17.7587 7.81678C17.7561 7.66498 17.6946 7.52015 17.5872 7.4128C17.4799 7.30544 17.335 7.24395 17.1832 7.24127C17.0314 7.23859 16.8845 7.29494 16.7734 7.39844L13.0859 11.085V2.34375C13.0859 2.18835 13.0242 2.03931 12.9143 1.92943C12.8044 1.81954 12.6554 1.75781 12.5 1.75781C12.3446 1.75781 12.1956 1.81954 12.0857 1.92943C11.9758 2.03931 11.9141 2.18835 11.9141 2.34375V11.085L8.22656 7.39844C8.11549 7.29494 7.96858 7.23859 7.81678 7.24127C7.66498 7.24395 7.52015 7.30544 7.4128 7.4128C7.30544 7.52015 7.24395 7.66498 7.24127 7.81678C7.23859 7.96858 7.29494 8.11549 7.39844 8.22656L12.0859 12.9141ZM19.3359 16.4062C19.3359 16.2131 19.2787 16.0243 19.1714 15.8637C19.0641 15.7031 18.9115 15.5779 18.7331 15.504C18.5546 15.4301 18.3583 15.4108 18.1689 15.4485C17.9794 15.4861 17.8054 15.5791 17.6688 15.7157C17.5323 15.8523 17.4393 16.0263 17.4016 16.2157C17.3639 16.4052 17.3832 16.6015 17.4571 16.78C17.5311 16.9584 17.6562 17.1109 17.8168 17.2182C17.9774 17.3255 18.1662 17.3828 18.3594 17.3828C18.6184 17.3828 18.8668 17.2799 19.0499 17.0968C19.2331 16.9136 19.3359 16.6653 19.3359 16.4062Z" fill="#635A3F"/></svg>
+                      </div>
+        )}
+      </PDFDownloadLink>
+    );
+  };
+
+  const MyDocument: React.FC<{ data: Bid[] }> = ({ data }) => (
+    <Document>
+      <Page size="A3" style={styles.page}>
+        <View style={styles.table}>
+        <Text style={styles.title}>Bid Summary Report</Text>
+          <View style={styles.row}>
+            <Text style={[styles.cell, styles.cell]}>Auction Title</Text>
+            <Text style={[styles.cell, styles.cell]}>Auction Category</Text>
+            <Text style={[styles.cell, styles.cell]}>Bidded Price</Text>
+            <Text style={[styles.cell, styles.cell]}>Auctioneer Name</Text>
+          </View>
+          {data.map((bid) => (
+            <View style={styles.row} key={bidder._id}>
+              {/* <Text style={styles.cell}>{bidder._id}</Text> */}
+              <Text style={styles.cell}>{bid.auction && bid.auction.auctionTitle}</Text>
+              <Text style={styles.cell}>{bid.auction && bid.auction.auctionCategory}</Text>
+              <Text style={styles.cell}>{bid.bidPrice.toString()}</Text>
+              <Text style={styles.cell}>{bid.auctioneer && bid.auctioneer.companyName}</Text>
+            </View>
+          ))}
+        </View>
+      </Page>
+    </Document>
+  );
+
+
+ 
 
     const handleDashboard = () => {
         navigate('/bidderDashboard');
@@ -19,7 +170,7 @@ const BidderMybids = () => {
     };
 
     const handleWishlistlick = () => {
-        navigate('/bidderWishlist');
+        navigate('/wishList');
     };
 
     const Logout = () => {
@@ -27,20 +178,66 @@ const BidderMybids = () => {
     };
 
   return (
-    <>
-      <CardHeader className='gap-10 mt-11'>
-        <CardTitle className="font-akshar text-primary  text-center mr-0 text-2xl">
+    
+    
+     <div className="flex min-h-screen flex-col bg-muted/40">
+            
+            
+              <header className="top-0 z-30 flex items-center justify-between px-4 py-2" >
+              <CardHeader className='flex justify-start items-start gap-10 mt-2 ml-8 mb-2'>
+        <CardTitle className="font-akshar text-primary  text-center ml-0 text-3xl">
           My Bids
         </CardTitle>
       </CardHeader>
+              <div className="flex items-center justify-center flex-1 mr-4">
+                
+                <div className="relative mr-4">
+                  <Input
+                  onChange={(e) => setQuery(e.target.value)}
 
-      <div className="container flex flex-col md:flex-row items-start justify-center gap-4">
-        <Card className="flex flex-col items-center gap-4 px-2 py-5 bg-white shadow-2xl h-96 w-64 mb-52 mt-0">
+                    type="search"
+                    placeholder="Search..."
+                    className="w-full rounded-lg bg-background pl-8 md:w-[200px] lg:w-[336px]"
+                  />
+                </div>
+  
+                <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" size="sm" className="h-8 gap-1">
+
+                  <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
+                    Sort by
+                  </span>
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuLabel>category</DropdownMenuLabel>
+                <DropdownMenuCheckboxItem onClick={() => handleFilter('Clothing')}  >
+                  Clothing
+              </DropdownMenuCheckboxItem>
+              <DropdownMenuCheckboxItem onClick={() => handleFilter('Furniture')}>
+                Furniture
+              </DropdownMenuCheckboxItem>
+              <DropdownMenuCheckboxItem onClick={() => handleFilter('Art')}>
+                Art
+              </DropdownMenuCheckboxItem>
+              <DropdownMenuCheckboxItem onClick={() => handleFilter('Jewelry')}>
+                Jewelry
+              </DropdownMenuCheckboxItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+          
+                    </div>
+                    
+                    </header>
+
+      <div className="flex justify-between,center ml-8 gap-6">
+        <Card className="flex flex-col items-center gap-2 px-2 py-5 bg-white shadow-2xl h-96 w-64 mb-52 mt-0 ">
           <ul className="flex flex-col gap-4 mt-4">
             <li>
               <Link to="#" >
               <div className="flex items-center mb-2 gap-16 hover:scale-110 transition duration-300 ease-in-out">
-                <span onClick={handleDashboard} className=" text-secondary font-akshar text-l font-semibold mr-6"> Dashboard</span> 
+                <span onClick={handleDashboard} className=" text-brownDark font-akshar text-l font-semibold mr-6"> Dashboard</span> 
                   <svg onClick={handleDashboard} className="ml-auto " width="24" height="24" viewBox="0 0 31 31" fill="none" xmlns="http://www.w3.org/2000/svg ">
                     <path d="M6.625 2.75C6.11613 2.75 5.61224 2.85023 5.1421 3.04497C4.67197 3.2397 4.24479 3.52513 3.88496 3.88496C3.52513 4.24479 3.2397 4.67197 3.04497 5.1421C2.85023 5.61224 2.75 6.11613 2.75 6.625C2.75 7.13387 2.85023 7.63776 3.04497 8.1079C3.2397 8.57804 3.52513 9.00521 3.88496 9.36504C4.24479 9.72487 4.67197 10.0103 5.1421 10.205C5.61224 10.3998 6.11613 10.5 6.625 10.5C7.65271 10.5 8.63834 10.0917 9.36504 9.36504C10.0917 8.63834 10.5 7.65271 10.5 6.625C10.5 5.59729 10.0917 4.61166 9.36504 3.88496C8.63834 3.15826 7.65271 2.75 6.625 2.75ZM17.375 2.75C16.8661 2.75 16.3622 2.85023 15.8921 3.04497C15.422 3.2397 14.9948 3.52513 14.635 3.88496C14.2751 4.24479 13.9897 4.67197 13.795 5.1421C13.6002 5.61224 13.5 6.11613 13.5 6.625C13.5 7.13387 13.6002 7.63776 13.795 8.1079C13.9897 8.57804 14.2751 9.00521 14.635 9.36504C14.9948 9.72487 15.422 10.0103 15.8921 10.205C16.3622 10.3998 16.8661 10.5 17.375 10.5C18.4027 10.5 19.3883 10.0917 20.115 9.36504C20.8417 8.63834 21.25 7.65271 21.25 6.625C21.25 5.59729 20.8417 4.61166 20.115 3.88496C19.3883 3.15826 18.4027 2.75 17.375 2.75ZM6.625 13.5C6.11613 13.5 5.61224 13.6002 5.1421 13.795C4.67197 13.9897 4.24479 14.2751 3.88496 14.635C3.52513 14.9948 3.2397 15.422 3.04497 15.8921C2.85023 16.3622 2.75 16.8661 2.75 17.375C2.75 17.8839 2.85023 18.3878 3.04497 18.8579C3.2397 19.328 3.52513 19.7552 3.88496 20.115C4.24479 20.4749 4.67197 20.7603 5.1421 20.955C5.61224 21.1498 6.11613 21.25 6.625 21.25C7.65271 21.25 8.63834 20.8417 9.36504 20.115C10.0917 19.3883 10.5 18.4027 10.5 17.375C10.5 16.3473 10.0917 15.3617 9.36504 14.635C8.63834 13.9083 7.65271 13.5 6.625 13.5ZM17.375 13.5C16.8661 13.5 16.3622 13.6002 15.8921 13.795C15.422 13.9897 14.9948 14.2751 14.635 14.635C14.2751 14.9948 13.9897 15.422 13.795 15.8921C13.6002 16.3622 13.5 16.8661 13.5 17.375C13.5 17.8839 13.6002 18.3878 13.795 18.8579C13.9897 19.328 14.2751 19.7552 14.635 20.115C14.9948 20.4749 15.422 20.7603 15.8921 20.955C16.3622 21.1498 16.8661 21.25 17.375 21.25C18.4027 21.25 19.3883 20.8417 20.115 20.115C20.8417 19.3883 21.25 18.4027 21.25 17.375C21.25 16.3473 20.8417 15.3617 20.115 14.635C19.3883 13.9083 18.4027 13.5 17.375 13.5Z" stroke="#635A3F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
               </div>
@@ -48,13 +245,11 @@ const BidderMybids = () => {
             </li>
 
             <li>
-              {/* <Link to="/auctioneerProfile" > */}
               <div className="flex items-center mb-2 hover:scale-110 transition duration-300 ease-in-out">
                 <span onClick={handleProfileClick} className="text-brownDark font-akshar text-l font-semibold  mr-4">My Profile</span>   
                   <svg onClick={handleProfileClick} className="ml-auto " xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 25 25">
                     <path fill="currentColor" d="M17.438 21.937H6.562a2.5 2.5 0 0 1-2.5-2.5v-.827c0-3.969 3.561-7.2 7.938-7.2s7.938 3.229 7.938 7.2v.827a2.5 2.5 0 0 1-2.5 2.5M12 12.412c-3.826 0-6.938 2.78-6.938 6.2v.827a1.5 1.5 0 0 0 1.5 1.5h10.876a1.5 1.5 0 0 0 1.5-1.5v-.829c0-3.418-3.112-6.198-6.938-6.198m0-2.501a3.924 3.924 0 1 1 3.923-3.924A3.927 3.927 0 0 1 12 9.911m0-6.847a2.924 2.924 0 1 0 2.923 2.923A2.926 2.926 0 0 0 12 3.064"/></svg>
               </div>
-              {/* </Link> */}
             </li>
 
             <li>
@@ -79,11 +274,12 @@ const BidderMybids = () => {
 
                   <li className='mb-12'>
                     <Link to="#" >
-                    <div className="flex items-center mb-2 hover:scale-110 transition duration-300 ease-in-out">
+                    {generatePDF()}
+                    {/* <div className="flex items-center mb-2 hover:scale-110 transition duration-300 ease-in-out">
                       <span className="text-brownDark font-akshar text-l font-semibold  mr-4">Generate Reports</span> 
                       <svg className="ml-auto" width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M23.2422 13.2812V19.5312C23.2422 19.8939 23.0981 20.2416 22.8417 20.498C22.5854 20.7544 22.2376 20.8984 21.875 20.8984H3.125C2.7624 20.8984 2.41465 20.7544 2.15825 20.498C1.90186 20.2416 1.75781 19.8939 1.75781 19.5312V13.2812C1.75781 12.9186 1.90186 12.5709 2.15825 12.3145C2.41465 12.0581 2.7624 11.9141 3.125 11.9141H7.03125C7.18665 11.9141 7.33569 11.9758 7.44557 12.0857C7.55545 12.1956 7.61719 12.3446 7.61719 12.5C7.61719 12.6554 7.55545 12.8044 7.44557 12.9143C7.33569 13.0242 7.18665 13.0859 7.03125 13.0859H3.125C3.0732 13.0859 3.02352 13.1065 2.98689 13.1431C2.95027 13.1798 2.92969 13.2295 2.92969 13.2812V19.5312C2.92969 19.583 2.95027 19.6327 2.98689 19.6694C3.02352 19.706 3.0732 19.7266 3.125 19.7266H21.875C21.9268 19.7266 21.9765 19.706 22.0131 19.6694C22.0497 19.6327 22.0703 19.583 22.0703 19.5312V13.2812C22.0703 13.2295 22.0497 13.1798 22.0131 13.1431C21.9765 13.1065 21.9268 13.0859 21.875 13.0859H17.9688C17.8133 13.0859 17.6643 13.0242 17.5544 12.9143C17.4445 12.8044 17.3828 12.6554 17.3828 12.5C17.3828 12.3446 17.4445 12.1956 17.5544 12.0857C17.6643 11.9758 17.8133 11.9141 17.9688 11.9141H21.875C22.2376 11.9141 22.5854 12.0581 22.8417 12.3145C23.0981 12.5709 23.2422 12.9186 23.2422 13.2812ZM12.0859 12.9141C12.1958 13.0238 12.3447 13.0854 12.5 13.0854C12.6553 13.0854 12.8042 13.0238 12.9141 12.9141L17.6016 8.22656C17.7051 8.11549 17.7614 7.96858 17.7587 7.81678C17.7561 7.66498 17.6946 7.52015 17.5872 7.4128C17.4799 7.30544 17.335 7.24395 17.1832 7.24127C17.0314 7.23859 16.8845 7.29494 16.7734 7.39844L13.0859 11.085V2.34375C13.0859 2.18835 13.0242 2.03931 12.9143 1.92943C12.8044 1.81954 12.6554 1.75781 12.5 1.75781C12.3446 1.75781 12.1956 1.81954 12.0857 1.92943C11.9758 2.03931 11.9141 2.18835 11.9141 2.34375V11.085L8.22656 7.39844C8.11549 7.29494 7.96858 7.23859 7.81678 7.24127C7.66498 7.24395 7.52015 7.30544 7.4128 7.4128C7.30544 7.52015 7.24395 7.66498 7.24127 7.81678C7.23859 7.96858 7.29494 8.11549 7.39844 8.22656L12.0859 12.9141ZM19.3359 16.4062C19.3359 16.2131 19.2787 16.0243 19.1714 15.8637C19.0641 15.7031 18.9115 15.5779 18.7331 15.504C18.5546 15.4301 18.3583 15.4108 18.1689 15.4485C17.9794 15.4861 17.8054 15.5791 17.6688 15.7157C17.5323 15.8523 17.4393 16.0263 17.4016 16.2157C17.3639 16.4052 17.3832 16.6015 17.4571 16.78C17.5311 16.9584 17.6562 17.1109 17.8168 17.2182C17.9774 17.3255 18.1662 17.3828 18.3594 17.3828C18.6184 17.3828 18.8668 17.2799 19.0499 17.0968C19.2331 16.9136 19.3359 16.6653 19.3359 16.4062Z" fill="#635A3F"/></svg>
-                      </div>
+                      </div> */}
                     </Link>
                   </li>
 
@@ -100,12 +296,73 @@ const BidderMybids = () => {
                   </li>
           </ul>
         </Card>
-      </div>
+          <Dialog>
+            <Card className="mr-8 w-90 bg-white justify-center shadow-2xl ">
+              <CardContent>
+                <Table >
+                  <TableHeader className="h-16">
+                  <TableRow>
+              <TableHead className="hidden md:table-cell text-center text-brownDark font-akshar text-xl font-semibold mb-2">
+                Auction Image
+              </TableHead>
+              <TableHead className="hidden md:table-cell text-center text-brownDark font-akshar text-xl font-semibold mb-2">
+                Auction Title
+              </TableHead>
+              <TableHead className="hidden md:table-cell text-center text-brownDark font-akshar text-xl font-semibold mb-2">
+                Auctioneer name
+              </TableHead> 
+              <TableHead className="hidden md:table-cell text-center text-brownDark font-akshar text-xl font-semibold mb-2">
+                Bidded Price
+              </TableHead>
+              <TableHead className="hidden md:table-cell text-center text-brownDark font-akshar text-xl font-semibold mb-2">
+                 Status
+              </TableHead>  
+            </TableRow>
+                  </TableHeader>
+ 
+                  <TableBody>
+                    {filteredBids.map((bid: Bid, index: number) => (
+                      <TableRow key={index} className="hover:bg-footertxt  hover:scale-105 transition duration-300 ease-in-out">
+                        <TableCell className="hidden sm:table-cell font-akshar  ">
+                          {bid.auction && bid.auction.auctionImages.map((image: string, imageIndex: number) => (
+                            <img
+                              key={imageIndex}
+                              src={image}
+                              alt={`Auction Image ${imageIndex}`}
+                              className="w-24 h-24 object-cover"
+                            />
+                          ))}
+                        </TableCell>
+                        <TableCell className="text-center hidden md:table-cell font-akshar w-1/4">
+                          {bid.auction && bid.auction.auctionTitle}
+                        </TableCell>
+                        <TableCell className="text-center hidden md:table-cell font-akshar w-1/4">
+                          {bid.auctioneer && bid.auctioneer.companyName}
+                        </TableCell>
+                        <TableCell className="text-center hidden md:table-cell font-akshar w-1/4">
+                          {bid.bidPrice.toString()}
+                        </TableCell>
+                        <TableCell className="text-center hidden md:table-cell font-akshar w-1/4">
+                          {bid.auction && bid.auction.isExpired ? 'Expired' : 'Ongoing'}
+                        </TableCell>
+                        {/* <TableCell className="hidden md:table-cell font-akshar w-1/4">
+                          {bid.createAt}
+                        </TableCell> */}
+                        
+                      </TableRow>
+                    ))}
+                </TableBody>
 
-          
-        </>
-  )
-}
+                </Table>
+              </CardContent>
+            </Card>
+          </Dialog>
+        </div>
+        </div>
+       
+  );
+};
 
 export default BidderMybids
  
+

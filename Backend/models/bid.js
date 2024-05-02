@@ -14,6 +14,9 @@ const bidSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "Bidder",
     },
+    bidderName: {
+      type: String,
+    },
     bidPrice: {
       type: Number,
       required: true,

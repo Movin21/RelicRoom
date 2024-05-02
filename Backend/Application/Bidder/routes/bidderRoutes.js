@@ -1,9 +1,12 @@
 const express = require("express");
+// const bodyParser = require("body-parser");
+// const cors = require("cors");
 const bidder = require("../../../models/bidderModel"); //import the created user model
 const router = express.Router(); //use to create http rreqequests
-const bid = require("../../../models/bid");
-const auctions = require("../../../models/auctions");
-
+const Bids = require("../../../models/bid");
+const Auction = require("../../../models/auctions");
+const Auctioneer = require("../../../models/auctionnerModel");
+const wishlist = require("../../../models/Wishlist")
 //create bidder
 router.post("/create", async (req, res) => {
   try {
@@ -96,44 +99,83 @@ router.post("/login", async (req, res) => {
   }
 });
 
+//Mybids
+router.get('/currentBidDetails/:bidderId', async (req, res) => {
+  try {
+    const { bidderId } = req.params;
+    const { setSelectedCategory } = req.query;
 
-//filter
+    // Fetch all bids for the bidder
+    const bids = await Bids.find({ bidderId });
 
-// Get all auctions placed by all auctioneers
-// router.get('auctions/getAllAuctionsByAuctioneers', async (req, res) => {
-//   try {
-//     const allAuctions = await bid.find();
-//     return res.status(200).json(allAuctions);
-//   } catch (err) {
-//     return res.status(400).json({
-//       error: err.message
-//     });
-//   }
-// });
+    // If category is provided, filter bids by auction category
+    if (setSelectedCategory) {
+      // Fetch auctions that match the specified category
+      const auctions = await Auction.find({ auctionCategory: setSelectedCategory });
+      // Extract auction IDs from the filtered auctions
+      const auctionIds = auctions.map(auction => auction._id);
+      // Filter bids that belong to the filtered auctions
+      bids = bids.filter(bid => auctionIds.includes(bid.auctionId));
+    }
 
-//  // Get all ongoing auctions
-// router.get('/getOngoingAuctions', async (req, res) => {
-//   try {
-//     const ongoingAuctions = await bid.find({ isExpired: false });
-//     return res.status(200).json(ongoingAuctions);
-//   } catch (err) {
-//     return res.status(400).json({
-//       error: err.message
-//     });
-//   }
-// });
+    // Manually populate each bid
+    const populatedBids = await Promise.all(bids.map(async (bid) => {
+      // Fetch the auction data
+      const auction = bid.auctionId ? await Auction.findById(bid.auctionId) : null;
+      // Fetch the auctioneer data
+      const auctioneer = bid.auctioneerId ? await Auctioneer.findById(bid.auctioneerId) : null;
 
-// // Get all expired auctions
-// router.get('/getExpiredAuctions', async (req, res) => {
-//   try {
-//     const expiredAuctions = await bid.find({ isExpired: true });
-//     return res.status(200).json(expiredAuctions);
-//   } catch (err) {
-//     return res.status(400).json({
-//       error: err.message
-//     });
-//   }
-// });
+      // Construct a new object that includes the populated data
+      return {
+        ...bid.toObject(), // Convert Mongoose document to a plain object
+        auction: auction ? {
+          auctionTitle: auction.auctionTitle,
+          auctionImages: auction.auctionImages,
+          auctionCategory: auction.auctionCategory,
+          isExpired: auction.isExpired
+        } : null,
+        auctioneer: auctioneer ? {
+          companyName: auctioneer.companyname
+        } : null
+      };
+    }));
+
+    res.json(populatedBids);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Server Error' });
+  }
+});   
+
+//wishlist 
+router.post("/wishcreate", async (req, res) => {
+  try {
+    const newwish = new wishlist(req.body);
+    await newwish.save();
+    return res.status(200).json({
+      success: "Bidder wishlist is created successfully",
+    });
+  } catch (error) {
+    return res.status(400).json({
+      error: error.message,
+    });
+  }
+});
+
+
+//get current wishlist bidder
+router.get("/getOneee/:bidderId", async (req, res) => {
+  try {
+    const bidderId = req.params.bidderId;
+    const whish = await wishlist.find({bidderId});
+    return res.status(200).json(whish);
+  } catch (err) {
+    return res.status(400).json({
+      error: err.message,
+    });
+  }
+});
+
 
 module.exports = router;
- 
+

@@ -44,10 +44,9 @@ const SingleAuction: React.FC = () => {
   //Getting the States of Auctioneer and Bidder
   const auctioneer = useSelector((state: any) => state.auctioneer.auctioneer);
   const bidder = useSelector((state: any) => state.bidder.bidder);
- 
+ const bidderId = bidder ? bidder._id : null;
 
-  //Store the id that pass by the listing page
-  const { id } = useParams<{ id: string }>();
+  const { wishid } = useParams<{ wishid: string }>();
 
   const [auction, setAuction] = useState<Auction | undefined>();
   const [auctioneername, setAuctioneername] = useState("");
@@ -56,6 +55,8 @@ const SingleAuction: React.FC = () => {
   const [bidValue, setBidValue] = useState<number>(0);
   const [alertMessage, setAlertMessage] = useState<string>("");
   console.log(auction)
+  const [showAlert, setShowAlert] = useState<boolean>(false);
+
 
   //Fetch the Selected Auction
   useEffect(() => {
@@ -64,7 +65,7 @@ const SingleAuction: React.FC = () => {
         const response = await axios.get<{
           success: boolean;
           auction: Auction;
-        }>(`http://localhost:3000/auctions/${id}`);
+        }>(`http://localhost:3000/auctions/${wishid}`);
         setAuction(response.data.auction);
       } catch (error) {
         console.error("Error fetching auction:", error);
@@ -73,7 +74,7 @@ const SingleAuction: React.FC = () => {
       }
     };
     fetchAuction();
-  }, [id]);
+  }, [wishid]);
 
   // Update both bid and leading bidder
   const updateBidAndLeadingBidder = async (
@@ -83,7 +84,7 @@ const SingleAuction: React.FC = () => {
     try {
       console.log("leadingBidder", leadingBidder);
       await axios.put(
-        `http://localhost:3000/auctions/updateBidAndLeadingBidder/${id}`,
+        `http://localhost:3000/auctions/updateBidAndLeadingBidder/${wishid}`,
         {
           newBid,
           leadingBidder,
@@ -167,7 +168,6 @@ const SingleAuction: React.FC = () => {
         if (auction && auctioneer) {
           const response = await axios.post("http://localhost:3000/bids/save", {
             auctionId: auction._id,
-            bidderName: bidder.firstname,
             auctioneerId: auctioneer._id,
             bidderId: bidder._id,
             bidPrice: bidValue,
@@ -197,6 +197,33 @@ const SingleAuction: React.FC = () => {
     };
     fetchBidderName();
   };
+
+
+
+  const informWinner = async (auction: Auction) => {
+    const auctionData = {
+      bidderId: bidderId,
+      auctionTitle: auction.auctionTitle,
+      currentBid: auction.currentBid,
+      isExpired: auction.isExpired,
+      auctionImages: auction.auctionImages[0],
+    };
+  
+    try {
+      const response = await axios.post(
+        `http://localhost:3000/bidder/wishcreate`,
+        auctionData
+      );
+      console.log("Notification sent successfully", response.data);
+  
+      setShowAlert(true);
+    } catch (error) {
+      console.error("Error sending notification:", error);
+      alert("Error occurred while saving to wishlist");
+      setShowAlert(false);
+    }
+  };
+  
 
 
   
@@ -258,134 +285,44 @@ const SingleAuction: React.FC = () => {
 
               {/* Other Content */}
               <div className="flex flex-col flex-1 ml-10 mt-4 md:mt-0">
-                <p className="text-sm text-gray-500 mb-3  font-semibold font-sourceSans3">
-                  Listed by: {auctioneername}
-                </p>
+               
                 <h2 className="text-3xl font-bold mb-5 font-sangbleu w-full">
                   {auction.auctionTitle}
                 </h2>
-                <p className="  text-gray-500  text-sm flex items-center font-semibold font-sourceSans3  mb-2">
-                  {auction.viewCount} Views
-                </p>
+                <label className="text-xl font-semibold mb-5 font-akshar w-full">{auction && auction.isExpired ? 'This item is Expired ' : 'This item is Ongoing. Do you want to save ? '} </label>
 
-                <p className="text-sm text-gray-500 mb-2 font-sourceSans3 font-semibold">
-                  Category: {auction.auctionCategory}
-                </p>
 
-                <p className="text-sm  text-gray-500 font-semibold  mb-3 font-sourceSans3">
-                  Posted Date: {new Date(auction.createdAt).toLocaleString()}
-                </p>
-                <p className="text-lg  font-semibold mb-3 font-sourceSans3">
-                  Starting At: ${auction.auctionStartingPrice}
-                </p>
-                <p className="text-lg font-semibold mb-3 font-sourceSans3">
-                  Current Bid: ${auction.currentBid}
-                </p>
-                <p className="text-lg font-semibold mb-3 font-sourceSans3">
-                  Leading bidder: {auction.leadingBidderName}
-                </p>
-                {auction.isExpired ? (
-                  <p className="mt-12 text-3xl font-semibold mb-3 text-red-600 font-sourceSans3">
-                    Auction has been Expired !!!
-                  </p>
-                ) : (
-                  <>
-                    <p className="text-lg font-semibold mb-3 font-sourceSans3 mt-5">
-                      Auction closes in:{" "}
-                      <div className="flex items-center font-amethysta mt-2">
-                        {remainingTime.split(", ").map((time, index) => (
-                          <div key={index} className="flex items-center">
-                            <div className="bg-gray-200 w-16 h-16 flex items-center justify-center mr-2 rounded-xs">
-                              <span className="font-bold flex flex-col items-center">
-                                <div className="text-2xl font-amethysta">
-                                  {time.split(" ")[0]?.padStart(2, "0")}
-                                </div>
-                                <div className="text-xs text-gray-500 font-poppins font-bold uppercase mt-1">
-                                  {time.split(" ")[1]}
-                                </div>
-                              </span>
-                            </div>
-                            <span className="text-sm text-gray-500">
-                              {time.split(" ")[2]?.padStart(2, "0")}
-                            </span>
-                          </div>
-                        ))}
-                      </div>
-                    </p>
-
-                    <div className="flex flex-col md:flex-row items-center mt-5 ">
-                      <Input
-                        type="number"
-                        placeholder="Enter bid value"
-                        className="border border-gray-300 p-2 rounded-md mb-2 md:mb-0 md:mr-2 w-full md:w-40"
-                        value={bidValue}
-                        onChange={handleBidValueChange}
-                      />
-                      <AlertDialog>
-                        <AlertDialogTrigger asChild>
-                          <Button
-                            className="flex items-center justify-center mb-2 md:mb-0 bg-blue-800 text-white px-5 py-2 rounded-md hover:bg-blue-600 w-full md:w-auto md:ml-2 md:mr-2 h-10"
-                            onClick={handlePlaceBid}
-                          >
-                            <BiShoppingBag className="mr-2" />
-                            Place Bid
-                          </Button>
-                        </AlertDialogTrigger>
-                        <AlertDialogContent>
-                          <AlertDialogHeader>
-                            <AlertDialogTitle>
-                              Are you sure you want to bid?
-                            </AlertDialogTitle>
-                          </AlertDialogHeader>
-                          <AlertDialogDescription>
-                            {alertMessage}
-                          </AlertDialogDescription>
-                          <AlertDialogFooter>
-                            {alertMessage ===
-                            "Are you sure you want to bid with the entered price?" ? (
-                              <>
-                                <AlertDialogCancel>Cancel</AlertDialogCancel>
-                                <AlertDialogAction
-                                  onClick={() => {
-                                    handleConfirmBid();
-                                  }}
-                                >
-                                  Confirm
-                                </AlertDialogAction>
-                              </>
-                            ) : (
-                              <AlertDialogCancel>
-                                {alertMessage && "Cancel"}
-                              </AlertDialogCancel>
-                            )}
-                          </AlertDialogFooter>
-                        </AlertDialogContent>
-                      </AlertDialog>
-                      <Link to={`/wishAdd/${auction._id}`}>
-                      <button className="flex items-center justify-center bg-red-800 text-white px-3 py-2 rounded-md hover:bg-red-600 w-full md:w-auto md:ml-2">
+                      <button type="submit"   onClick={() => auction && informWinner(auction)}
+ className="flex items-center justify-center bg-red-800 text-white px-3 py-2 rounded-md hover:bg-red-600 w-full md:w-auto md:ml-2">
                         <AiOutlineHeart className="mr-2" />
                         Add to Wishlist
                       </button>
-                      </Link>
-                    </div>
-                  </>
-                )}
+                     
+
+
+
               </div>
             </>
           )
         )}
       </section>
 
-      {auction && (
-        <div className="mb-10 ml-2 md:ml-20 w-full md:w-2/4">
-          <h1 className="text-lg font-semibold font-sourceSans3">
-            Item Description:
-          </h1>
-          <p className="text-sm mt-2 font-sangbleu whitespace-pre-wrap">
-            {auction.auctionDescription}
-          </p>
+      {showAlert && (
+        <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-50 mt-32 flex justify-center items-center">
+          <div className="bg-white p-10 rounded-lg shadow-lg">
+            <p className="text-xl font-semibold ml-14 mb-4">Notification</p>
+            <p>Successfully informed the winner</p>
+            <button
+              onClick={() => setShowAlert(false)}
+              className="mt-4 bg-brownDark hover:bg-brownMedium text-white px-4 py-2 ml-20 rounded  focus:outline-none focus:ring focus:border-blue-300"
+            >
+              Close
+            </button>
+          </div>
         </div>
       )}
+
+     
     </>
   );
 };

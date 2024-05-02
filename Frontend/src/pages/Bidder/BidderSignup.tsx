@@ -100,7 +100,7 @@ const BidderSignup = () => {
           </CardHeader>
     
     <div className="flex items-center justify-center">
-      <Card className=" w-full md:w-96 p-6 mt-0 mb-10 shadow-2xl" style={{ width: '700px' }}>
+      <Card className=" w-full md:w-96 p-6 mt-0 mb-10 shadow-2xl" style={{ width: '695px' , height: '1030px', padding: '40px'}}>
           <CardContent>
           <Form {...form} >
           <form onSubmit={form.handleSubmit(onSubmit)} 
@@ -213,7 +213,7 @@ const BidderSignup = () => {
             control={form.control}
             name="payment"
             render={({ field }) => (
-                <FormItem>
+                <FormItem className="mb-10">
                 <FormLabel className="font-akshar">Payment method :</FormLabel>
                   <FormControl>
                     <select {...field} className="font-akshar w-full px-3 py-1.5 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
@@ -227,6 +227,7 @@ const BidderSignup = () => {
             )}
             />
             
+            <div className="flex items-center justify-between mb-2">
             <div className="flex items-center">
               <Checkbox id="termscondition" />
               <label
@@ -240,9 +241,10 @@ const BidderSignup = () => {
             <Button
                 disabled={form.formState.isSubmitting} // Disable the button while submitting
                 type="submit"
-                className="font-akshar w-full text-white bg-primary hover:bg-secondary ease-in-out hover:text-white tw-50 mt-4 hover:scale-110 transition duration-300"
-                variant="outline"
+                className="font-akshar w-24 text-white bg-primary hover:bg-secondary ease-in-out hover:text-white tw-50 mt-4 hover:scale-110 transition duration-300"
+                variant="outline" 
               >Submit</Button>
+            </div>
             </div>
             </form>
           </Form>
@@ -253,4 +255,4 @@ const BidderSignup = () => {
 };
 
 export default BidderSignup;
-
+ 

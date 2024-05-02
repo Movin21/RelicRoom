@@ -60,9 +60,7 @@ function NavBar() {
                 <MenubarItem
                   className={`font-akshar text-primary hover:text-secondary `}
                 >
-
                   <Link to="/bidderSignup">Bidder Account</Link>
-
                 </MenubarItem>
                 <MenubarSeparator />
                 <MenubarItem
@@ -161,7 +159,7 @@ function NavBar() {
                 className={`font-akshar text-lg md:text-lg lg:text-lg text-primary hover:text-secondary`}
               >
                 <DropdownMenuSeparator />
-                <Link to="/blog/PostView">
+                <Link to="/blog/View">
                   <DropdownMenuItem
                     className={`font-akshar text-lg md:text-xl lg:text-lg text-primary hover:text-secondary`}
                   >

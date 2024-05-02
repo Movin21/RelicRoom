@@ -33,7 +33,7 @@ function NavBar() {
   return (
     <div>
       {/* Upper Navbar */}
-      <div className="flex justify-between items-center px-4 py-2 border-b border-gray-200 bg-gray-100">
+      <div className="flex items-center justify-between px-4 py-2 bg-gray-100 border-b border-gray-200">
         <div>
           <Link to="/">
             <img
@@ -46,11 +46,11 @@ function NavBar() {
         <div className="flex items-center space-x-4">
           <Menubar>
             <MenubarMenu>
-              <div className="font-akshar text-primary font-bold ">
-                <MenubarTrigger className="border-none text-lg cborder-none hover:none">
+              <div className="font-bold font-akshar text-primary ">
+                <MenubarTrigger className="text-lg border-none cborder-none hover:none">
                   <Link
                     to="#"
-                    className="hover:underline transition-all duration-300 text-medium"
+                    className="transition-all duration-300 hover:underline text-medium"
                   >
                     Create Account
                   </Link>
@@ -102,7 +102,7 @@ function NavBar() {
         </div>
       </div>
       {/* Second Navbar  */}
-      <div className="flex flex-col md:flex-row justify-between items-center px-4 py-2">
+      <div className="flex flex-col items-center justify-between px-4 py-2 md:flex-row">
         <NavigationMenu className="mb-4 md:mb-0">
           <NavigationMenuList>
             <NavigationMenuItem>
@@ -116,7 +116,7 @@ function NavBar() {
               <NavigationMenuLink
                 className={`font-akshar text-lg md:text-xl lg:text-lg text-primary hover:text-secondary hover:bg-white ${navigationMenuTriggerStyle()}`}
               >
-                <Link to="#">Customer Care</Link>
+                <Link to="/complaint">Customer Care</Link>
               </NavigationMenuLink>
             </NavigationMenuItem>
             <DropdownMenu>
@@ -184,7 +184,7 @@ function NavBar() {
           <input
             type="text"
             placeholder="Search here.."
-            className="flex-1 w-full md:w-60 transition-all duration-300 border border-gray-300 px-4 py-1 focus:outline-none focus:border-1 focus:border-primary hover:w-48 lg:hover:w-80 text-lg md:text-xl lg:text-lg"
+            className="flex-1 w-full px-4 py-1 text-lg transition-all duration-300 border border-gray-300 md:w-60 focus:outline-none focus:border-1 focus:border-primary hover:w-48 lg:hover:w-80 md:text-xl lg:text-lg"
           />
           <div className="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-500 group-hover:text-primary">
             <Link to="">

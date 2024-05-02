@@ -6,6 +6,8 @@ import { z } from "zod"
 import axios from "axios"
 import { Textarea } from "@/components/ui/textarea";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { toast } from "sonner"
+
 
 import {
     Card,
@@ -76,6 +78,7 @@ const formSchema = z.object({
            
             const response = await axios.post(
              "http://localhost:3000/customerCare/complaints/create",
+             
               {
                 Name: values.Name,
                 Email: values.Email,
@@ -83,7 +86,8 @@ const formSchema = z.object({
                 Recommend: values.Recommend,
                 Complaints: values.Message  
               }
-            );
+            )
+            alert("Succefully submitted..");
             console.log(response);
             console.log("Response:", response.data);
           } catch (error) {
@@ -215,8 +219,9 @@ const formSchema = z.object({
                                  <FormMessage  className='text-red-500 font-akshar'/>
                                 </FormItem>
                                     )}
-                        />     
-                       <Button type="submit" className='w-3/6 mx-36'>Submit</Button>
+                        /> 
+                        <Button type="submit" className='w-3/6 mx-36' >Submit</Button>
+                       
                        </form>
                     </Form>
                     </CardContent>

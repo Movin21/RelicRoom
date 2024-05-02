@@ -86,13 +86,14 @@ const formSchema = z.object({
                 Rate: values.Recommend,
                 Feedback: values.Message
               }
-            );
+            )
+            alert("Succefully submitted..");
             console.log(response);
             console.log("Response:", response.data);
           } catch (error) {
             console.error("Error:", error);
           }
-      
+       
       };
     
 

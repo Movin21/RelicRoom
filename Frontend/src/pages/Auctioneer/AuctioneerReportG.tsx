@@ -85,7 +85,7 @@ const AuctioneerReportG: React.FC = () => {
     return (
       <PDFDownloadLink document={<MyDocument data={data} />} fileName="auction_report.pdf">
         {({ blob, url, loading, error }) => (
-          <Button className="font-akshar w-40 text-white bg-red-700 hover:bg-red-500 ease-in-out hover:text-white tw-50 mt-4">
+          <Button className="w-40 mt-4 text-white ease-in-out bg-red-700 font-akshar hover:bg-red-500 hover:text-white tw-50">
             {loading ? 'Loading document...' : 'Download PDF'}
           </Button>
         )}
@@ -138,28 +138,28 @@ const AuctioneerReportG: React.FC = () => {
       {/* Main Content */}
       <div className="flex flex-1">
         {/* Card Component */}
-        <div className="ml-4 sm:mt-0 flex-1">
+        <div className="flex-1 ml-4 sm:mt-0">
           <Dialog>
             <Card>
               <CardHeader>
-                <CardTitle className="font-akshar text-secondary text-4xl ">Auction Summary Report</CardTitle>
+                <CardTitle className="text-4xl font-akshar text-secondary ">Auction Summary Report</CardTitle>
               </CardHeader>
               <CardContent>
               <Table>
                   <TableHeader>
                     <TableRow>
-                    <TableHead className="hidden md:table-cell text-brownDark font-akshar text-xl font-semibold mb-2">Auction ID</TableHead>
-                      <TableHead className="hidden md:table-cell text-brownDark font-akshar text-xl font-semibold mb-2">Auction Title</TableHead>
-                      {/* <TableHead className="hidden md:table-cell text-brownDark font-akshar text-xl font-semibold mb-2">Auction Images</TableHead> */}
-                      {/* <TableHead className="hidden md:table-cell text-brownDark font-akshar text-xl font-semibold mb-2">Description</TableHead> */}
-                      <TableHead className="hidden md:table-cell text-brownDark font-akshar text-xl font-semibold mb-2">Auction Category</TableHead>
-                      <TableHead className="hidden md:table-cell text-brownDark font-akshar text-xl font-semibold mb-2">Starting Price</TableHead>
-                      <TableHead className="hidden md:table-cell text-brownDark font-akshar text-xl font-semibold mb-2">Auction Duration</TableHead>
-                      <TableHead className="hidden md:table-cell text-brownDark font-akshar text-xl font-semibold mb-2">Current Bid</TableHead>
-                      <TableHead className="hidden md:table-cell text-brownDark font-akshar text-xl font-semibold mb-2">view Count</TableHead>
-                      <TableHead className="hidden md:table-cell text-brownDark font-akshar text-xl font-semibold mb-2">Created At</TableHead>
-                      <TableHead className="hidden md:table-cell text-brownDark font-akshar text-xl font-semibold mb-2">Winning Bid Price</TableHead>
-                      <TableHead className="hidden md:table-cell text-brownDark font-akshar text-xl font-semibold mb-2">Winning Bidder Name</TableHead>
+                    <TableHead className="hidden mb-2 text-xl font-semibold md:table-cell text-brownDark font-akshar">Auction ID</TableHead>
+                      <TableHead className="hidden mb-2 text-xl font-semibold md:table-cell text-brownDark font-akshar">Auction Title</TableHead>
+                      {/* <TableHead className="hidden mb-2 text-xl font-semibold md:table-cell text-brownDark font-akshar">Auction Images</TableHead> */}
+                      {/* <TableHead className="hidden mb-2 text-xl font-semibold md:table-cell text-brownDark font-akshar">Description</TableHead> */}
+                      <TableHead className="hidden mb-2 text-xl font-semibold md:table-cell text-brownDark font-akshar">Auction Category</TableHead>
+                      <TableHead className="hidden mb-2 text-xl font-semibold md:table-cell text-brownDark font-akshar">Starting Price</TableHead>
+                      <TableHead className="hidden mb-2 text-xl font-semibold md:table-cell text-brownDark font-akshar">Auction Duration</TableHead>
+                      <TableHead className="hidden mb-2 text-xl font-semibold md:table-cell text-brownDark font-akshar">Current Bid</TableHead>
+                      <TableHead className="hidden mb-2 text-xl font-semibold md:table-cell text-brownDark font-akshar">view Count</TableHead>
+                      <TableHead className="hidden mb-2 text-xl font-semibold md:table-cell text-brownDark font-akshar">Created At</TableHead>
+                      <TableHead className="hidden mb-2 text-xl font-semibold md:table-cell text-brownDark font-akshar">Winning Bid Price</TableHead>
+                      <TableHead className="hidden mb-2 text-xl font-semibold md:table-cell text-brownDark font-akshar">Winning Bidder Name</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
@@ -188,7 +188,7 @@ const AuctioneerReportG: React.FC = () => {
                 <div className="flex justify-between mb-4">
                   {/* Button to trigger PDF download */}
                   {generatePDF()}
-                  <Button className="font-akshar w-40 text-white bg-primary hover:bg-secondary ease-in-out hover:text-white tw-50 mt-4" onClick={handleBackToPortal}>Back Portal</Button>
+                  <Button className="w-40 mt-4 text-white ease-in-out font-akshar bg-primary hover:bg-secondary hover:text-white tw-50" onClick={handleBackToPortal}>Back Portal</Button>
                 </div>
               </CardContent>
             </Card>

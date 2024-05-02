@@ -134,7 +134,7 @@ const router = createBrowserRouter([
     children: [
       { path: "/feedbackManage", element: <FeedbackManage /> },
       { path: "/faqManage", element: <FAQmanage /> },
-      { path: "/FAQUpdate", element: <Update /> },
+      { path: "/FAQUpdate/:id", element: <Update /> },
     ],
   },
 ]);

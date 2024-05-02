@@ -61,9 +61,11 @@ function Update() {
   const handleSubmit: SubmitHandler<FormValues> = () => {
     axios
       .patch(`http://localhost:3000/customerCare/faq/update/${id}`, values)
+      
       .then((res) => {
         console.log(res);
         navigate('/FaqManage');
+        alert("Succefully");
       })
       .catch((err) => console.log(err));
   };

@@ -78,6 +78,55 @@ export default function Suggestions() {
     }
   };
 
+const formSchema = z.object({
+    Name: z.string().min(4).max(50, {
+        message: "Name should be atleast 4 characters",
+    }),
+    Email: z.string().min(10).max(50, {
+        message: "Email should be atleast 10 characters",
+    }),
+    Message: z.string().min(10).max(1000, {
+        message: "Message should be atleast 10 characters",
+    }),
+    Recommend: z
+    .string({
+      required_error: "Choose this.",
+    })
+    
+    
+  })
+
+ export default  function Suggestions() {
+   
+    const form = useForm<z.infer<typeof formSchema>>({
+      resolver: zodResolver(formSchema),
+      defaultValues: {},
+    });
+
+    const handleSubmit = async (values: z.infer<typeof formSchema>) => {
+        console.log(values);
+         try {
+          
+            const response = await axios.post(
+             "http://localhost:3000/customerCare/suggestion/create",
+              {
+                Name: values.Name,
+                Email: values.Email,
+                Rate: values.Recommend,
+                Suggestions: values.Message
+              }
+            )
+            alert("Succefully submitted..");
+            console.log(response);
+            console.log("Response:", response.data);
+          } catch (error) {
+            console.error("Error:", error);
+          }
+      
+      };
+      
+  
+
   return (
     <>
       <h1 className="flex justify-center text-2xl font-bold h-500 item-center w-500 font-akshar text-yellow-950">

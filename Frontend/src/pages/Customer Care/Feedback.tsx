@@ -52,42 +52,48 @@ const formSchema = z.object({
       message: "Invalid email format",
     }),
 
-  Message: z.string().min(10).max(1000, {
-    message: "Message should be atleast 10 characters",
-  }),
-  Need: z.string({
-    required_error: "Choose this.",
-  }),
-  Recommend: z.string({
-    required_error: "Choose this.",
-  }),
-});
+    Need: z
+    .string({
+      required_error: "Choose this.",
+    }),
+    Recommend: z
+    .string({
+      required_error: "Choose this.",
+    })
+    
+    
+  })
 
-export default function Feedback() {
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {},
-  });
+ export default  function Feedback() {
+   
+    const form = useForm<z.infer<typeof formSchema>>({
+      resolver: zodResolver(formSchema),
+      defaultValues: {},
+    });
 
-  const handleSubmit = async (values: z.infer<typeof formSchema>) => {
-    console.log(values);
-    try {
-      const response = await axios.post(
-        "http://localhost:3000/customerCare/feedback/create",
-        {
-          Name: values.Name,
-          Email: values.Email,
-          Need: values.Need,
-          Rate: values.Recommend,
-          Feedback: values.Message,
-        }
-      );
-      console.log(response);
-      console.log("Response:", response.data);
-    } catch (error) {
-      console.error("Error:", error);
-    }
-  };
+    const handleSubmit = async (values: z.infer<typeof formSchema>) => {  
+      console.log(values);
+        try { 
+            const response = await axios.post(
+             "http://localhost:3000/customerCare/feedback/create",
+              {
+                Name: values.Name,
+                Email: values.Email,
+                Need: values.Need,
+                Rate: values.Recommend,
+                Feedback: values.Message
+              }
+            )
+            alert("Succefully submitted..");
+            console.log(response);
+            console.log("Response:", response.data);
+          } catch (error) {
+            console.error("Error:", error);
+          }
+       
+      };
+    
+
 
   return (
     <>

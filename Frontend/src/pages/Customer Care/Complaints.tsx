@@ -5,7 +5,12 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import axios from "axios";
 import { Textarea } from "@/components/ui/textarea";
+
+import { toast } from "sonner"
+
+
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
@@ -31,48 +36,61 @@ import {
 import { Link } from "react-router-dom";
 
 const formSchema = z.object({
-  Name: z.string().min(4).max(50, {
-    message: "Name should be atleast 4 characters",
-  }),
-  Email: z.string().min(10).max(50, {
-    message: "Email should be atleast 10 characters",
-  }),
-  Message: z.string().min(10).max(1000, {
-    message: "Message should be atleast 10 characters",
-  }),
-  Type: z.string({
-    required_error: "Choose the type.",
-  }),
-  Recommend: z.string({
-    required_error: "Choose this.",
-  }),
-});
 
-export default function Complaints() {
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {},
-  });
+    Name: z.string().min(4).max(50, {
+        message: "Name should be atleast 4 characters",
+    }),
+    Email: z.string().min(10).max(50, {
+        message: "Email should be atleast 10 characters",
+    }),
+    Message: z.string().min(10).max(1000, {
+        message: "Message should be atleast 10 characters",
+    }),
+    Type: z
+    .string({
+      required_error: "Choose the type.",
+    }),
+    Recommend: z
+    .string({
+      required_error: "Choose this.",
+    })
+  
+    
 
-  const handleSubmit = async (values: z.infer<typeof formSchema>) => {
-    console.log(values);
-    try {
-      const response = await axios.post(
-        "http://localhost:3000/customerCare/complaints/create",
-        {
-          Name: values.Name,
-          Email: values.Email,
-          Type: values.Type,
-          Recommend: values.Recommend,
-          Complaints: values.Message,
-        }
-      );
-      console.log(response);
-      console.log("Response:", response.data);
-    } catch (error) {
-      console.error("Error:", error);
-    }
-  };
+  })
+
+ export default  function Complaints() {
+   
+    const form = useForm<z.infer<typeof formSchema>>({
+      resolver: zodResolver(formSchema),
+      defaultValues: {},
+    });
+
+    const handleSubmit = async (values: z.infer<typeof formSchema>) => {
+        console.log(values);
+        try {
+           
+            const response = await axios.post(
+             "http://localhost:3000/customerCare/complaints/create",
+             
+              {
+                Name: values.Name,
+                Email: values.Email,
+                Type: values.Type,
+                Recommend: values.Recommend,
+                Complaints: values.Message  
+              }
+            )
+            alert("Succefully submitted..");
+            console.log(response);
+            console.log("Response:", response.data);
+          } catch (error) {
+            console.error("Error:", error);
+          }
+      
+      };
+    
+
 
   return (
     <>
@@ -121,119 +139,28 @@ export default function Complaints() {
                                 placeholder="Enter the your name.."
                                 {...field}
                               />
-                            </FormControl>
+     
+                        <FormField
+                              control={form.control}
+                              name="Message"
+                              render={({ field }) => (
+                                <FormItem>
+                                 <FormLabel> Your Message</FormLabel>
+                                 <FormControl >
+                                    <Textarea placeholder="Type your message here.."{...field }/>
+                                 </FormControl>
+              
+                                 <FormMessage  className='text-red-500 font-akshar'/>
+                                </FormItem>
+                                    )}
+                        /> 
+                        <Button type="submit" className='w-3/6 mx-36' >Submit</Button>
+                       
+                       </form>
+                    </Form>
+                    </CardContent>
+                 </Card>
 
-                            <FormMessage className="text-red-500 font-akshar" />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-
-                    <FormField
-                      control={form.control}
-                      name="Email"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Email</FormLabel>
-                          <FormControl className="w-full">
-                            <Input
-                              placeholder="Enter the your Email address.."
-                              {...field}
-                            />
-                          </FormControl>
-
-                          <FormMessage className="text-red-500 font-akshar" />
-                        </FormItem>
-                      )}
-                    />
-
-                    <FormField
-                      control={form.control}
-                      name="Type"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Complaint Type</FormLabel>
-                          <Select onValueChange={field.onChange}>
-                            <FormControl>
-                              <SelectTrigger className="w-full">
-                                <SelectValue placeholder="Select" />
-                              </SelectTrigger>
-                            </FormControl>
-
-                            <SelectContent>
-                              <SelectItem value="Type1">
-                                Item Not as Described
-                              </SelectItem>
-                              <SelectItem value="Type2">
-                                Poor Quality Items
-                              </SelectItem>
-                              <SelectItem value="Type3">
-                                Shipping Delays
-                              </SelectItem>
-                              <SelectItem value="Type4">
-                                Communication Issues
-                              </SelectItem>
-                              <SelectItem value="Type5">
-                                Website Technical Issues
-                              </SelectItem>
-                            </SelectContent>
-                          </Select>
-                          <FormMessage className="text-red-500 font-akshar" />
-                        </FormItem>
-                      )}
-                    />
-
-                    <FormField
-                      control={form.control}
-                      name="Recommend"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>
-                            How would you like to recommend our site
-                          </FormLabel>
-                          <Select onValueChange={field.onChange}>
-                            <FormControl>
-                              <SelectTrigger className="w-full">
-                                <SelectValue placeholder="Select" />
-                              </SelectTrigger>
-                            </FormControl>
-
-                            <SelectContent>
-                              <SelectItem value="one">1</SelectItem>
-                              <SelectItem value="two">2</SelectItem>
-                              <SelectItem value="three">3</SelectItem>
-                              <SelectItem value="four">4</SelectItem>
-                              <SelectItem value="five">5</SelectItem>
-                            </SelectContent>
-                          </Select>
-                          <FormMessage className="text-red-500 font-akshar" />
-                        </FormItem>
-                      )}
-                    />
-
-                    <FormField
-                      control={form.control}
-                      name="Message"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel> Your Message</FormLabel>
-                          <FormControl>
-                            <Textarea
-                              placeholder="Type your message here.."
-                              {...field}
-                            />
-                          </FormControl>
-
-                          <FormMessage className="text-red-500 font-akshar" />
-                        </FormItem>
-                      )}
-                    />
-                    <Button type="submit" className="w-3/6 mx-36">
-                      Submit
-                    </Button>
-                  </form>
-                </Form>
-              </CardContent>
             </div>
           </CardContent>
         </Card>

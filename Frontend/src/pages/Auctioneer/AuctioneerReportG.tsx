@@ -71,8 +71,10 @@ const AuctioneerReportG: React.FC = () => {
   const generatePDF = () => {
     return (
       <PDFDownloadLink document={<MyDocument data={data} />} fileName="auction_report.pdf">
+
         {({ loading }) => (
           <Button className="font-akshar w-40 text-white bg-red-700 hover:bg-red-500 tw-50 mt-4">
+
             {loading ? 'Loading document...' : 'Download PDF'}
           </Button>
         )}
@@ -107,16 +109,19 @@ const AuctioneerReportG: React.FC = () => {
   return (
     <div className="flex flex-col min-h-screen bg-muted/40">
       <div className="flex flex-1">
+
         <div className="ml-4 sm:mt-0 flex-1">
+
           <Dialog>
             <Card>
               <CardHeader>
-                <CardTitle className="font-akshar text-secondary text-4xl ">Auction Summary Report</CardTitle>
+                <CardTitle className="text-4xl font-akshar text-secondary ">Auction Summary Report</CardTitle>
               </CardHeader>
               <CardContent>
                 <Table>
                   <TableHeader>
                     <TableRow>
+
                       <TableHeader className="hidden md:table-cell text-brownDark font-akshar text-xl font-semibold mb-2">Auction ID</TableHeader>
                       <TableHeader className="hidden md:table-cell text-brownDark font-akshar text-xl font-semibold mb-2">Auction Title</TableHeader>
                       <TableHeader className="hidden md:table-cell text-brownDark font-akshar text-xl font-semibold mb-2">Auction Category</TableHeader>
@@ -126,6 +131,7 @@ const AuctioneerReportG: React.FC = () => {
                       <TableHeader className="hidden md:table-cell text-brownDark font-akshar text-xl font-semibold mb-2">view Count</TableHeader>
                       <TableHeader className="hidden md:table-cell text-brownDark font-akshar text-xl font-semibold mb-2">Winning Bid Price</TableHeader>
                       <TableHeader className="hidden md:table-cell text-brownDark font-akshar text-xl font-semibold mb-2">Winning Bidder Name</TableHeader>
+
                     </TableRow>
                   </TableHeader>
                   <TableBody>
@@ -146,9 +152,11 @@ const AuctioneerReportG: React.FC = () => {
                 </Table>
                 <div className="flex flex-col sm:flex-row justify-between items-center mt-4">
                   {generatePDF()}
+
                   <Button className="font-akshar w-full sm:w-auto text-white bg-primary hover:bg-secondary mt-4 sm:mt-0" onClick={handleBackToPortal}>
                     Back to Portal
                   </Button>
+
                 </div>
               </CardContent>
             </Card>

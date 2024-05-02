@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 
+
 const SideMenu = () => {
   return (
     <div className="w-64 h-full py-6 text-black bg-white rounded-lg shadow">
@@ -67,6 +68,7 @@ const SideMenu = () => {
             </li>
 
             <li>
+              
               <Button className="flex items-center w-full px-4 py-2 mb-5 text-white transition-colors duration-200 rounded-md text-md bg-brownDark hover:bg-brownMedium">
                 <svg
                   className="w-5 h-5 mr-2"

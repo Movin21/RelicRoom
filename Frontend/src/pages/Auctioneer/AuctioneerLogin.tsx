@@ -15,6 +15,7 @@ import { TabsContent } from '@radix-ui/react-tabs';
 import { Card,CardContent, CardHeader, CardTitle } from '@/components/ui/card';
  
 
+
 const FormSchema = z.object({
   email: z.string().min(1,{
     message: "Email is required.",
@@ -60,7 +61,7 @@ const AuctioneerLogin = () => {
 
   return (
     <>
-    <Tabs defaultValue="bidderSign" className="flex items-center justify-center  h-ful">
+    <Tabs defaultValue="bidderSign" className="flex items-center justify-center h-ful">
         <TabsList>
           <TabsTrigger className="font-akshar" value="login">Login</TabsTrigger>
           <TabsTrigger className="font-akshar" value="register">
@@ -69,13 +70,13 @@ const AuctioneerLogin = () => {
         </TabsList>
       </Tabs>
       <CardHeader>
-            <CardTitle className="font-akshar text-secondary  text-center text-2xl mb-0">
+            <CardTitle className="mb-0 text-2xl text-center font-akshar text-secondary">
             Login To Your Profile
             </CardTitle>
           </CardHeader>
     
     <div className="flex items-center justify-center">
-      <Card className="w-full md:w-96 p-6 mt-0 mb-10 shadow-2xl" style={{ width: '700px' }}>
+      <Card className="w-full p-6 mt-0 mb-10 shadow-2xl md:w-96" style={{ width: '700px' }}>
           <CardContent></CardContent>
     <Form {...form}>
 
@@ -121,7 +122,7 @@ const AuctioneerLogin = () => {
           /></div>
        
        <div className="flex justify-end mt-6">
-      <Button className="w-full font-akshar bg-primary hover:bg-secondary ease-in-out hover:text-white tw-50 mt-4" type="submit" style={{ padding: '4px', margin: '0px', fontSize: '20px' }}>
+      <Button className="w-full mt-4 ease-in-out font-akshar bg-primary hover:bg-secondary hover:text-white tw-50" type="submit" style={{ padding: '4px', margin: '0px', fontSize: '20px' }}>
           Log In
         </Button>
     </div>

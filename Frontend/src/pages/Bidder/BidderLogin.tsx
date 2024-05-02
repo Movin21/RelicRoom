@@ -140,5 +140,4 @@ const BidderLogin = () => {
 };
 
 export default BidderLogin;
-
-
+ 

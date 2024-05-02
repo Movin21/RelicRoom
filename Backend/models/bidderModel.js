@@ -56,7 +56,7 @@ const bidderSchema = mongoose.Schema(
       type: String,
       default: "Bidder",
     },
-    profileImage: {
+    profilePicture: {
       type: String,
       default: "",
     },
@@ -66,3 +66,5 @@ const bidderSchema = mongoose.Schema(
 
 const bidderModel = mongoose.model("Bidder", bidderSchema);
 module.exports = bidderModel;
+
+ 

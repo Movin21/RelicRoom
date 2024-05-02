@@ -33,7 +33,7 @@ const AuctioneerPortal = () => {
   const dispatch = useDispatch();
 
 
-  const auctioneerId = auctioneer._id; // Replace with the actual auctioneer ID
+  const auctioneerId = auctioneer._id;  
   console.log(auctioneerId);
 
   useEffect(() => {

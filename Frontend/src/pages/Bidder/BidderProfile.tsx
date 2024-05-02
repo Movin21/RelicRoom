@@ -525,3 +525,4 @@ const BidderProfile = () => {
 };
 
 export default BidderProfile;
+ 

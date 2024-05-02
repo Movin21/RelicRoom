@@ -15,8 +15,9 @@ import BidderLogin from "./pages/Bidder/BidderLogin.tsx";
 import BidderSignup from "./pages/Bidder/BidderSignup.tsx";
 import BidderProfile from "./pages/Bidder/BidderProfile.tsx";
 import BidderDashboard from "./pages/Bidder/BidderDashboard.tsx";
-import BidderWishlist from "./pages/Bidder/BidderWishlist.tsx";
 import BidderMybids from "./pages/Bidder/BidderMybids.tsx";
+import BidderWishAdd from "./pages/Bidder/BidderWishAdd.tsx";
+import BidderWishlist from "./pages/Bidder/BidderWishlist.tsx";
 import AuctioneerLogin from "./pages/Auctioneer/AuctioneerLogin.tsx";
 import AuctioneerRegister from "./pages/Auctioneer/AuctioneerRegister.tsx";
 import AuctioneerPortal from "./pages/Auctioneer/AuctioneerPortal.tsx";
@@ -95,14 +96,17 @@ const router = createBrowserRouter([
       { path: "/bidderSignup", element: <BidderSignup /> },
       { path: "/bidderProfile", element: <BidderProfile /> },
 
+      { path: "/bidderDashboard", element: <BidderDashboard/>},
+      { path: "/bidderMybids", element: <BidderMybids/>},
+      { path: "/wishAdd/:wishid", element: <BidderWishAdd/>},
+      { path: "/wishlist", element: <BidderWishlist/>}
+     
+
+
       { path: "/repairSpacialist/saveRs", element: <SaveRs /> },
       { path: "/repairSpacialist/logRS", element: <LogRS /> },
       { path: "/repairSpacialist/rsprofile", element: <RSProfile /> },
       { path: "/repairSpacialist/rslist", element: <RSListing /> },
-
-      { path: "/bidderDashboard", element: <BidderDashboard /> },
-      { path: "/bidderWishlist", element: <BidderWishlist /> },
-      { path: "/bidderMybids", element: <BidderMybids /> },
       { path: "/feedbackreview", element: <FeedbackReview /> },
       { path: "/bidderDashboard", element: <BidderDashboard /> },
       { path: "/bidderWishlist", element: <BidderWishlist /> },
@@ -115,6 +119,7 @@ const router = createBrowserRouter([
       { path: "/blog/PostReadMore/:id", element: <BlogPostReadMore /> },
       { path: "/vintageexpert/Update/:id", element: <VintageexpertUpdate /> },
       { path: "/blog/Update/:id", element: <BlogPostUpdate /> },
+
     ],
   },
 

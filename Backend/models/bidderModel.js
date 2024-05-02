@@ -56,7 +56,7 @@ const bidderSchema = mongoose.Schema(
       type: String,
       default: "Bidder",
     },
-    profileImage: {
+    profilePicture: {
       type: String,
       default: "",
     },

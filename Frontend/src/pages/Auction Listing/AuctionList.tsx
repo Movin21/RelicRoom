@@ -35,6 +35,7 @@ const AuctionList: React.FC = () => {
   const [auctionStatus, setAuctionStatus] = useState<
     "All" | "expired" | "ongoing"
   >("ongoing");
+  console.log(auctions);
 
   useEffect(() => {
     fetchAllAuctions();

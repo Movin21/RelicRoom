@@ -2,15 +2,31 @@ const mongoose = require("mongoose");
 
 const wishlistSchema = mongoose.Schema(
   {
-    email: {
+
+    bidderId: {
       type: String,
       required: true,
     },
-    auctionid: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref:"Auctions",
+    auctionImages: [
+      {
+        type: String,
+      },
+    ],
+    auctionTitle: {
+      type: String,
       required: true,
     },
+    currentBid: {
+      type: String,
+      required: true,
+    },
+    isExpired: {
+      type: String,
+      required: true,
+    },
+    
+
+    
   },
   { timestamp: true }
 );

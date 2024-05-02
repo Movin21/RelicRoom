@@ -15,8 +15,9 @@ import BidderLogin from "./pages/Bidder/BidderLogin.tsx";
 import BidderSignup from "./pages/Bidder/BidderSignup.tsx";
 import BidderProfile from "./pages/Bidder/BidderProfile.tsx";
 import BidderDashboard from "./pages/Bidder/BidderDashboard.tsx";
-import BidderWishlist from "./pages/Bidder/BidderWishlist.tsx";
 import BidderMybids from "./pages/Bidder/BidderMybids.tsx";
+import BidderWishAdd from "./pages/Bidder/BidderWishAdd.tsx";
+import BidderWishlist from "./pages/Bidder/BidderWishlist.tsx";
 import AuctioneerLogin from "./pages/Auctioneer/AuctioneerLogin.tsx";
 import AuctioneerRegister from "./pages/Auctioneer/AuctioneerRegister.tsx";
 import AuctioneerPortal from "./pages/Auctioneer/AuctioneerPortal.tsx";
@@ -73,6 +74,11 @@ const router = createBrowserRouter([
       { path: "/bidderLogin", element: <BidderLogin /> },
       { path: "/bidderSignup", element: <BidderSignup /> },
       { path: "/bidderProfile", element: <BidderProfile /> },
+      { path: "/bidderDashboard", element: <BidderDashboard/>},
+      { path: "/bidderMybids", element: <BidderMybids/>},
+      { path: "/wishAdd/:wishid", element: <BidderWishAdd/>},
+      { path: "/wishlist", element: <BidderWishlist/>}
+     
     ],
   },
 

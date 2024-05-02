@@ -20,6 +20,7 @@ import { useNavigate } from "react-router-dom";
 import { CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Card } from "antd";
 
+//form validation using Zod
 const FormSchema = z.object({
   email: z.string().min(1, {
     message: "Email is required.",
@@ -36,17 +37,17 @@ const FormSchema = z.object({
 
 const BidderLogin = () => {
  
-  const dispatch = useDispatch();
+  const dispatch = useDispatch(); //a core concept in Redux, a state management library for JavaScript applications
   const navigate = useNavigate(); // Utilize useNavigate for redirection
-  const form = useForm<z.infer<typeof FormSchema>>({
-    resolver: zodResolver(FormSchema),
+  const form = useForm<z.infer<typeof FormSchema>>({ //manage form state and validation logic
+    resolver: zodResolver(FormSchema), //indicating that the Zod schema defined by FormSchema will be used to validate the form data.
     defaultValues: {
       email: "",
       password: "",
     },
   });
   // const navigate = useNavigate(); 
-  const onSubmit = async (values: z.infer<typeof FormSchema>) => {
+  const onSubmit = async (values: z.infer<typeof FormSchema>) => { //an asynchronous function 
     try {
       const response = await axios.post("http://localhost:3000/bidder/login", {
         email: values.email,
@@ -56,7 +57,7 @@ const BidderLogin = () => {
       // Handle successful login response, e.g., store token in local storage, redirect, etc.
       console.log("Login successful:", response.data);
       dispatch(login(response.data));
-      console.log(response.data);
+      console.log(response.data); //contains the data returned by the server
       navigate('/bidderDashboard');
     } catch (error) {
       // Handle login error, e.g., display error message to the user
@@ -82,8 +83,8 @@ const BidderLogin = () => {
             </CardTitle>
           </CardHeader>
     
-    <div className="flex items-center justify-center">
-      <Card className="w-full md:w-96 p-6 mt-0 mb-10 shadow-2xl" style={{ width: '700px' }}>
+    <div className="flex items-center justify-center ">
+      <Card className="w-65 md:w-96 p-0 mt-0 mb-10 shadow-2xl" style={{height:'400px', width: '600px', padding: '30px' }}>
           <CardContent>
     <Form {...form}>
 
@@ -113,10 +114,10 @@ const BidderLogin = () => {
             control={form.control}
             name="password"
             render={({ field }) => (
-              <FormItem>
-                <FormLabel className="font-akshar">Passsword :</FormLabel>
+              <FormItem className="mb-16">
+                <FormLabel className="font-akshar">Password :</FormLabel>
                 <FormControl>
-                  <Input className="font-akshar"
+                  <Input className="font-akshar "
                     placeholder="Enter your passsword"
                     type="password"
                     {...field}
@@ -127,11 +128,25 @@ const BidderLogin = () => {
               </FormItem>
             )}
           /></div>
-       
-       <div className="flex justify-end mt-6">
-      <Button className="w-full font-akshar bg-primary hover:bg-secondary ease-in-out hover:text-white tw-50 mt-4 hover:scale-110 transition duration-300" type="submit" style={{ padding: '4px', margin: '0px', fontSize: '20px' }}>
+           <div className="flex items-center justify-between mb-2">
+           <div className="flex">
+              <label
+                htmlFor="donthaveaccount"
+                className=" ml-1 text-xs font-akshar leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70" >
+                Don't have an account ?
+              </label>
+              <label 
+                onClick={handleRegisterClick} 
+                htmlFor="donthaveaccount"
+                className="hover:text-secondary ease-in-out underline ml-1 text-xs font-akshar leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 duration-100" >
+                Register
+              </label>
+              </div>
+       <div >
+      <Button className="font-akshar bg-primary hover:bg-secondary ease-in-out hover:text-white w-24 tw-50 mt-4 hover:scale-110 transition duration-300" type="submit" style={{ padding: '4px', margin: '0px', fontSize: '20px' }}>
           Log In
         </Button>
+    </div>
     </div>
       </form>
     </Form></CardContent></Card>

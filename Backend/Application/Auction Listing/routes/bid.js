@@ -92,19 +92,56 @@ router.delete("/delete/:id", async (req, res) => {
   }
 });
 
-//getlast  bidders
-
-router.get("/last3bidders", async (req, res) => {
+//get last 3 bidder details
+router.get("/last3bidders/:auctionId", async (req, res) => {
   try {
-    const lastThreeBids = await Bids.find()
+    const auctionId = req.params.auctionId;
+
+    const lastThreeBids = await Bids.find({ auctionId })
       .sort({ createdAt: -1, updatedAt: -1 })
       .limit(3);
 
-    const firstBid = lastThreeBids[0];
-    const secondBid = lastThreeBids[1];
-    const thirdBid = lastThreeBids[2];
+    console.log("Last three bids:", lastThreeBids); // Log the last three bids
 
-    res.json({ firstBid, secondBid, thirdBid });
+    // Manually populate the bidderId
+    const transformedBids = await Promise.all(
+      lastThreeBids.map(async (bid) => {
+        console.log("Current bid:", bid); // Log the current bid
+
+        if (bid.bidderId) {
+          const bidder = await Bidders.findById(bid.bidderId);
+          console.log("Retrieved bidder:", bidder); // Log the retrieved bidder
+
+          if (bidder) {
+            return {
+              ...bid._doc,
+              bidderId: {
+                _id: bidder._id,
+                firstname: bidder.firstname,
+                lastname: bidder.lastname,
+                email: bidder.email,
+                address: bidder.address,
+                contactnumber: bidder.contactnumber,
+              },
+            };
+          } else {
+            return {
+              ...bid._doc,
+              bidderId: null,
+            };
+          }
+        } else {
+          return {
+            ...bid._doc,
+            bidderId: null,
+          };
+        }
+      })
+    );
+
+    console.log("Transformed bids:", transformedBids); // Log the transformed bids
+
+    res.json(transformedBids);
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Server Error" });

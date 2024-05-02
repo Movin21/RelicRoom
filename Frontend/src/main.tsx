@@ -61,6 +61,12 @@ import VintageexpertProfile from "./pages/Vintage Item Expert/VintageexpertProfi
 import ReportGeneration from "./pages/Auction Listing/ReportGeneration.tsx";
 import ReportView from "./pages/Auction Listing/ReportView.tsx";
 import LoginDashboard from "./pages/Home/LoginDashboard.tsx";
+import DeliveryTrackingLayout from "./pages/layouts/DeliveryTrackingLayout.tsx";
+import Winsabidder from "./pages/Delivery Tracking/Winsabidder.tsx";
+import Inform from "./pages/Delivery Tracking/Inform.tsx";
+import Notifi from "./pages/Delivery Tracking/Notification.tsx";
+import Paymentmange from "./pages/Delivery Tracking/PaymetMange.tsx";
+import Tracki from "./pages/Delivery Tracking/TrackingDetails.tsx";
 
 // Initialize Firebase
 const firebaseConfig = {
@@ -98,12 +104,10 @@ const router = createBrowserRouter([
       { path: "/bidderSignup", element: <BidderSignup /> },
       { path: "/bidderProfile", element: <BidderProfile /> },
 
-      { path: "/bidderDashboard", element: <BidderDashboard/>},
-      { path: "/bidderMybids", element: <BidderMybids/>},
-      { path: "/wishAdd/:wishid", element: <BidderWishAdd/>},
-      { path: "/wishlist", element: <BidderWishlist/>}
-     
-
+      { path: "/bidderDashboard", element: <BidderDashboard /> },
+      { path: "/bidderMybids", element: <BidderMybids /> },
+      { path: "/wishAdd/:wishid", element: <BidderWishAdd /> },
+      { path: "/wishlist", element: <BidderWishlist /> },
 
       { path: "/repairSpacialist/saveRs", element: <SaveRs /> },
       { path: "/repairSpacialist/logRS", element: <LogRS /> },
@@ -123,7 +127,8 @@ const router = createBrowserRouter([
       { path: "/blog/ReadMore/:id", element: <BlogReadMore /> },
       { path: "/vintageexpert/Update/:id", element: <VintageexpertUpdate /> },
       { path: "/blog/Update/:id", element: <BlogPostUpdate /> },
-
+      { path: "/Notifi", element: <Notifi /> },
+      { path: "/trackig", element: <Tracki /> },
     ],
   },
 
@@ -149,6 +154,16 @@ const router = createBrowserRouter([
       { path: "/auction/ReportView/:id", element: <ReportView /> },
     ],
   },
+
+  {
+    element: <DeliveryTrackingLayout />,
+    children: [
+      { path: "/Winsabidder", element: <Winsabidder /> },
+      { path: "/auctionwins/:winsid", element: <Inform /> },
+      { path: "/MangePaymet", element: <Paymentmange /> },
+    ],
+  },
+
   {
     element: <AdminLoginLayout />,
     children: [{ path: "/adminLogin", element: <AdminPortalLogin /> }],

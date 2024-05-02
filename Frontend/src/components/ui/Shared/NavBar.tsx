@@ -88,7 +88,10 @@ function NavBar() {
           <div className="font-akshar text-primary text-medium">
             <HoverCard>
               <HoverCardTrigger>
-                <Link to="#" className="hover:underline text-medium">
+                <Link
+                  to="/loginDashboard"
+                  className="hover:underline text-medium"
+                >
                   Login
                 </Link>
               </HoverCardTrigger>

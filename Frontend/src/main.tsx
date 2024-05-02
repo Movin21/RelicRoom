@@ -57,6 +57,7 @@ import VintageitemexpertLogin from "./pages/Vintage Item Expert/VintageexpertLog
 import VintageexpertProfile from "./pages/Vintage Item Expert/VintageexpertProfile.tsx";
 import ReportGeneration from "./pages/Auction Listing/ReportGeneration.tsx";
 import ReportView from "./pages/Auction Listing/ReportView.tsx";
+import LoginDashboard from "./pages/Home/LoginDashboard.tsx";
 
 // Initialize Firebase
 const firebaseConfig = {
@@ -75,6 +76,7 @@ const router = createBrowserRouter([
     element: <RootLayout />,
     children: [
       { path: "/", element: <Home /> },
+      { path: "/loginDashboard", element: <LoginDashboard /> },
       { path: "/auctioneerLogin", element: <AuctioneerLogin /> },
       { path: "/auctioneerRegister", element: <AuctioneerRegister /> },
       { path: "/auctioneerPortal", element: <AuctioneerPortal /> },

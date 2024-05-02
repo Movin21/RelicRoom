@@ -39,7 +39,7 @@ const FormSchema = z
       .regex(/\d/, {
         message: "Username must contain at least one digit.",
       }),
-    profilePicture: z.string(),
+    profileImage: z.string(),
     password: z
       .string()
       .min(6, { message: "Password must be at least 8 characters." })
@@ -74,7 +74,7 @@ const AdminRegister = () => {
       lastName: "",
       username: "",
       password: "",
-      profilePicture: "",
+      profileImage: "",
     },
   });
 
@@ -88,14 +88,13 @@ const AdminRegister = () => {
         snapshot.ref.getDownloadURL().then((downloadURL) => {
           setImgUrl(downloadURL);
           setIsLoading(false);
-          form.setValue("profilePicture", downloadURL);
+          form.setValue("profileImage", downloadURL);
         });
       });
     }
   }
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
-    data.profilePicture = imgUrl;
     try {
       await axios.post("http://localhost:3000/admin/adminUser", data);
       console.log("Admin created successfully");

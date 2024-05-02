@@ -60,25 +60,29 @@ function NavBar() {
                 <MenubarItem
                   className={`font-akshar text-primary hover:text-secondary `}
                 >
-                  <Link to="#">Type 1</Link>
+
+                  <Link to="/bidderSignup">Bidder Account</Link>
+
                 </MenubarItem>
                 <MenubarSeparator />
                 <MenubarItem
                   className={`font-akshar text-primary hover:text-secondary `}
                 >
-                  <Link to="#">Type 2</Link>
+                  <Link to="/auctioneerRegister">Auctioneer Account</Link>
                 </MenubarItem>
                 <MenubarSeparator />
                 <MenubarItem
                   className={`font-akshar text-primary hover:text-secondary `}
                 >
-                  <Link to="#">Type 3</Link>
+                  <Link to="/repairSpacialist/saveRs">
+                    Repair Spacialist Account
+                  </Link>
                 </MenubarItem>
                 <MenubarSeparator />
                 <MenubarItem
                   className={`font-akshar text-primary hover:text-secondary `}
                 >
-                  <Link to="#">Type 4</Link>
+                  <Link to="/vintageexpert/Register">Vintage Expert</Link>
                 </MenubarItem>
               </MenubarContent>
             </MenubarMenu>
@@ -86,7 +90,10 @@ function NavBar() {
           <div className="font-akshar text-primary text-medium">
             <HoverCard>
               <HoverCardTrigger>
-                <Link to="#" className="hover:underline text-medium">
+                <Link
+                  to="/loginDashboard"
+                  className="hover:underline text-medium"
+                >
                   Login
                 </Link>
               </HoverCardTrigger>
@@ -154,21 +161,20 @@ function NavBar() {
                 className={`font-akshar text-lg md:text-lg lg:text-lg text-primary hover:text-secondary`}
               >
                 <DropdownMenuSeparator />
-                <DropdownMenuItem
-                  className={`font-akshar text-lg md:text-xl lg:text-lg text-primary hover:text-secondary`}
-                >
-                  Service 1
-                </DropdownMenuItem>
-                <DropdownMenuItem
-                  className={`font-akshar text-lg md:text-xl lg:text-lg text-primary hover:text-secondary`}
-                >
-                  Service 2
-                </DropdownMenuItem>
-                <DropdownMenuItem
-                  className={`font-akshar text-lg md:text-xl lg:text-lg text-primary hover:text-secondary`}
-                >
-                  Service 3
-                </DropdownMenuItem>
+                <Link to="/blog/PostView">
+                  <DropdownMenuItem
+                    className={`font-akshar text-lg md:text-xl lg:text-lg text-primary hover:text-secondary`}
+                  >
+                    Blog Space
+                  </DropdownMenuItem>
+                </Link>
+                <Link to="/repairSpacialist/rslist">
+                  <DropdownMenuItem
+                    className={`font-akshar text-lg md:text-xl lg:text-lg text-primary hover:text-secondary`}
+                  >
+                    Repair Specialists
+                  </DropdownMenuItem>
+                </Link>
               </DropdownMenuContent>
             </DropdownMenu>
             <NavigationMenuItem>

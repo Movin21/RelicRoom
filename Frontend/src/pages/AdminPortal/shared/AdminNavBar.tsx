@@ -18,11 +18,13 @@ const AdminPortal = () => {
     <>
       <nav className="sticky top-0 bg-white flex items-center justify-between px-4 py-2 sm:px-6 z-10 shadow-md">
         <div className="flex items-center">
-          <img
-            src={logo}
-            alt="Relic Room Logo"
-            className="max-w-[10rem] w-full"
-          />
+          <Link to="/">
+            <img
+              src={logo}
+              alt="Relic Room Logo"
+              className="max-w-[10rem] w-full"
+            />
+          </Link>
           <div className="relative sm:ml-4">
             <input
               type="text"
@@ -46,7 +48,7 @@ const AdminPortal = () => {
         </div>
         <div className="flex items-center sm:ml-4">
           <Avatar>
-            <AvatarImage src={admin.profilePicture} />
+            <AvatarImage src={admin.profileImage} />
             <AvatarFallback>CN</AvatarFallback>
           </Avatar>
           <div className="ml-2 hidden sm:block">

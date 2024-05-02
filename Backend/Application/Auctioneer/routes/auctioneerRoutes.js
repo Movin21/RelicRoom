@@ -115,6 +115,7 @@ router.get('/getExpiredAuctions/:id', async (req, res) => {
     }
 });
 
+//login
 router.post("/login", async (req, res) => {
   const { email, password } = req.body;
   try {
@@ -142,7 +143,7 @@ router.post("/login", async (req, res) => {
   }
 });
 
-
+//report generation
 router.get('/generateReport/:id', async (req, res) => {
     try {
         const expiredAuctions = await auction.find({ auctioneerId: req.params.id, isExpired: true });
@@ -150,7 +151,8 @@ router.get('/generateReport/:id', async (req, res) => {
         const auctionsWithBids = await Promise.all(expiredAuctions.map(async auction => {
             const winningBid = await bid.findOne({ auctionId: auction._id }).sort({ bidPrice: -1 }).populate('bidderId', 'firstname lastname');
             const winningBidPrice = winningBid ? winningBid.bidPrice : null;
-            const winningBidderName = winningBid ? `${winningBid.bidderId.firstname} ${winningBid.bidderId.lastname}` : null;
+            //const winningBidderName = winningBid ? `${winningBid.bidderId.firstname} ${winningBid.bidderId.lastname}` : null;
+            const winningBidderName = winningBid && winningBid.bidderId ? `${winningBid.bidderId.firstname} ${winningBid.bidderId.lastname}` : null;
 
             return {
                 _id: auction._id,

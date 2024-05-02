@@ -23,24 +23,19 @@ const VintageExpertSchema = mongoose.Schema(
       required: true,
     },
     workingexperience: {
-      type: Boolean,
+      type: String,
       required: true,
-    },
-    isActive: {
-      type: Boolean,
-      default: true,
     },
     type: {
       type: String,
-      default: "Vintage Expert",
+      default:"Vintage Expert",
     },
-    profileImage: {
-      type: String,
-      default: "",
-    },
+   
   },
 
-  { timestamps: true }
+  
 );
 
-module.exports = mongoose.model("vintageExpert", VintageExpertSchema);
+
+const vintageExpert = mongoose.model("vintageExpert", VintageExpertSchema);
+module.exports = vintageExpert;

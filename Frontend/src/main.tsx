@@ -15,8 +15,9 @@ import BidderLogin from "./pages/Bidder/BidderLogin.tsx";
 import BidderSignup from "./pages/Bidder/BidderSignup.tsx";
 import BidderProfile from "./pages/Bidder/BidderProfile.tsx";
 import BidderDashboard from "./pages/Bidder/BidderDashboard.tsx";
-import BidderWishlist from "./pages/Bidder/BidderWishlist.tsx";
 import BidderMybids from "./pages/Bidder/BidderMybids.tsx";
+import BidderWishAdd from "./pages/Bidder/BidderWishAdd.tsx";
+import BidderWishlist from "./pages/Bidder/BidderWishlist.tsx";
 import AuctioneerLogin from "./pages/Auctioneer/AuctioneerLogin.tsx";
 import AuctioneerRegister from "./pages/Auctioneer/AuctioneerRegister.tsx";
 import AuctioneerPortal from "./pages/Auctioneer/AuctioneerPortal.tsx";
@@ -43,15 +44,29 @@ import AuctionDashboardLayout from "./pages/layouts/AuctionDashboardLayout.tsx";
 import AuctionDashboard from "./pages/Auction Listing/AuctionDashboard.tsx";
 import ManageAuctions from "./pages/Auction Listing/ManageAuctions.tsx";
 import UpdateAuction from "./pages/Auction Listing/UpdateAuction.tsx";
-
 import SaveRs from "./pages/Repair Specialist/SaveRs.tsx";
 import LogRS from "./pages/Repair Specialist/RSlogin.tsx";
 import RSProfile from "./pages/Repair Specialist/userProfile.tsx";
 import RSListing from "./pages/Repair Specialist/RSlisting.tsx";
-
+import BlogCreate from "./pages/Vintage Item Expert/BlogCreate.tsx";
+import BlogPostView from "./pages/Vintage Item Expert/BlogPostView.tsx";
+import BlogsView from "./pages/Vintage Item Expert/BlogsView.tsx";
+import BlogPostReadMore from "./pages/Vintage Item Expert/BlogPostReadMore.tsx";
+import BlogReadMore from "./pages/Vintage Item Expert/BlogReadMore.tsx";
+import VintageexpertUpdate from "./pages/Vintage Item Expert/VintageexpertUpdate.tsx";
+import BlogPostUpdate from "./pages/Vintage Item Expert/BlogPostUpdate.tsx";
+import VintageexpertRegister from "./pages/Vintage Item Expert/VintageexpertRegister.tsx";
+import VintageitemexpertLogin from "./pages/Vintage Item Expert/VintageexpertLogin.tsx";
+import VintageexpertProfile from "./pages/Vintage Item Expert/VintageexpertProfile.tsx";
 import ReportGeneration from "./pages/Auction Listing/ReportGeneration.tsx";
 import ReportView from "./pages/Auction Listing/ReportView.tsx";
-
+import LoginDashboard from "./pages/Home/LoginDashboard.tsx";
+import DeliveryTrackingLayout from "./pages/layouts/DeliveryTrackingLayout.tsx";
+import Winsabidder from "./pages/Delivery Tracking/Winsabidder.tsx";
+import Inform from "./pages/Delivery Tracking/Inform.tsx";
+import Notifi from "./pages/Delivery Tracking/Notification.tsx";
+import Paymentmange from "./pages/Delivery Tracking/PaymetMange.tsx";
+import Tracki from "./pages/Delivery Tracking/TrackingDetails.tsx";
 
 // Initialize Firebase
 const firebaseConfig = {
@@ -70,12 +85,14 @@ const router = createBrowserRouter([
     element: <RootLayout />,
     children: [
       { path: "/", element: <Home /> },
+      { path: "/loginDashboard", element: <LoginDashboard /> },
       { path: "/auctioneerLogin", element: <AuctioneerLogin /> },
       { path: "/auctioneerRegister", element: <AuctioneerRegister /> },
       { path: "/auctioneerPortal", element: <AuctioneerPortal /> },
       { path: "/auctioneerProfile", element: <AuctioneerProfile /> },
       { path: "/auctioneerReportG", element: <AuctioneerReportG /> },
       { path: "/auction/listedAuctions", element: <AuctionList /> },
+
       { path: "/bidderLogin", element: <BidderLogin /> },
       { path: "/bidderSignup", element: <BidderSignup /> },
       { path: "/feedback", element: <Feedback /> },
@@ -87,19 +104,31 @@ const router = createBrowserRouter([
       { path: "/bidderSignup", element: <BidderSignup /> },
       { path: "/bidderProfile", element: <BidderProfile /> },
 
+      { path: "/bidderDashboard", element: <BidderDashboard /> },
+      { path: "/bidderMybids", element: <BidderMybids /> },
+      { path: "/wishAdd/:wishid", element: <BidderWishAdd /> },
+      { path: "/wishlist", element: <BidderWishlist /> },
+
       { path: "/repairSpacialist/saveRs", element: <SaveRs /> },
       { path: "/repairSpacialist/logRS", element: <LogRS /> },
       { path: "/repairSpacialist/rsprofile", element: <RSProfile /> },
       { path: "/repairSpacialist/rslist", element: <RSListing /> },
-
-      { path: "/bidderDashboard", element: <BidderDashboard /> },
-      { path: "/bidderWishlist", element: <BidderWishlist /> },
-      { path: "/bidderMybids", element: <BidderMybids /> },
       { path: "/feedbackreview", element: <FeedbackReview /> },
       { path: "/bidderDashboard", element: <BidderDashboard /> },
       { path: "/bidderWishlist", element: <BidderWishlist /> },
       { path: "/bidderMybids", element: <BidderMybids /> },
-
+      { path: "/vintageexpert/Register", element: <VintageexpertRegister /> },
+      { path: "/vintageexpert/Login", element: <VintageitemexpertLogin /> },
+      { path: "/vintageexpert/Profile/:id", element: <VintageexpertProfile /> },
+      { path: "/blog/Post", element: <BlogCreate /> },
+      { path: "/blog/PostView", element: <BlogPostView /> },
+      { path: "/blog/View", element: <BlogsView /> },
+      { path: "/blog/PostReadMore/:id", element: <BlogPostReadMore /> },
+      { path: "/blog/ReadMore/:id", element: <BlogReadMore /> },
+      { path: "/vintageexpert/Update/:id", element: <VintageexpertUpdate /> },
+      { path: "/blog/Update/:id", element: <BlogPostUpdate /> },
+      { path: "/Notifi", element: <Notifi /> },
+      { path: "/trackig", element: <Tracki /> },
     ],
   },
 
@@ -125,6 +154,16 @@ const router = createBrowserRouter([
       { path: "/auction/ReportView/:id", element: <ReportView /> },
     ],
   },
+
+  {
+    element: <DeliveryTrackingLayout />,
+    children: [
+      { path: "/Winsabidder", element: <Winsabidder /> },
+      { path: "/auctionwins/:winsid", element: <Inform /> },
+      { path: "/MangePaymet", element: <Paymentmange /> },
+    ],
+  },
+
   {
     element: <AdminLoginLayout />,
     children: [{ path: "/adminLogin", element: <AdminPortalLogin /> }],

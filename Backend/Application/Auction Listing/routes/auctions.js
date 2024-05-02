@@ -32,7 +32,7 @@ router.post("/save", async (req, res) => {
   try {
     let newAuction = new Auctions(req.body);
     const savedAuction = await newAuction.save();
-    console.log("Auction saved successfully:", savedAuction);
+
     return res.status(200).json({
       success: "Auction saved successfully",
       auction: savedAuction,
@@ -179,6 +179,7 @@ router.delete("/delete/:id", async (req, res) => {
   }
 });
 
+
 // Get auctions by auctioneer ID
 router.get("/auctioneer/:id", async (req, res) => {
   try {
@@ -192,3 +193,4 @@ router.get("/auctioneer/:id", async (req, res) => {
 });
 
 module.exports = router;
+

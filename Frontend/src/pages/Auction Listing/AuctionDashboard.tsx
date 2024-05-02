@@ -24,6 +24,7 @@ const AuctionDashboard = () => {
   const [ongoingAuctions, setOngoingAuctions] = useState(0);
   const [expiredAuctions, setExpiredAuctions] = useState(0);
 
+  //Getting the auctions counts by auction id
   useEffect(() => {
     const fetchAuctions = async () => {
       try {

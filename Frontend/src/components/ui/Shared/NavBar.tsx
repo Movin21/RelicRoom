@@ -60,7 +60,7 @@ function NavBar() {
                 <MenubarItem
                   className={`font-akshar text-primary hover:text-secondary `}
                 >
-                  <Link to="#">Type 1</Link>
+                  <Link to="/vintageexpert/Register">As A Vintage Expert</Link>
                 </MenubarItem>
                 <MenubarSeparator />
                 <MenubarItem

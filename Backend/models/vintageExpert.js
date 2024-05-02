@@ -26,23 +26,15 @@ const VintageExpertSchema = mongoose.Schema(
       type: String,
       required: true,
     },
-    isActive: {
-      type: Boolean,
-      default: true,
-    },
-   type: {
+    type: {
       type: String,
       default:"Vintage Expert",
     },
-    profileImage: {
-      type: String,
-      default: "",
-    },
+   
   },
 
-  { timestamps: true }
+  
 );
-
 
 
 const vintageExpert = mongoose.model("vintageExpert", VintageExpertSchema);

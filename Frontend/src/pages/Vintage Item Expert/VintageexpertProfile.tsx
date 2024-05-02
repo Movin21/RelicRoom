@@ -26,7 +26,7 @@ const VintageexpertProfile = () => {
             setDeletionSuccess(true); // Set deletion success message
             setTimeout(() => {
                 // Redirect to login page after 2 seconds
-                navigate(`/vintageexpert/Login`); // Replace with your login page URL
+                navigate(`/vintageexpert/Register`); // Replace with your login page URL
             }, 2000);
         } catch (error) {
             console.error('Error deleting post:', error);
@@ -45,15 +45,15 @@ const VintageexpertProfile = () => {
     <nav className="flex flex-col items-center gap-4 px-2 py-5 bg-white shadow-lg mt-4 mb-4 w-64">
       <ul className="flex flex-col gap-2">
         <li>
-          <Link to="/auctioneerPortal">
+          
           <div className="flex items-center mb-2">
           
           <span className="text-brownDark font-akshar text-2xl font-bold  ml-2">Vintage Expert Dashboard</span> 
           </div>
-          </Link>
+          
         </li>
         <li>
-          <Link to="#"> 
+          <Link to="/vintageexpert/Update/:id"> 
           <div className="flex items-center mb-2">
           
           <span className=" text-black font-akshar text-1xl font-semibold  ml-2"> Profile Details</span>  
@@ -70,13 +70,13 @@ const VintageexpertProfile = () => {
         </li>
         <li></li>
         
-          <Link to="/AuctioneerReportG" >
+          <Link to="/blog/PostView" >
           <div className="flex items-center mb-2">
           
             <span className="text-brownDark font-akshar text-1xl font-semibold  ml-2">Generate Report</span> 
             </div>
           </Link>
-          <Link to="/AuctioneerReportG" >
+          <Link to="/vintageexpert/Login" >
           <div className="flex items-center mb-2">
           
             <span className="text-brownDark font-akshar text-1xl font-semibold  ml-2">Log Out</span> 
@@ -121,7 +121,7 @@ const VintageexpertProfile = () => {
                             <div className="flex justify-center items-start space-x-20 mt-20">
                                 <Link to={`/vintageexpert/Update/${post._id}`} className="w-40 text-white bg-primary hover:bg-secondary ease-in-out hover:text-white font-bold py-2 px-4 rounded transition duration-700">Update Profile</Link>
                                 <button onClick={deletePost} className="bg-red-800 hover:bg-red-800 text-white font-bold py-2 px-4 rounded transition duration-300">Delete Profile</button>
-                                {deletionSuccess && <p className="text-green-500">Profile deleted successfully. Redirecting to login page...</p>}
+                                {deletionSuccess && <p className="text-green-500">Profile deleted successfully.</p>}
                             </div>
                         </div>
                     </div>

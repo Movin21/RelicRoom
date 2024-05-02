@@ -11,7 +11,7 @@ import { z } from "zod";
 import axios, { AxiosError } from 'axios';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
-// Define the interface for login response
+// Define the interface for login response,specifies the structure of the response expected from the login endpoint. It includes a message field which is a string, and optionally a user field of any type.
 interface LoginResponse {
   message: string;
   user?: any; // Define the structure of user object if needed
@@ -51,14 +51,16 @@ const [previousResponse, setPreviousResponse] = useState<string | null>(null);
       // Redirect to profile page upon successful login
       navigate(`/vintageexpert/Profile/${response.data.user._id}`);// Redirect to the profile page
     } catch (error) {
-      // Handle login error
+      // Handle login error,if the error is an Axios error by using the axios.isAxiosError() function. Axios errors are errors returned specifically by Axios when HTTP requests fail.
       if (axios.isAxiosError(error)) {
         const axiosError = error as AxiosError<LoginResponse>;
         console.error('Error logging in:', axiosError.response?.data.message);
         setPreviousResponse(axiosError.response?.data.message || "Internal server error");
         setError(axiosError.response?.data.message || "Internal server error");
-        setTimeout(() => setError(null), 5000);
-      } else {
+        setTimeout(() => setError(null), 5000);//a timeout function to clear the error message after 5 seconds (5000 milliseconds). After 5 seconds, the error message will be set to null, removing it 
+      }
+      // "Internal server error" since it's a non-Axios error.
+       else {
         console.error('Non-Axios error occurred:', error);
         setPreviousResponse("Internal server error");
         setError("Internal server error");

@@ -4,9 +4,9 @@ import DataTable from 'react-data-table-component';
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import {PDFDownloadLink} from "@react-pdf/renderer";
+
 import { Link } from "react-router-dom";
-import PdfFile from './PdfFile';
+import { useReactToPrint } from "react-to-print";
 
 interface Feedback {
   _id: string;
@@ -32,7 +32,7 @@ interface Complaints {
 function FeedbackManage() {
   const [dataFeedback, setDataFeedback] = useState<(Feedback | Suggestion | Complaints)[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
-;
+  const [isPrinting, setIsPrinting] = useState(false);
 
 
   useEffect(() => {
@@ -87,7 +87,7 @@ function FeedbackManage() {
     {
       name: "Action",
       cell: (row: Feedback | Suggestion | Complaints) => (
-        <Button type="button" className='w-3/6 bg-red-950' onClick={() => handleDelete(row._id)}>Delete</Button>
+        !isPrinting && <Button type="button" className='w-3/6 bg-red-950' onClick={() => handleDelete(row._id)}>Delete</Button>
       ),
     },
   ];
@@ -135,14 +135,19 @@ function FeedbackManage() {
 
 
   const ComponentsRef = useRef<HTMLDivElement>(null);
-  
+  const handlePrint = useReactToPrint({
+    content: () => ComponentsRef.current,
+    documentTitle: "Details Report",
+    onBeforeGetContent: () => setIsPrinting(true),
+    onAfterPrint: () => {
+      setIsPrinting(false);
+      alert("Details Report Successfully Downloaded");
+    }
+  });
 
   return (
     <div className="max-w-screen-lg px-4 mx-auto">
-      <PDFDownloadLink document={<PdfFile/>} fileName="PdfFile">
-        {({loading})=> (loading ? <Button>Loading Document...</Button> :  <Button className='btnfeed'>Details Download</Button>)}
-      </PDFDownloadLink> 
-      
+      <Button className='btnfeed' onClick={handlePrint}>Details Download</Button>
       <Tabs defaultValue="feedbackManage" className="w-full">
         <TabsList className='flex justify-center text-2xl font-bold h-500 item-center w-500 font-akshar text-yellow-950'>
           <TabsTrigger value="feedbackManage" className='text-lg'>Feedback Manage</TabsTrigger>

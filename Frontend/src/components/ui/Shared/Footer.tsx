@@ -28,7 +28,7 @@ const Footer = () => {
               </li>
               <li className="mb-2">
                 <Link
-                  to="/blog/Post"
+                  to="/blog/View"
                   className="text-footertxt uppercase transition duration-300 ease-in-out hover:text-white"
                 >
                   Blogs

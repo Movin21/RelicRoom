@@ -40,7 +40,7 @@ import { Link } from "react-router-dom";
 
 const formSchema = z.object({
   Name: z.string().min(4).max(50, {
-    message: "Name should be atleast 4 characters",
+    message: "Name should be at least 4 characters",
   }),
   Email: z
     .string()
@@ -53,7 +53,7 @@ const formSchema = z.object({
     }),
 
   Message: z.string().min(10).max(1000, {
-    message: "Message should be atleast 10 characters",
+    message: "Message should be at least 10 characters",
   }),
   Need: z.string({
     required_error: "Choose this.",
@@ -134,7 +134,7 @@ export default function Feedback() {
                             <FormLabel>Name</FormLabel>
                             <FormControl className="w-full">
                               <Input
-                                placeholder="Enter the your name.."
+                                placeholder="Enter your name.."
                                 {...field}
                               />
                             </FormControl>
@@ -153,7 +153,7 @@ export default function Feedback() {
                           <FormLabel>Email</FormLabel>
                           <FormControl className="w-full">
                             <Input
-                              placeholder="Enter the your Email address.."
+                              placeholder="Enter your Email address.."
                               {...field}
                             />
                           </FormControl>
@@ -229,9 +229,13 @@ export default function Feedback() {
                         </FormItem>
                       )}
                     />
-                    <Button type="submit" className="w-3/6 mx-36">
-                      Submit
-                    </Button>
+                    <div className="flex justify-center">
+                      {" "}
+                      {/* Centering the submit button */}
+                      <Button type="submit" className="w-3/6">
+                        Submit
+                      </Button>
+                    </div>
                   </form>
                 </Form>
               </CardContent>
@@ -242,5 +246,3 @@ export default function Feedback() {
     </>
   );
 }
-
-//export default Feedback

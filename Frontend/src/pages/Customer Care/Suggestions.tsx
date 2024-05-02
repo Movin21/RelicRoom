@@ -196,9 +196,13 @@ export default function Suggestions() {
                         </FormItem>
                       )}
                     />
-                    <Button type="submit" className="w-3/6 mx-36">
-                      Submit
-                    </Button>
+                    <div className="flex justify-center">
+                      {" "}
+                      {/* Centering the submit button */}
+                      <Button type="submit" className="w-3/6">
+                        Submit
+                      </Button>
+                    </div>
                   </form>
                 </Form>
               </CardContent>

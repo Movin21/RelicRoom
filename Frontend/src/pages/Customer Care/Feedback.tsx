@@ -1,33 +1,31 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import axios from "axios";
 import { Textarea } from "@/components/ui/textarea";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogContent,
+  AlertDialogFooter,
+  AlertDialogCancel,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-
 import {
   Select,
   SelectContent,
@@ -35,12 +33,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { toast } from "@/components/ui/use-toast";
 import { Link } from "react-router-dom";
 
 const formSchema = z.object({
   Name: z.string().min(4).max(50, {
-    message: "Name should be atleast 4 characters",
+    message: "Name should be at least 4 characters",
   }),
   Email: z
     .string()
@@ -51,9 +48,8 @@ const formSchema = z.object({
     .email({
       message: "Invalid email format",
     }),
-
   Message: z.string().min(10).max(1000, {
-    message: "Message should be atleast 10 characters",
+    message: "Message should be at least 10 characters",
   }),
   Need: z.string({
     required_error: "Choose this.",
@@ -64,6 +60,7 @@ const formSchema = z.object({
 });
 
 export default function Feedback() {
+  const [showDialog, setShowDialog] = useState(false);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {},
@@ -84,6 +81,7 @@ export default function Feedback() {
       );
       console.log(response);
       console.log("Response:", response.data);
+      
     } catch (error) {
       console.error("Error:", error);
     }
@@ -121,118 +119,157 @@ export default function Feedback() {
             <div>
               <CardContent>
                 <Form {...form}>
-                  <form
-                    onSubmit={form.handleSubmit(handleSubmit)}
-                    className="space-y-8 text-yellow-950 font-akshar"
-                  >
-                    <div>
-                      <FormField
-                        control={form.control}
-                        name="Name"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Name</FormLabel>
-                            <FormControl className="w-full">
-                              <Input
-                                placeholder="Enter the your name.."
-                                {...field}
-                              />
-                            </FormControl>
 
-                            <FormMessage className="text-red-500 font-akshar" />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
+                  <FormField
+                    control={form.control}
+                    name="Name"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Name</FormLabel>
+                        <FormControl className="w-full">
+                          <Input
+                            placeholder="Enter your name.."
+                            {...field}
+                          />
+                        </FormControl>
+                        <FormMessage className="text-red-500 font-akshar" />
+                      </FormItem>
+                    )}
+                  />
+                  <br/>
 
-                    <FormField
-                      control={form.control}
-                      name="Email"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Email</FormLabel>
-                          <FormControl className="w-full">
-                            <Input
-                              placeholder="Enter the your Email address.."
-                              {...field}
-                            />
-                          </FormControl>
 
-                          <FormMessage className="text-red-500 font-akshar" />
-                        </FormItem>
-                      )}
-                    />
+                  <FormField
+                    control={form.control}
+                    name="Email"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Email</FormLabel>
+                        <FormControl className="w-full">
+                          <Input
+                            placeholder="Enter your Email address.."
+                            {...field}
+                          />
+                        </FormControl>
+                        <FormMessage className="text-red-500 font-akshar" />
+                      </FormItem>
+                    )}
+                  />
+                  <br/>
 
-                    <FormField
-                      control={form.control}
-                      name="Need"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Did you find what you needed?</FormLabel>
-                          <Select onValueChange={field.onChange}>
-                            <FormControl>
-                              <SelectTrigger className="w-full">
-                                <SelectValue placeholder="Select" />
-                              </SelectTrigger>
-                            </FormControl>
-                            <SelectContent>
-                              <SelectItem value="Yes">Yes</SelectItem>
-                              <SelectItem value="No">No</SelectItem>
-                            </SelectContent>
-                          </Select>
-                          <FormMessage className="text-red-500 font-akshar" />
-                        </FormItem>
-                      )}
-                    />
-
-                    <FormField
-                      control={form.control}
-                      name="Recommend"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>
-                            How would you like to recommend our site
-                          </FormLabel>
-                          <Select onValueChange={field.onChange}>
-                            <FormControl>
-                              <SelectTrigger className="w-full">
-                                <SelectValue placeholder="Select" />
-                              </SelectTrigger>
-                            </FormControl>
-                            <SelectContent>
-                              <SelectItem value="1">1</SelectItem>
-                              <SelectItem value="2">2</SelectItem>
-                              <SelectItem value="3">3</SelectItem>
-                              <SelectItem value="4">4</SelectItem>
-                              <SelectItem value="5">5</SelectItem>
-                            </SelectContent>
-                          </Select>
-                          <FormMessage className="text-red-500 font-akshar" />
-                        </FormItem>
-                      )}
-                    />
-
-                    <FormField
-                      control={form.control}
-                      name="Message"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel> Your Message</FormLabel>
+                  <FormField
+                    control={form.control}
+                    name="Need"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Did you find what you needed?</FormLabel>
+                        <Select onValueChange={field.onChange}>
                           <FormControl>
-                            <Textarea
-                              placeholder="Type your message here.."
-                              {...field}
-                            />
-                          </FormControl>
+                            <SelectTrigger className="w-full">
+                              <SelectValue placeholder="Select" />
+                            </SelectTrigger>
 
-                          <FormMessage className="text-red-500 font-akshar" />
-                        </FormItem>
-                      )}
-                    />
-                    <Button type="submit" className="w-3/6 mx-36">
+                          </FormControl>
+                          <SelectContent>
+                            <SelectItem value="Yes">Yes</SelectItem>
+                            <SelectItem value="No">No</SelectItem>
+                          </SelectContent>
+                        </Select>
+                        <FormMessage className="text-red-500 font-akshar" />
+                      </FormItem>
+                    )}
+                  />
+                  <br/>
+
+                  <FormField
+                    control={form.control}
+                    name="Recommend"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>
+                          How would you like to recommend our site
+                        </FormLabel>
+                        <Select onValueChange={field.onChange}>
+                          <FormControl>
+                            <SelectTrigger className="w-full">
+                              <SelectValue placeholder="Select" />
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent>
+                            <SelectItem value="1">1</SelectItem>
+                            <SelectItem value="2">2</SelectItem>
+                            <SelectItem value="3">3</SelectItem>
+                            <SelectItem value="4">4</SelectItem>
+                            <SelectItem value="5">5</SelectItem>
+                          </SelectContent>
+                        </Select>
+                        <FormMessage className="text-red-500 font-akshar" />
+                      </FormItem>
+                    )}
+                  />
+                  <br/>
+
+                  <FormField
+                    control={form.control}
+                    name="Message"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Your Message</FormLabel>
+                        <FormControl>
+                          <Textarea
+                            placeholder="Type your message here.."
+                            {...field}
+                          />
+                        </FormControl>
+                        <FormMessage className="text-red-500 font-akshar" />
+                      </FormItem>
+                    )}
+                  />
+                  <br/>
+                   
+                  <div className="flex justify-between">
+                  <AlertDialog>
+                  <AlertDialogTrigger>
+                    <Button
+                      type="button"
+                      className="w-3/6 mx-36"
+                      onClick={() => setShowDialog(true)}
+                    >
                       Submit
                     </Button>
-                  </form>
+                  </AlertDialogTrigger>
+                  <AlertDialogContent>
+                    <AlertDialogHeader>
+                      <AlertDialogTitle>
+                        Are you absolutely sure?
+                      </AlertDialogTitle>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                      <AlertDialogCancel>
+                        <Button
+                          type="button"
+                          onClick={() => setShowDialog(false)}
+                        >
+                          Cancel
+                        </Button>
+                      </AlertDialogCancel>
+                      <AlertDialogAction>
+                        <Button
+                          type="button"
+                          onClick={() => {
+                            form.handleSubmit(handleSubmit)();
+                            setShowDialog(false);
+                          }}
+                        >
+                          Submit
+                        </Button>
+                      </AlertDialogAction>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialog>
+                  </div>
+                
+
                 </Form>
               </CardContent>
             </div>
@@ -243,4 +280,6 @@ export default function Feedback() {
   );
 }
 
+
 //export default Feedback
+

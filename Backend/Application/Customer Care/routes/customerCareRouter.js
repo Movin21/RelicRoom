@@ -72,7 +72,7 @@ router.delete('/feedback/delete/:id', async (req, res) => {
 
 
 // Create suggestion
-router.post('/suggestion/create', async (req, res) => {
+router.post('/Suggestion/create', async (req, res) => {
     try {
         const newSuggestion = new suggestion(req.body);
         await newSuggestion .save();

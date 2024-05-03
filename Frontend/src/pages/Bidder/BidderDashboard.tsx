@@ -30,7 +30,7 @@ const BidderDashboard = () => {
   };
 
   const handleDeliveryClick = () => {
-    navigate("/Winsabidder");
+    navigate("/Notifi");
   };
 
   return (

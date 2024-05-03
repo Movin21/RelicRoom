@@ -228,13 +228,13 @@ const AuctioneerPortal = () => {
                     ></path>
                   </svg>
                   <span className="text-brownDark font-akshar text-xl font-semibold  ml-2">
-                    Auction Dashboard
+                  Auction Dashboard
                   </span>
                 </div>
               </Link>
             </li>
             <li>
-              <Link to="#">
+              <Link to="/Winsabidder">
                 <div className="flex items-center mb-2">
                   <svg
                     width="15"

@@ -211,6 +211,7 @@ export default function Suggestions() {
                         </FormItem>
                       )}
                     />
+
                     
                  <div className="flex justify-between">
                   <AlertDialog>
@@ -255,6 +256,7 @@ export default function Suggestions() {
                 </AlertDialog>
                         </div>
                
+
                 </Form>
               </CardContent>
             </div>

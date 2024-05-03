@@ -119,6 +119,7 @@ export default function Feedback() {
             <div>
               <CardContent>
                 <Form {...form}>
+
                   <FormField
                     control={form.control}
                     name="Name"
@@ -136,6 +137,7 @@ export default function Feedback() {
                     )}
                   />
                   <br/>
+
 
                   <FormField
                     control={form.control}
@@ -166,6 +168,7 @@ export default function Feedback() {
                             <SelectTrigger className="w-full">
                               <SelectValue placeholder="Select" />
                             </SelectTrigger>
+
                           </FormControl>
                           <SelectContent>
                             <SelectItem value="Yes">Yes</SelectItem>
@@ -266,6 +269,7 @@ export default function Feedback() {
                 </AlertDialog>
                   </div>
                 
+
                 </Form>
               </CardContent>
             </div>
@@ -278,3 +282,4 @@ export default function Feedback() {
 
 
 //export default Feedback
+

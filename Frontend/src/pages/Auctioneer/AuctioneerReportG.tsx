@@ -5,8 +5,21 @@ import { Dialog } from "@/components/ui/dialog";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
-import { PDFDownloadLink, Document, Page, View, Text, StyleSheet } from '@react-pdf/renderer';
+import { PDFDownloadLink, Document, Page, View, Text, StyleSheet,Font, Image, } from '@react-pdf/renderer';
 import { Table, TableBody, TableCell, TableHeader, TableRow } from "@/components/ui/table";
+
+import logo from "../../assets/Logo/Logo.png";
+
+// Import fonts
+Font.register({
+  family: "Oswald",
+  src: "https://fonts.gstatic.com/s/oswald/v13/Y_TKV6o8WovbUd3m_X9aAA.ttf",
+});
+
+Font.register({
+  family: "Roboto",
+  src: "https://fonts.gstatic.com/s/roboto/v20/KFOmCnqEu92Fr1Mu4mxP.ttf",
+});
 
 interface Auction {
   _id: string;
@@ -22,27 +35,71 @@ interface Auction {
 
 const styles = StyleSheet.create({
   page: {
-    flexDirection: 'row',
-    backgroundColor: '#ffffff',
-    padding: 20,
+    flexDirection: "column",
+    backgroundColor: "#FFFFFF",
+    padding: "2cm",
+    borderWidth: 3,
+    borderStyle: "solid",
+    borderColor: "#000000",
   },
   title: {
-    textAlign: 'center',
-    fontSize: 30,
+    fontSize: 26,
+    fontWeight: "bold",
     marginBottom: 20,
-    marginTop: 5,
-    fontWeight: 'bold',
+    fontFamily: "Oswald",
+    textAlign: "center",
   },
-  header: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 10,
-    color: 'blue',
+  logoContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "flex-start", // Align logo to the left
+    marginBottom: 20,
+    marginTop: 10,
   },
-  paragraph: {
+  subtitle: {
+    fontSize: 18,
+    fontWeight: "bold",
+    marginBottom: 5,
+    fontFamily: "Oswald",
+  },
+  description: {
     fontSize: 12,
-    marginBottom: 8,
-    lineHeight: 1.5,
+    marginBottom: 5,
+    fontFamily: "Roboto",
+    textAlign: "justify",
+  },
+  section: {
+    marginBottom: 20,
+  },
+  tableRow: {
+    flexDirection: "row",
+    marginTop: 5,
+    borderBottomWidth: 1,
+    borderBottomColor: "#DDDDDD",
+    borderBottomStyle: "solid",
+    paddingBottom: 5,
+  },
+  tableCell: {
+    flex: 1,
+    fontSize: 12,
+    marginBottom: 5,
+    fontFamily: "Roboto",
+    textAlign: "center",
+  },
+  logo: {
+    width: 155,
+    height: 50,
+    marginRight: 10,
+  },
+  letterhead: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: 20,
+  },
+  companyInfo: {
+    flexDirection: "column",
+    alignItems: "flex-start",
   },
 });
 
@@ -82,24 +139,38 @@ const AuctioneerReportG: React.FC = () => {
 
   const MyDocument: React.FC<{ data: Auction[] }> = ({ data }) => (
     <Document>
-      <Page size="A4" style={styles.page}>
-        <View>
-          <Text style={styles.title}>Auction Summary Report</Text>
+       <Page size="A4" style={styles.page}>
+        {/* Letterhead */}
+        <View style={styles.letterhead}>
+          <View style={styles.logoContainer}>
+            <Image style={styles.logo} src={logo} />
+          </View>
+          <View style={styles.companyInfo}>
+            <Text style={{ fontSize: 12 }}>123 Main Street</Text>
+            <Text style={{ fontSize: 12 }}>New York, NY 10001</Text>
+            <Text style={{ fontSize: 12 }}>Phone: (123) 456-7890</Text>
+            <Text style={{ fontSize: 12 }}>Email: info@relicroom.com</Text>
+          </View>
+        </View>
+
+        {/* Title */}
+        <Text style={styles.title}>Auction Summary Report</Text>
+        <Text style={styles.subtitle}>Auction Details</Text>
+         
           {data.map((auction) => (
             <View key={auction._id}>
-              <Text style={styles.header}>Auction ID: {auction._id}</Text>
-              <Text style={styles.paragraph}>Auction Title: {auction.auctionTitle}</Text>
-              <Text style={styles.paragraph}>Category: {auction.auctionCategory}</Text>
-              <Text style={styles.paragraph}>Starting Price: {auction.auctionStartingPrice}</Text>
-              <Text style={styles.paragraph}>Created At: {new Date(auction.createdAt).toLocaleString()}</Text>
-              <Text style={styles.paragraph}>Duration: {new Date(auction.auctionDuration).toLocaleString()}</Text>
-              <Text style={styles.paragraph}>View Count: {auction.viewCount}</Text>
-              <Text style={styles.paragraph}>Winning Bid Price: {auction.winningBidPrice}</Text>
-              <Text style={styles.paragraph}>Winning Bidder Name: {auction.winningBidderName}</Text>
-              <Text style={styles.paragraph}>----------------------------------------------------</Text>
+              <Text style={styles.description}>Auction ID: {auction._id}</Text>
+              <Text style={styles.description}>Auction Title: {auction.auctionTitle}</Text>
+              <Text style={styles.description}>Category: {auction.auctionCategory}</Text>
+              <Text style={styles.description}>Starting Price: {auction.auctionStartingPrice}</Text>
+              <Text style={styles.description}>Created At: {new Date(auction.createdAt).toLocaleString()}</Text>
+              <Text style={styles.description}>Duration: {new Date(auction.auctionDuration).toLocaleString()}</Text>
+              <Text style={styles.description}>View Count: {auction.viewCount}</Text>
+              <Text style={styles.description}>Winning Bid Price: {auction.winningBidPrice}</Text>
+              <Text style={styles.description}>Winning Bidder Name: {auction.winningBidderName}</Text>
+              <Text style={styles.description}>-------------------------------------------------------------------</Text>
             </View>
           ))}
-        </View>
       </Page>
     </Document>
   );

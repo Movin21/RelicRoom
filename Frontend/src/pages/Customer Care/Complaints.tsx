@@ -198,7 +198,6 @@ export default function Complaints() {
                               <SelectValue placeholder="Select" />
                             </SelectTrigger>
                           </FormControl>
-
                           <SelectContent>
                             <SelectItem value="one">1</SelectItem>
                             <SelectItem value="two">2</SelectItem>
@@ -268,6 +267,7 @@ export default function Complaints() {
                     </AlertDialogFooter>
                   </AlertDialogContent>
                 </AlertDialog>
+
               </CardContent>
             </div>
           </CardContent>

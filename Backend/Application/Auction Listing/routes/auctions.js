@@ -179,6 +179,7 @@ router.delete("/delete/:id", async (req, res) => {
   }
 });
 
+
 // Get auctions by auctioneer ID
 router.get("/auctioneer/:id", async (req, res) => {
   try {
@@ -192,3 +193,4 @@ router.get("/auctioneer/:id", async (req, res) => {
 });
 
 module.exports = router;
+

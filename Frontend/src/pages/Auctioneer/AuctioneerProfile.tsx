@@ -27,6 +27,7 @@ import { Label } from "@radix-ui/react-label";
 import { ChangeEvent, useRef, useState } from "react";
 
 const FormSchema = z.object({
+  _id: z.string(), // Add ID field to the schema
   email: z.string().min(1,{
       message: "Email is required.",
     }),
@@ -69,6 +70,7 @@ const AuctioneerProfile = () => {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
+      _id: auctioneer._id, // Assign ID to defaultValues
       companyname: auctioneer.companyname,
       industry: auctioneer.industry,
       description: auctioneer.description,
@@ -92,7 +94,7 @@ const AuctioneerProfile = () => {
         data
       );
       console.log("Auctioneer updated successfully", data);
-      dispatch(login(data));
+      dispatch(login(data)); // Dispatch the updated data
     } catch (error) {
       console.error("Error updating auctioneer", error);
     }

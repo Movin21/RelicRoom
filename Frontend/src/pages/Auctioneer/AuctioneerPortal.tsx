@@ -46,7 +46,9 @@ const AuctioneerPortal = () => {
   const auctioneer = useSelector((state: any) => state.auctioneer.auctioneer);
   const dispatch = useDispatch();
 
-  const auctioneerId = auctioneer._id; // Replace with the actual auctioneer ID
+
+  const auctioneerId = auctioneer._id;  
+
   console.log(auctioneerId);
 
   useEffect(() => {
@@ -383,3 +385,4 @@ const AuctioneerPortal = () => {
 };
 
 export default AuctioneerPortal;
+

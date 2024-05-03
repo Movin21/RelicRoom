@@ -3,7 +3,7 @@ const { boolean } = require("zod");
 
 const PaymentSchema = mongoose.Schema(
   {
-    bidderId : {
+    bidderId: {
       type: String,
       required: true,
     },
@@ -15,20 +15,12 @@ const PaymentSchema = mongoose.Schema(
       type: String,
       required: true,
     },
-    
-    auctionDescription: {
-      type: String,
-      required: true,
-    },
+
     auctionImage: {
       type: String,
       required: true,
     },
-    auctionStartingPrice: {
-      type: String,
-      required: true,
-    
-    },
+
     firstname: {
       type: String,
       required: true,
@@ -37,33 +29,33 @@ const PaymentSchema = mongoose.Schema(
       type: String,
       required: false,
     },
-    contactnumber: {
+    cardNumber: {
+      type: Number,
+      required: true,
+    },
+
+    bidPrice: {
       type: String,
       required: true,
     },
-    area: {
-      type: String,
-      required: true,
-    },
-    CardNumber: {
-      type: String,
-      required: true,
-    },
-    date: {
+    expiryDate: {
       type: String,
       required: true,
     },
     cvc: {
-      type: String,
+      type: Number,
+      required: true,
+    },
+    contactnumber: {
+      type: Number,
       required: true,
     },
 
     status: {
       type: String,
-      enum: ['processing', 'On-the-way', 'delivered'], 
-      default: 'processing' 
-  }
-   
+      enum: ["processing", "on-the-way", "Deliverd"],
+      default: "processing",
+    },
   },
   { timestamp: true }
 );

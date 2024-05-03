@@ -3,25 +3,21 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 import { Dialog } from "@/components/ui/dialog";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
-import { PDFDownloadLink, PDFViewer, Document, Page, View, Text, StyleSheet } from '@react-pdf/renderer';
+import { PDFDownloadLink, Document, Page, View, Text, StyleSheet } from '@react-pdf/renderer';
+import { Table, TableBody, TableCell, TableHeader, TableRow } from "@/components/ui/table";
 
 interface Auction {
   _id: string;
   auctionTitle: string;
-  auctionDescription: string;
-  auctionImages: string[];
   auctionCategory: string;
   auctionStartingPrice: number;
-  auctionDuration: Date;
-  currentBid: number;
-  isExpired: boolean;
-  viewCount: number;
   createdAt: Date;
-  winningBidPrice: number | null;
-  winningBidderName: string | null;
+  auctionDuration: Date;
+  viewCount: number;
+  winningBidPrice: number;
+  winningBidderName: string;
 }
 
 const styles = StyleSheet.create({
@@ -30,35 +26,26 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffffff',
     padding: 20,
   },
-  table: {
-    width: '100%',
-    borderWidth: 1,
-    borderColor: '#000000',
-    borderStyle: 'solid',
-    borderRadius: 4,
-  },
-  row: {
-    flexDirection: 'row',
-    borderBottomWidth: 1,
-    borderBottomColor: '#000000',
-    borderStyle: 'solid',
-  },
-  cell: {
-    padding: 8,
-    flex: 1,
-    textAlign: 'center',
-    border: '1px solid #ccc',
-    fontSize: 10,
-  },
   title: {
     textAlign: 'center',
-    fontSize: 24,
+    fontSize: 30,
     marginBottom: 20,
-    marginTop:5,
+    marginTop: 5,
+    fontWeight: 'bold',
   },
-  
+  header: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 10,
+    color: 'blue',
+  },
+  paragraph: {
+    fontSize: 12,
+    marginBottom: 8,
+    lineHeight: 1.5,
+  },
 });
- 
+
 const AuctioneerReportG: React.FC = () => {
   const [data, setData] = useState<Auction[]>([]);
   const auctioneer = useSelector((state: any) => state.auctioneer.auctioneer);
@@ -67,7 +54,7 @@ const AuctioneerReportG: React.FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`http://localhost:3000/auctioneer/generateReport/${auctioneer._id}`);
+        const response = await axios.get<Auction[]>(`http://localhost:3000/auctioneer/generateReport/${auctioneer._id}`);
         setData(response.data);
       } catch (error) {
         console.error("Error fetching auction data:", error);
@@ -78,14 +65,14 @@ const AuctioneerReportG: React.FC = () => {
   }, [auctioneer._id]);
 
   const handleBackToPortal = () => {
-    navigate("/auctioneerPortal"); 
+    navigate("/auctioneerPortal");
   };
 
   const generatePDF = () => {
     return (
       <PDFDownloadLink document={<MyDocument data={data} />} fileName="auction_report.pdf">
-        {({ blob, url, loading, error }) => (
-          <Button className="font-akshar w-40 text-white bg-red-700 hover:bg-red-500 ease-in-out hover:text-white tw-50 mt-4">
+        {({ loading }) => (
+          <Button className="font-akshar w-40 text-white bg-red-700 hover:bg-red-500 tw-50 mt-4">
             {loading ? 'Loading document...' : 'Download PDF'}
           </Button>
         )}
@@ -93,51 +80,33 @@ const AuctioneerReportG: React.FC = () => {
     );
   };
 
-  // Define the component to render the PDF
   const MyDocument: React.FC<{ data: Auction[] }> = ({ data }) => (
     <Document>
-      <Page size="A3" style={styles.page}>
-        <View style={styles.table}>
-        <Text style={styles.title}>Auction Summary Report</Text>
-          <View style={styles.row}>
-            <Text style={[styles.cell, styles.cell]}>Auction ID</Text>
-            <Text style={[styles.cell, styles.cell]}>Auction Title</Text>
-            {/* <Text style={[styles.cell, styles.cell]}>Description</Text> */}
-            <Text style={[styles.cell, styles.cell]}>Category</Text>
-            <Text style={[styles.cell, styles.cell]}>Starting Price</Text>
-            <Text style={[styles.cell, styles.cell]}>Duration</Text>
-            <Text style={[styles.cell, styles.cell]}>Current Bid</Text>
-            <Text style={[styles.cell, styles.cell]}>View Count</Text>
-            <Text style={[styles.cell, styles.cell]}>Created At</Text>
-            <Text style={[styles.cell, styles.cell]}>Winning Bid Price</Text>
-            <Text style={[styles.cell, styles.cell]}>Winning Bidder Name</Text>
-          </View>
+      <Page size="A4" style={styles.page}>
+        <View>
+          <Text style={styles.title}>Auction Summary Report</Text>
           {data.map((auction) => (
-            <View style={styles.row} key={auction._id}>
-              <Text style={styles.cell}>{auction._id}</Text>
-              <Text style={styles.cell}>{auction.auctionTitle}</Text>
-              {/* <Text style={styles.cell}>{auction.auctionDescription}</Text> */}
-              <Text style={styles.cell}>{auction.auctionCategory}</Text>
-              <Text style={styles.cell}>{auction.auctionStartingPrice}</Text>
-              <Text style={styles.cell}>{new Date(auction.auctionDuration).toLocaleString()}</Text>
-              <Text style={styles.cell}>{auction.currentBid}</Text>
-              <Text style={styles.cell}>{auction.viewCount}</Text>
-              <Text style={styles.cell}>{new Date(auction.createdAt).toLocaleString()}</Text>
-              <Text style={styles.cell}>{auction.winningBidPrice}</Text>
-              <Text style={styles.cell}>{auction.winningBidderName}</Text>
+            <View key={auction._id}>
+              <Text style={styles.header}>Auction ID: {auction._id}</Text>
+              <Text style={styles.paragraph}>Auction Title: {auction.auctionTitle}</Text>
+              <Text style={styles.paragraph}>Category: {auction.auctionCategory}</Text>
+              <Text style={styles.paragraph}>Starting Price: {auction.auctionStartingPrice}</Text>
+              <Text style={styles.paragraph}>Created At: {new Date(auction.createdAt).toLocaleString()}</Text>
+              <Text style={styles.paragraph}>Duration: {new Date(auction.auctionDuration).toLocaleString()}</Text>
+              <Text style={styles.paragraph}>View Count: {auction.viewCount}</Text>
+              <Text style={styles.paragraph}>Winning Bid Price: {auction.winningBidPrice}</Text>
+              <Text style={styles.paragraph}>Winning Bidder Name: {auction.winningBidderName}</Text>
+              <Text style={styles.paragraph}>----------------------------------------------------</Text>
             </View>
           ))}
         </View>
       </Page>
     </Document>
   );
-  
 
   return (
     <div className="flex flex-col min-h-screen bg-muted/40">
-      {/* Main Content */}
       <div className="flex flex-1">
-        {/* Card Component */}
         <div className="ml-4 sm:mt-0 flex-1">
           <Dialog>
             <Card>
@@ -145,21 +114,18 @@ const AuctioneerReportG: React.FC = () => {
                 <CardTitle className="font-akshar text-secondary text-4xl ">Auction Summary Report</CardTitle>
               </CardHeader>
               <CardContent>
-              <Table>
+                <Table>
                   <TableHeader>
                     <TableRow>
-                    <TableHead className="hidden md:table-cell text-brownDark font-akshar text-xl font-semibold mb-2">Auction ID</TableHead>
-                      <TableHead className="hidden md:table-cell text-brownDark font-akshar text-xl font-semibold mb-2">Auction Title</TableHead>
-                      {/* <TableHead className="hidden md:table-cell text-brownDark font-akshar text-xl font-semibold mb-2">Auction Images</TableHead> */}
-                      {/* <TableHead className="hidden md:table-cell text-brownDark font-akshar text-xl font-semibold mb-2">Description</TableHead> */}
-                      <TableHead className="hidden md:table-cell text-brownDark font-akshar text-xl font-semibold mb-2">Auction Category</TableHead>
-                      <TableHead className="hidden md:table-cell text-brownDark font-akshar text-xl font-semibold mb-2">Starting Price</TableHead>
-                      <TableHead className="hidden md:table-cell text-brownDark font-akshar text-xl font-semibold mb-2">Auction Duration</TableHead>
-                      <TableHead className="hidden md:table-cell text-brownDark font-akshar text-xl font-semibold mb-2">Current Bid</TableHead>
-                      <TableHead className="hidden md:table-cell text-brownDark font-akshar text-xl font-semibold mb-2">view Count</TableHead>
-                      <TableHead className="hidden md:table-cell text-brownDark font-akshar text-xl font-semibold mb-2">Created At</TableHead>
-                      <TableHead className="hidden md:table-cell text-brownDark font-akshar text-xl font-semibold mb-2">Winning Bid Price</TableHead>
-                      <TableHead className="hidden md:table-cell text-brownDark font-akshar text-xl font-semibold mb-2">Winning Bidder Name</TableHead>
+                      <TableHeader className="hidden md:table-cell text-brownDark font-akshar text-xl font-semibold mb-2">Auction ID</TableHeader>
+                      <TableHeader className="hidden md:table-cell text-brownDark font-akshar text-xl font-semibold mb-2">Auction Title</TableHeader>
+                      <TableHeader className="hidden md:table-cell text-brownDark font-akshar text-xl font-semibold mb-2">Auction Category</TableHeader>
+                      <TableHeader className="hidden md:table-cell text-brownDark font-akshar text-xl font-semibold mb-2">Starting Price</TableHeader>
+                      <TableHeader className="hidden md:table-cell text-brownDark font-akshar text-xl font-semibold mb-2">Created At</TableHeader>
+                      <TableHeader className="hidden md:table-cell text-brownDark font-akshar text-xl font-semibold mb-2">Auction Duration</TableHeader>
+                      <TableHeader className="hidden md:table-cell text-brownDark font-akshar text-xl font-semibold mb-2">view Count</TableHeader>
+                      <TableHeader className="hidden md:table-cell text-brownDark font-akshar text-xl font-semibold mb-2">Winning Bid Price</TableHeader>
+                      <TableHeader className="hidden md:table-cell text-brownDark font-akshar text-xl font-semibold mb-2">Winning Bidder Name</TableHeader>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
@@ -167,28 +133,22 @@ const AuctioneerReportG: React.FC = () => {
                       <TableRow key={auction._id}>
                         <TableCell className="hidden md:table-cell font-akshar">{auction._id}</TableCell>
                         <TableCell className="hidden md:table-cell font-akshar">{auction.auctionTitle}</TableCell>
-                        {/* <TableCell className="hidden md:table-cell font-akshar">
-                          {auction.auctionImages.map((image, index) => (
-                            <img key={index} src={image} alt={`Auction Image ${index}`} />
-                          ))}
-                        </TableCell> */}
-                        {/* <TableCell className="hidden md:table-cell font-akshar">{auction.auctionDescription}</TableCell> */}
                         <TableCell className="hidden md:table-cell font-akshar">{auction.auctionCategory}</TableCell>
                         <TableCell className="hidden md:table-cell font-akshar">{auction.auctionStartingPrice}</TableCell>
-                        <TableCell className="hidden md:table-cell font-akshar"> {new Date(auction.auctionDuration).toLocaleString()}</TableCell>
-                        <TableCell className="hidden md:table-cell font-akshar">{auction.currentBid}</TableCell>
                         <TableCell className="hidden md:table-cell font-akshar"> {new Date(auction.createdAt).toLocaleString()}</TableCell>
-                         {new Date(auction.createdAt).toLocaleString()}
+                        <TableCell className="hidden md:table-cell font-akshar"> {new Date(auction.auctionDuration).toLocaleString()}</TableCell>
+                        <TableCell className="hidden md:table-cell font-akshar">  {auction.viewCount}</TableCell>
                         <TableCell className="hidden md:table-cell font-akshar">{auction.winningBidPrice}</TableCell>
                         <TableCell className="hidden md:table-cell font-akshar">{auction.winningBidderName}</TableCell>
                       </TableRow>
                     ))}
                   </TableBody>
                 </Table>
-                <div className="flex justify-between mb-4">
-                  {/* Button to trigger PDF download */}
+                <div className="flex flex-col sm:flex-row justify-between items-center mt-4">
                   {generatePDF()}
-                  <Button className="font-akshar w-40 text-white bg-primary hover:bg-secondary ease-in-out hover:text-white tw-50 mt-4" onClick={handleBackToPortal}>Back Portal</Button>
+                  <Button className="font-akshar w-full sm:w-auto text-white bg-primary hover:bg-secondary mt-4 sm:mt-0" onClick={handleBackToPortal}>
+                    Back to Portal
+                  </Button>
                 </div>
               </CardContent>
             </Card>
@@ -200,4 +160,3 @@ const AuctioneerReportG: React.FC = () => {
 };
 
 export default AuctioneerReportG;
-

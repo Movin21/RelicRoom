@@ -49,17 +49,21 @@ const RSlogin = () => {
 
   const onSubmit = async (values: z.infer<typeof FormSchema>) => {
     try {
-      const response = await axios.post("http://localhost:3000/repairSpecialist/log", { // Corrected endpoint
-        username: values.username,
-        password: values.password,
-      });
+      const response = await axios.post(
+        "http://localhost:3000/repairSpecialist/log",
+        {
+          // Corrected endpoint
+          username: values.username,
+          password: values.password,
+        }
+      );
 
       console.log("Login successful:", response.data);
 
-      localStorage.setItem('userData', JSON.stringify(response.data));
+      localStorage.setItem("userData", JSON.stringify(response.data));
       // Dispatch the login action here
       dispatch(login(response.data));
-      navigate('/repairSpacialist/rsprofile');
+      navigate("/repairSpacialist/rsprofile");
 
       console.log(response.data);
     } catch (error) {
@@ -69,9 +73,14 @@ const RSlogin = () => {
 
   return (
     <div className="flex flex-col items-center justify-center">
-      <Tabs defaultValue="account" className="w-[400px] flex item-center justify-center">
+      <Tabs
+        defaultValue="account"
+        className="w-[400px] flex item-center justify-center"
+      >
         <TabsList>
-          <TabsTrigger value="Register"><Link to="/repairSpacialist/saveRs">Register</Link></TabsTrigger>
+          <TabsTrigger value="Register">
+            <Link to="/repairSpacialist/saveRs">Register</Link>
+          </TabsTrigger>
           <TabsTrigger value="Login">Login</TabsTrigger>
         </TabsList>
       </Tabs>
@@ -89,7 +98,7 @@ const RSlogin = () => {
             >
               <FormField
                 control={form.control}
-                name="username" 
+                name="username"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Username</FormLabel>
@@ -107,7 +116,11 @@ const RSlogin = () => {
                   <FormItem>
                     <FormLabel>Password</FormLabel>
                     <FormControl>
-                      <Input placeholder="Password" {...field} />
+                      <Input
+                        placeholder="Password"
+                        type="password"
+                        {...field}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -118,10 +131,7 @@ const RSlogin = () => {
                 variant="outline"
                 onClick={() => {
                   if (form.formState.isValid) {
-                    toast(
-                      "",
-                      {}
-                    );
+                    toast("", {});
                   }
                 }}
               >

@@ -12,8 +12,8 @@ import { useDispatch } from "react-redux";
 import { login } from "./slice/auctioneerSlice";
 import { useNavigate } from "react-router-dom";
 import { TabsContent } from '@radix-ui/react-tabs';
-import { CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Card } from 'antd';
+import { Card,CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+ 
 
 const FormSchema = z.object({
   email: z.string().min(1,{
@@ -53,7 +53,7 @@ const AuctioneerLogin = () => {
 
       navigate('/auctioneerPortal');
     } catch (error) {
-      // Handle login error, e.g., display error message to the user
+      // display error message to the user
       console.error("Login error:", error);
     }
   };

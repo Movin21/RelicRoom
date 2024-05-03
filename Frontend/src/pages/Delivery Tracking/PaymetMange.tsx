@@ -255,6 +255,7 @@ const PaymentMange: React.FC = () => {
           </div>
 
           <ul>
+          <div className="max-h-[520px] overflow-y-auto  scrollbar-none ">
             {filter && filter.length > 0 ? (
               <>
                 {filter.map((User, index) => (
@@ -343,7 +344,10 @@ const PaymentMange: React.FC = () => {
                 </div>
               </>
             )}
+            </div>
           </ul>
+
+
         </div>
       ) : (
         <>

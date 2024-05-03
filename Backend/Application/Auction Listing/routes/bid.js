@@ -1,5 +1,6 @@
 const express = require("express");
 const Bids = require("../../../models/bid");
+const Bidders = require("../../../models/bidderModel");
 
 const router = express.Router();
 

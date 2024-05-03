@@ -6,7 +6,17 @@ import { z } from "zod";
 import axios from "axios";
 import { Textarea } from "@/components/ui/textarea";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 import {
   Card,
   CardContent,
@@ -35,25 +45,32 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { toast } from "@/components/ui/use-toast";
+
 import { Link } from "react-router-dom";
 
 const formSchema = z.object({
   Name: z.string().min(4).max(50, {
     message: "Name should be atleast 4 characters",
   }),
-  Email: z.string().min(10).max(50, {
-    message: "Email should be atleast 10 characters",
+  Email: z
+  .string()
+  .min(10)
+  .max(50, {
+    message: "Email should be at least 10 characters",
+  })
+  .email({
+    message: "Invalid email format",
   }),
   Message: z.string().min(10).max(1000, {
     message: "Message should be atleast 10 characters",
   }),
-  Recommend: z.string({
+  Rate: z.string({
     required_error: "Choose this.",
   }),
 });
 
 export default function Suggestions() {
+  const [showDialog, setShowDialog] = useState(false);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {},
@@ -63,21 +80,22 @@ export default function Suggestions() {
     console.log(values);
     try {
       const response = await axios.post(
-        "http://localhost:3000/customerCare/suggestion/create",
+        "http://localhost:3000/customerCare/Suggestion/create",
         {
           Name: values.Name,
           Email: values.Email,
-          Rate: values.Recommend,
+          Rate : values.Rate,
+          
           Suggestions: values.Message,
         }
       );
       console.log(response);
       console.log("Response:", response.data);
+      
     } catch (error) {
       console.error("Error:", error);
     }
   };
-
   return (
     <>
       <h1 className="flex justify-center text-2xl font-bold h-500 item-center w-500 font-akshar text-yellow-950">
@@ -110,10 +128,7 @@ export default function Suggestions() {
             <div>
               <CardContent>
                 <Form {...form}>
-                  <form
-                    onSubmit={form.handleSubmit(handleSubmit)}
-                    className="space-y-8 text-yellow-950 font-akshar"
-                  >
+                  
                     <div>
                       <FormField
                         control={form.control}
@@ -154,7 +169,7 @@ export default function Suggestions() {
 
                     <FormField
                       control={form.control}
-                      name="Recommend"
+                      name="Rate"
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel>
@@ -167,11 +182,11 @@ export default function Suggestions() {
                               </SelectTrigger>
                             </FormControl>
                             <SelectContent>
-                              <SelectItem value="one">1</SelectItem>
-                              <SelectItem value="two">2</SelectItem>
-                              <SelectItem value="three">3</SelectItem>
-                              <SelectItem value="four">4</SelectItem>
-                              <SelectItem value="five">5</SelectItem>
+                              <SelectItem value="1">1</SelectItem>
+                              <SelectItem value="2">2</SelectItem>
+                              <SelectItem value="3">3</SelectItem>
+                              <SelectItem value="4">4</SelectItem>
+                              <SelectItem value="5">5</SelectItem>
                             </SelectContent>
                           </Select>
                           <FormMessage className="text-red-500 font-akshar" />
@@ -196,14 +211,52 @@ export default function Suggestions() {
                         </FormItem>
                       )}
                     />
-                    <div className="flex justify-center">
-                      {" "}
-                      {/* Centering the submit button */}
-                      <Button type="submit" className="w-3/6">
-                        Submit
-                      </Button>
-                    </div>
-                  </form>
+
+                    
+                 <div className="flex justify-between">
+                  <AlertDialog>
+                  <AlertDialogTrigger>
+                    <Button
+                      type="button"
+                      className="w-3/6 mx-36"
+                      onClick={() => setShowDialog(true)}
+                    >
+                      Submit
+                    </Button>
+                  </AlertDialogTrigger>
+                  <AlertDialogContent>
+                    <AlertDialogHeader>
+                      <AlertDialogTitle>
+                        Are you absolutely sure?
+                      </AlertDialogTitle>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                      <AlertDialogCancel>
+                        <Button
+                          type="button"
+                          onClick={() => setShowDialog(false)}
+                        >
+                          Cancel
+                        </Button>
+                      </AlertDialogCancel>
+                      <AlertDialogAction>
+                      <Button
+                          type="button"
+                          onClick={() => {
+                            form.handleSubmit(handleSubmit)();
+                            setShowDialog(false);
+                          }}
+                        >
+                          Submit
+                        </Button>
+                            </AlertDialogAction>
+
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialog>
+                        </div>
+               
+
                 </Form>
               </CardContent>
             </div>

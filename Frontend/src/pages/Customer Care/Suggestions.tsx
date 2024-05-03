@@ -129,7 +129,7 @@ export default function Suggestions() {
               <CardContent>
                 <Form {...form}>
                   
-                    <div>
+                    
                       <FormField
                         control={form.control}
                         name="Name"
@@ -147,7 +147,7 @@ export default function Suggestions() {
                           </FormItem>
                         )}
                       />
-                    </div>
+                    <br/>
 
                     <FormField
                       control={form.control}
@@ -166,6 +166,7 @@ export default function Suggestions() {
                         </FormItem>
                       )}
                     />
+                    <br/>
 
                     <FormField
                       control={form.control}
@@ -193,6 +194,7 @@ export default function Suggestions() {
                         </FormItem>
                       )}
                     />
+                    <br/>
 
                     <FormField
                       control={form.control}
@@ -211,6 +213,7 @@ export default function Suggestions() {
                         </FormItem>
                       )}
                     />
+                    <br/>
 
                     
                  <div className="flex justify-between">

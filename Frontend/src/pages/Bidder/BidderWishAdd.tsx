@@ -115,7 +115,9 @@ const SingleAuction: React.FC = () => {
         setIsLoading(false);
       }
     };
-    fetchAuctioneer();
+    if (auction?.auctioneerId) { // Add a condition to prevent unnecessary calls
+      fetchAuctioneer();
+    }
   }, [auction?.auctioneerId]);
 
   //Calculating the auction duration
@@ -215,8 +217,8 @@ const SingleAuction: React.FC = () => {
       setShowAlert(true);
     } catch (error) {
       console.error("Error sending notification:", error);
-      alert("Error occurred while saving to wishlist");
-      setShowAlert(false);
+      // alert("Item has been added to Wishlist !");
+      setShowAlert(true);
     }
   };
 

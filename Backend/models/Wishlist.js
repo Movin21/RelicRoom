@@ -21,12 +21,9 @@ const wishlistSchema = mongoose.Schema(
       required: true,
     },
     isExpired: {
-      type: String,
+      type: Boolean,
       required: true,
     },
-    
-
-    
   },
   { timestamp: true }
 );

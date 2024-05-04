@@ -216,7 +216,7 @@ const PaymentMange: React.FC = () => {
       {/* Breadcrumb */}
       <Breadcrumb className="mb-2">
         <Breadcrumb.Item>
-          <Link to="/auctionDashboard">Auction Dashboard</Link>
+          <Link to="/auctioneerPortal">Auction Dashboard</Link>
         </Breadcrumb.Item>
         <Breadcrumb.Item>
           {" "}

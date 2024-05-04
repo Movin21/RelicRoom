@@ -108,7 +108,7 @@ const Inform: React.FC = () => {
       {/* Breadcrumb */}
       <Breadcrumb className="mt-4 mb-2 ml-10">
         <Breadcrumb.Item>
-          <Link to="/auctionDashboard">Auction Dashboard</Link>
+          <Link to="/auctioneerPortal">Auction Dashboard</Link>
         </Breadcrumb.Item>
         <Breadcrumb.Item>
           {" "}
@@ -175,7 +175,7 @@ const Inform: React.FC = () => {
                     <span className="font-semibold ml-4">Bid time:</span>{" "}
                     {moment(bidder.createdAt).format("YYYY-MM-DD HH:mm:ss")}
                     <span className="font-semibold ml-4 mt-3  w-10 truncate  ">
-                      Email:
+                    Email
                     </span>{" "}
                     {bidder.email}
                     <span className="font-semibold ml-4   ">
@@ -185,7 +185,9 @@ const Inform: React.FC = () => {
                     <Button
                       type="submit"
                       onClick={() => auction && informWinner(bidder, auction)}
-                      className="font-nunitoSans bg-brownDark hover:bg-brownMedium lg:ml-20 lg:mt-4 mt-2    text-white font-bold w-20 h-8 rounded-xl focus:outline-none focus:shadow-outline"
+                      className="font-nunitoSans  bg-brownDark hover:bg-brownMedium lg:ml-20 lg:mt-4 mt-2    text-white font-bold w-20 h-8 rounded-xl focus:outline-none focus:shadow-outline"
+                      
+
                     >
                       Inform
                     </Button>
@@ -205,7 +207,7 @@ const Inform: React.FC = () => {
         )}
       </div>
       {showAlert && (
-        <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-50 mt-32 flex justify-center items-center">
+        <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-50 mt-18 flex justify-center items-center">
           <div className="bg-white p-10 rounded-lg shadow-lg">
             <p className="text-xl font-semibold ml-14 mb-4">Notification</p>
             <p>Successfully informed the winner</p>

@@ -134,7 +134,7 @@ const Notifcation: React.FC = () => {
       <div className="ml-64 mt-10">
         <Breadcrumb className="mb-2 ">
           <Breadcrumb.Item>
-            <Link to="/">Home</Link>
+            <Link to="/bidderProfile">Home</Link>
           </Breadcrumb.Item>
           <Breadcrumb.Item>Notification</Breadcrumb.Item>
         </Breadcrumb>

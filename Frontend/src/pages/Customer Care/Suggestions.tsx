@@ -53,14 +53,14 @@ const formSchema = z.object({
     message: "Name should be atleast 4 characters",
   }),
   Email: z
-  .string()
-  .min(10)
-  .max(50, {
-    message: "Email should be at least 10 characters",
-  })
-  .email({
-    message: "Invalid email format",
-  }),
+    .string()
+    .min(10)
+    .max(50, {
+      message: "Email should be at least 10 characters",
+    })
+    .email({
+      message: "Invalid email format",
+    }),
   Message: z.string().min(10).max(1000, {
     message: "Message should be atleast 10 characters",
   }),
@@ -84,14 +84,13 @@ export default function Suggestions() {
         {
           Name: values.Name,
           Email: values.Email,
-          Rate : values.Rate,
-          
+          Rate: values.Rate,
+
           Suggestions: values.Message,
         }
       );
       console.log(response);
       console.log("Response:", response.data);
-      
     } catch (error) {
       console.error("Error:", error);
     }
@@ -128,135 +127,132 @@ export default function Suggestions() {
             <div>
               <CardContent>
                 <Form {...form}>
-                  
-                    <div>
-                      <FormField
-                        control={form.control}
-                        name="Name"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Name</FormLabel>
-                            <FormControl className="w-full">
-                              <Input
-                                placeholder="Enter the your name.."
-                                {...field}
-                              />
-                            </FormControl>
+                  <FormField
+                    control={form.control}
+                    name="Name"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Name</FormLabel>
+                        <FormControl className="w-full">
+                          <Input
+                            placeholder="Enter the your name.."
+                            {...field}
+                          />
+                        </FormControl>
 
-                            <FormMessage className="text-red-500 font-akshar" />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
+                        <FormMessage className="text-red-500 font-akshar" />
+                      </FormItem>
+                    )}
+                  />
+                  <br />
 
-                    <FormField
-                      control={form.control}
-                      name="Email"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Email</FormLabel>
-                          <FormControl className="w-full">
-                            <Input
-                              placeholder="Enter the your Email address.."
-                              {...field}
-                            />
-                          </FormControl>
+                  <FormField
+                    control={form.control}
+                    name="Email"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Email</FormLabel>
+                        <FormControl className="w-full">
+                          <Input
+                            placeholder="Enter the your Email address.."
+                            {...field}
+                          />
+                        </FormControl>
 
-                          <FormMessage className="text-red-500 font-akshar" />
-                        </FormItem>
-                      )}
-                    />
+                        <FormMessage className="text-red-500 font-akshar" />
+                      </FormItem>
+                    )}
+                  />
+                  <br />
 
-                    <FormField
-                      control={form.control}
-                      name="Rate"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>
-                            How would you like to recommend our site
-                          </FormLabel>
-                          <Select onValueChange={field.onChange}>
-                            <FormControl>
-                              <SelectTrigger className="w-full">
-                                <SelectValue placeholder="Select" />
-                              </SelectTrigger>
-                            </FormControl>
-                            <SelectContent>
-                              <SelectItem value="1">1</SelectItem>
-                              <SelectItem value="2">2</SelectItem>
-                              <SelectItem value="3">3</SelectItem>
-                              <SelectItem value="4">4</SelectItem>
-                              <SelectItem value="5">5</SelectItem>
-                            </SelectContent>
-                          </Select>
-                          <FormMessage className="text-red-500 font-akshar" />
-                        </FormItem>
-                      )}
-                    />
-
-                    <FormField
-                      control={form.control}
-                      name="Message"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel> Your Message</FormLabel>
+                  <FormField
+                    control={form.control}
+                    name="Rate"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>
+                          How would you like to recommend our site
+                        </FormLabel>
+                        <Select onValueChange={field.onChange}>
                           <FormControl>
-                            <Textarea
-                              placeholder="Type your message here.."
-                              {...field}
-                            />
+                            <SelectTrigger className="w-full">
+                              <SelectValue placeholder="Select" />
+                            </SelectTrigger>
                           </FormControl>
+                          <SelectContent>
+                            <SelectItem value="1">1</SelectItem>
+                            <SelectItem value="2">2</SelectItem>
+                            <SelectItem value="3">3</SelectItem>
+                            <SelectItem value="4">4</SelectItem>
+                            <SelectItem value="5">5</SelectItem>
+                          </SelectContent>
+                        </Select>
+                        <FormMessage className="text-red-500 font-akshar" />
+                      </FormItem>
+                    )}
+                  />
+                  <br />
 
-                          <FormMessage className="text-red-500 font-akshar" />
-                        </FormItem>
-                      )}
-                    />
+                  <FormField
+                    control={form.control}
+                    name="Message"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel> Your Message</FormLabel>
+                        <FormControl>
+                          <Textarea
+                            placeholder="Type your message here.."
+                            {...field}
+                          />
+                        </FormControl>
 
-                    
-                 <div className="flex justify-between">
-                  <AlertDialog>
-                  <AlertDialogTrigger>
-                    <Button
-                      type="button"
-                      className="w-3/6 mx-36"
-                      onClick={() => setShowDialog(true)}
-                    >
-                      Submit
-                    </Button>
-                  </AlertDialogTrigger>
-                  <AlertDialogContent>
-                    <AlertDialogHeader>
-                      <AlertDialogTitle>
-                        Are you absolutely sure?
-                      </AlertDialogTitle>
-                    </AlertDialogHeader>
-                    <AlertDialogFooter>
-                      <AlertDialogCancel>
+                        <FormMessage className="text-red-500 font-akshar" />
+                      </FormItem>
+                    )}
+                  />
+                  <br />
+
+                  <div className="flex justify-between">
+                    <AlertDialog>
+                      <AlertDialogTrigger>
                         <Button
                           type="button"
-                          onClick={() => setShowDialog(false)}
-                        >
-                          Cancel
-                        </Button>
-                      </AlertDialogCancel>
-                      <AlertDialogAction>
-                      <Button
-                          type="button"
-                          onClick={() => {
-                            form.handleSubmit(handleSubmit)();
-                            setShowDialog(false);
-                          }}
+                          className="w-3/6 mx-36"
+                          onClick={() => setShowDialog(true)}
                         >
                           Submit
                         </Button>
-                            </AlertDialogAction>
-
-                    </AlertDialogFooter>
-                  </AlertDialogContent>
-                </AlertDialog>
-                        </div>
-               
-
+                      </AlertDialogTrigger>
+                      <AlertDialogContent>
+                        <AlertDialogHeader>
+                          <AlertDialogTitle>
+                            Are you absolutely sure?
+                          </AlertDialogTitle>
+                        </AlertDialogHeader>
+                        <AlertDialogFooter>
+                          <AlertDialogCancel>
+                            <Button
+                              type="button"
+                              onClick={() => setShowDialog(false)}
+                            >
+                              Cancel
+                            </Button>
+                          </AlertDialogCancel>
+                          <AlertDialogAction>
+                            <Button
+                              type="button"
+                              onClick={() => {
+                                form.handleSubmit(handleSubmit)();
+                                setShowDialog(false);
+                              }}
+                            >
+                              Submit
+                            </Button>
+                          </AlertDialogAction>
+                        </AlertDialogFooter>
+                      </AlertDialogContent>
+                    </AlertDialog>
+                  </div>
                 </Form>
               </CardContent>
             </div>

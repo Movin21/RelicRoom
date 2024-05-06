@@ -35,6 +35,8 @@ const Notifcation: React.FC = () => {
   const [Feed, setFeed] = useState<User[]>([]);
   const [selectedItem, setSelectedItem] = useState<User | null>(null);
   const [paymentError, setPaymentError] = useState<string | null>(null);
+  const [expiryDateError, setExpiryDateError] = useState<string>("");
+  const [cardNumberError, setCardNumberError] = useState<string>("");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -94,12 +96,41 @@ const Notifcation: React.FC = () => {
     }
   };
 
+  //expirydate
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setExpiryDate(value);
+
+    const regex = /^(0[1-9]|1[0-2])\/\d{2}$/;
+
+    if (!regex.test(value)) {
+      setExpiryDateError("Invalid format. Please use (mm/yy) format.");
+    } else {
+      setExpiryDateError("");
+    }
+  };
+
+  //card Number
+  const handleChangeCard = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setCardNumber(value);
+
+    // Regular expression to match only numbers
+    const regex = /^[0-9]*$/;
+
+    if (!regex.test(value)) {
+      setCardNumberError("Invalid format. Please enter numbers only.");
+    } else {
+      setCardNumberError("");
+    }
+  };
+
   return (
     <>
       <div className="ml-64 mt-10">
         <Breadcrumb className="mb-2 ">
           <Breadcrumb.Item>
-            <Link to="/">Home</Link>
+            <Link to="/bidderProfile">Home</Link>
           </Breadcrumb.Item>
           <Breadcrumb.Item>Notification</Breadcrumb.Item>
         </Breadcrumb>
@@ -205,9 +236,12 @@ const Notifcation: React.FC = () => {
                     placeholder="Card Number"
                     value={cardNumber}
                     maxLength={16}
-                    onChange={(e) => setCardNumber(e.target.value)}
+                    onChange={handleChangeCard}
                     className="mt-1 p-2 w-full border rounded-md"
                   />
+                  {cardNumberError && (
+                    <p className="text-red-500">{cardNumberError}</p>
+                  )}
                 </div>
                 <div className="mb-4">
                   <label className="block text-sm font-medium text-gray-700">
@@ -218,9 +252,12 @@ const Notifcation: React.FC = () => {
                     value={expiryDate}
                     placeholder="(mm/yy)"
                     maxLength={5}
-                    onChange={(e) => setExpiryDate(e.target.value)}
+                    onChange={handleChange}
                     className="mt-1 p-2 w-full border rounded-md"
                   />
+                  {expiryDateError && (
+                    <p className="text-red-500">{expiryDateError}</p>
+                  )}
                 </div>
                 <div className="mb-4">
                   <label className="block text-sm font-medium text-gray-700">

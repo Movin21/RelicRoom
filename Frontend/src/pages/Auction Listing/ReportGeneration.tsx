@@ -1,7 +1,5 @@
 import axios from "axios";
 import { Link } from "react-router-dom";
-import { Search } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -19,8 +17,6 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
-import { Input } from "@/components/ui/input";
-
 import {
   Table,
   TableBody,
@@ -33,18 +29,6 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
 
 interface Auction {
   _id: string;
@@ -97,22 +81,6 @@ export function ReportGeneration() {
 
     fetchData();
   }, [auctioneerId]);
-
-  // Handle delete confirmation
-  const handleDeleteConfirmation = (auctionId: string) => {
-    axios
-      .delete(`http://localhost:3000/auctions/delete/${auctionId}`)
-      .then((response) => {
-        // Update the state to remove the deleted auction
-        setAuctions(auctions.filter((auction) => auction._id !== auctionId));
-
-        // Reload the page after successful deletion
-        window.location.reload();
-      })
-      .catch((error) => {
-        console.error("Error deleting auction:", error);
-      });
-  };
 
   // Filter auctions based on search query and auctioneer ID
   const filteredAuctions = auctions.filter(

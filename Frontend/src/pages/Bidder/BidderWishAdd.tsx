@@ -115,7 +115,8 @@ const SingleAuction: React.FC = () => {
         setIsLoading(false);
       }
     };
-    if (auction?.auctioneerId) { // Add a condition to prevent unnecessary calls
+    if (auction?.auctioneerId) {
+      // Add a condition to prevent unnecessary calls
       fetchAuctioneer();
     }
   }, [auction?.auctioneerId]);
@@ -305,7 +306,7 @@ const SingleAuction: React.FC = () => {
         <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-50 mt-32 flex justify-center items-center">
           <div className="bg-white p-10 rounded-lg shadow-lg">
             <p className="text-xl font-semibold ml-14 mb-4">Notification</p>
-            <p>Successfully informed the winner</p>
+            <p>Item is added to Wishlist successfully</p>
             <button
               onClick={() => setShowAlert(false)}
               className="mt-4 bg-brownDark hover:bg-brownMedium text-white px-4 py-2 ml-20 rounded  focus:outline-none focus:ring focus:border-blue-300"

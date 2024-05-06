@@ -108,7 +108,7 @@ const Inform: React.FC = () => {
       {/* Breadcrumb */}
       <Breadcrumb className="mt-4 mb-2 ml-10">
         <Breadcrumb.Item>
-          <Link to="/auctionDashboard">Auction Dashboard</Link>
+          <Link to="/auctioneerPortal">Auction Dashboard</Link>
         </Breadcrumb.Item>
         <Breadcrumb.Item>
           {" "}

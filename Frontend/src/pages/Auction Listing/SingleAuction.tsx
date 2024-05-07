@@ -39,12 +39,10 @@ interface Auction {
   leadingBidderName: string;
 }
 
-
 const SingleAuction: React.FC = () => {
   //Getting the States of Auctioneer and Bidder
   const auctioneer = useSelector((state: any) => state.auctioneer.auctioneer);
   const bidder = useSelector((state: any) => state.bidder.bidder);
- 
 
   //Store the id that pass by the listing page
   const { id } = useParams<{ id: string }>();
@@ -55,7 +53,7 @@ const SingleAuction: React.FC = () => {
   const [remainingTime, setRemainingTime] = useState<string>("");
   const [bidValue, setBidValue] = useState<number>(0);
   const [alertMessage, setAlertMessage] = useState<string>("");
-  console.log(auction)
+  console.log(auction);
 
   //Fetch the Selected Auction
   useEffect(() => {
@@ -197,10 +195,6 @@ const SingleAuction: React.FC = () => {
     };
     fetchBidderName();
   };
-
-
-  
-
 
   return (
     <>
@@ -362,10 +356,10 @@ const SingleAuction: React.FC = () => {
                         </AlertDialogContent>
                       </AlertDialog>
                       <Link to={`/wishAdd/${auction._id}`}>
-                      <button className="flex items-center justify-center bg-red-800 text-white px-3 py-2 rounded-md hover:bg-red-600 w-full md:w-auto md:ml-2">
-                        <AiOutlineHeart className="mr-2" />
-                        Add to Wishlist
-                      </button>
+                        <button className="flex items-center justify-center bg-red-800 text-white px-3 py-2 rounded-md hover:bg-red-600 w-full md:w-auto md:ml-2">
+                          <AiOutlineHeart className="mr-2" />
+                          Add to Wishlist
+                        </button>
                       </Link>
                     </div>
                   </>

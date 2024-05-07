@@ -47,6 +47,7 @@ const formSchema = z.object({
   description: z.string().nonempty().min(20, {
     message: "Description must be at least 20 characters long",
   }),
+
   category: z.enum(["art", "clothing", "furniture", "jewelry"]),
   startingPrice: z.coerce
     .number({
@@ -224,6 +225,7 @@ export default function PostForm({}) {
                     </FormItem>
                   )}
                 />
+
                 <FormField
                   control={form.control}
                   name="category"

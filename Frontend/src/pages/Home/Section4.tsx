@@ -18,7 +18,7 @@ const Section4 = () => {
           <div className="mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start">
             <div className="rounded-md shadow">
               <Link
-                to="#"
+                to="/auctioneerRegister"
                 className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-primary hover:bg-secondary md:py-2 md:text-lg md:px-6"
               >
                 Get Register

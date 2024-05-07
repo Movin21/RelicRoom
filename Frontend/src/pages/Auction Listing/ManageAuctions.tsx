@@ -178,6 +178,7 @@ export function ManageAuctions() {
               <Card>
                 <CardHeader>
                   <CardTitle>Ongoing Auctions</CardTitle>
+
                   <CardDescription>
                     Manage all created active auctions.
                   </CardDescription>

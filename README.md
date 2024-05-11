@@ -1,6 +1,7 @@
-# Online Vintage Item Auction Management System
+# Online Vintage Item Auction Management System (RelicRoom)
 
-This repository contains the source code for an online vintage item auction management system developed as a project for the IT2080 Information Technology Project course at the Sri Lanka Institute of Information Technology.
+This repository contains the source code for an online vintage item auction management system developed as a project for the IT2080 Information Technology Project module at the Sri Lanka Institute of Information Technology (SLIIT).
+
 
 ## Project Overview
 
@@ -21,7 +22,7 @@ The online vintage auction management system aims to provide a comprehensive pla
 - Frontend: React.js, Redux
 - Backend: Node.js, Express.js
 - Database: MongoDB
-- Other Tools: Figma, Postman, Visual Studio Code, Heroku
+- Other Tools: Figma, Postman, Visual Studio Code
 
 ## Installation and Setup
 
@@ -35,12 +36,13 @@ The online vintage auction management system aims to provide a comprehensive pla
 
 ## Documentation
 
-Detailed documentation for the project can be found in the Documents folder within the repository.
+
+Detailed documentation for the project can be found in the Final Report.pdf file within the repository.
 
 ## Contributors
 
-- Liyanage M.I.H (Lead) 
-- Rajapakshe P.H.Y.L (UI Designer, Documentation Handling)
+- Liyanage M.I.H (Lead)
+- Rajapakshe P.H.Y.L (UI Design / Document Handling)
 - Jayasundara D.W.S
 - Perera W.P.M.A.N
 - Nirasha F

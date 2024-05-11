@@ -2,6 +2,7 @@
 
 This repository contains the source code for an online vintage item auction management system developed as a project for the IT2080 Information Technology Project module at the Sri Lanka Institute of Information Technology (SLIIT).
 
+
 ## Project Overview
 
 The online vintage auction management system aims to provide a comprehensive platform tailored to the unique needs of vintage item auctions. It serves as a centralized hub connecting auctioneers, bidders, vintage experts, and repair specialists in a seamless environment. The system features functionalities such as user account management, listing creation, bidding mechanisms, auction automation, secure payment handling, and delivery tracking.
@@ -34,6 +35,7 @@ The online vintage auction management system aims to provide a comprehensive pla
 7. Start the backend server: `cd ../backend && npm run dev`
 
 ## Documentation
+
 
 Detailed documentation for the project can be found in the Final Report.pdf file within the repository.
 

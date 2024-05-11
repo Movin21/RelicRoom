@@ -37,7 +37,7 @@ The online vintage auction management system aims to provide a comprehensive pla
 ## Documentation
 
 
-Detailed documentation for the project can be found in the Final Report.pdf file within the repository.
+Detailed documentation for the project can be found in the Documents folder within the repository.
 
 ## Contributors
 

@@ -48,7 +48,7 @@ Detailed documentation for the project can be found in the Documents folder with
 - Nirasha F
 - Tharuka R.M.S
 - L.R.S.L.Nissanka
-- Madinu V G A
+
   
 ## License
 

@@ -27,10 +27,6 @@ import AuctionList from "./pages/Auction Listing/AuctionList.tsx";
 import { Provider } from "react-redux";
 import { store, persistor } from "./redux/store.ts";
 import { PersistGate } from "redux-persist/integration/react";
-import Feedback from "./pages/Customer Care/Feedback.tsx";
-import Suggestions from "./pages/Customer Care/Suggestions.tsx";
-import Complaints from "./pages/Customer Care/Complaints.tsx";
-import FAQ from "./pages/Customer Care/FAQ.tsx";
 import SingleAuction from "./pages/Auction Listing/SingleAuction.tsx";
 import { AdminAuctions } from "./pages/AdminPortal/AdminAuctions.tsx";
 import AdminProfile from "./pages/AdminPortal/AdminProfile.tsx";
@@ -95,10 +91,6 @@ const router = createBrowserRouter([
 
       { path: "/bidderLogin", element: <BidderLogin /> },
       { path: "/bidderSignup", element: <BidderSignup /> },
-      { path: "/feedback", element: <Feedback /> },
-      { path: "/suggestion", element: <Suggestions /> },
-      { path: "/complaint", element: <Complaints /> },
-      { path: "/faq", element: <FAQ /> },
       { path: "/auction/:id", element: <SingleAuction /> },
       { path: "/bidderLogin", element: <BidderLogin /> },
       { path: "/bidderSignup", element: <BidderSignup /> },
@@ -168,14 +160,7 @@ const router = createBrowserRouter([
     element: <AdminLoginLayout />,
     children: [{ path: "/adminLogin", element: <AdminPortalLogin /> }],
   },
-  {
-    element: <CustomerCareLayout />,
-    children: [
-      { path: "/feedbackManage", element: <FeedbackManage /> },
-      { path: "/faqManage", element: <FAQmanage /> },
-      { path: "/FAQUpdate/:id", element: <Update /> },
-    ],
-  },
+  
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")!).render(

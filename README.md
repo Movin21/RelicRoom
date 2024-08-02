@@ -15,7 +15,7 @@ The online vintage auction management system aims to provide a comprehensive pla
 - Integration with vintage expertise and repair specialist modules
 - Secure payment processing and delivery tracking
 - Administrative dashboard for platform management
-- Customer care portal for user feedback and FAQs
+
 
 ## Technologies Used
 
